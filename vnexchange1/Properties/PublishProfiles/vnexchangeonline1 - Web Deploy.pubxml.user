@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQd0TEFDOlk2d3odyz5g8kQAAAAACAAAAAAAQZgAAAAEAACAAAAArTPTc8hwMTILMApgMeG560dp+Aw9ZMtUmTsRMLdWfxgAAAAAOgAAAAAIAACAAAADqdhfsFLYHF2fuvYsfcHH2RkGaiXu4uEYzOj1wlxz1cIAAAAAgU9ANNcEAJlkXiwZDVTsjYlYbpqeadERsSpzXW2nhXrh1ZQdL1jn4LJF/HyPuM9TTS/KihSP5iO070IElYwvw6oEsB0Zt42bJ2EoppvWv+3JRSmPk4MB6AhFS0T8yAaqTAKYCbVx8RQK/D+dfE8fBpiUeVJzTnOnZ5wgJLd2PF0AAAAAwyqWh7Eayv7jvzUejN5+D8mu6p6mXPMWsIPahew8Yt81XyRuFYgONZXgQMeF1TSPcT2qwBRiKNBeYlslvictP</EncryptedPassword>
+    <_NewBackgroundProfile>False</_NewBackgroundProfile>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:cscvmicroservicesdb.database.windows.net,1433;Initial Catalog=vnexchangeonline1_db;User Id=microservicesdb_admin@cscvmicroservicesdb;Password=P@ssword123</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="vnexchange1.Data.ApplicationDbContext">
+      <Value>Data Source=tcp:cscvmicroservicesdb.database.windows.net,1433;Initial Catalog=vnexchangeonline1_db;User Id=microservicesdb_admin@cscvmicroservicesdb;Password=P@ssword123</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="I:\projects\vnexchange1\vnexchange1\obj\Release\netcoreapp1.1\PubTmp\Out\" />
+  <dbfullsql path="I:\projects\vnexchange1\vnexchange1\obj\Release\netcoreapp1.1\PubTmp\EFSQLScripts\vnexchange1.Data.ApplicationDbContext.sql" />
+</sitemanifest>
