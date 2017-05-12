@@ -7,3 +7,4 @@ I:\projects\vnexchange1\vnexchange1\obj\Debug\netcoreapp1.1\UserSecretsAssemblyI
 I:\projects\vnexchange1\vnexchange1\obj\Debug\netcoreapp1.1\vnexchange1.AssemblyInfo.cs
 I:\projects\vnexchange1\vnexchange1\obj\Debug\netcoreapp1.1\vnexchange1.dll
 I:\projects\vnexchange1\vnexchange1\obj\Debug\netcoreapp1.1\vnexchange1.pdb
+I:\projects\vnexchange1\vnexchange1\obj\Debug\netcoreapp1.1\vnexchange1.csprojResolveAssemblyReference.cache

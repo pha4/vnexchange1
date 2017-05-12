@@ -761,3 +761,13 @@ textarea {
 .exchange-product a.btn {
     display: none;
 }
+.dn {
+    display: none;
+}
+.header {
+    position: unset; 
+    background-color: #185047;
+}
+.section {
+    padding-top: 30px;
+}
