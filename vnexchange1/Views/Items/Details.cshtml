@@ -1,0 +1,84 @@
+@model vnexchange1.Models.Item
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemPrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemCategory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemCategory)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemOwner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemOwner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemManufacturer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemManufacturer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CanExchange)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CanExchange)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CanGiveAway)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CanGiveAway)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CanTrade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CanTrade)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
