@@ -1,23 +1,7 @@
-﻿@model IEnumerable<vnexchange1.Models.Category>
-@{
+﻿@{
     ViewData["Title"] = "vnexchange.com - Mua bán, Trao Đổi và Cho nhận Đồ cũ";
 }
-<script>
-    var CommentList = React.createClass({
-        render: function () {
-            return (
-                <div className="commentList">
-                    Hello, world! I am a CommentList.
-      </div>
-            );
-        }
-    });
 
-    ReactDOM.render(
-        <CommentList />,
-        document.getElementById('content')
-    );
-</script>
 <div class="section" id="sectionPortfolio">
     <div class="container" style="width: 1000px;">
         <h2 class="text-center title" id="portfolio" style="font-weight: bold;">Với vnexchange.com</h2>
@@ -38,25 +22,6 @@
                 </div>
                 <!-- isotope filters end -->
                 <!-- portfolio items start -->
-
-                <div>
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-sm-6 col-md-3 isotope-item web-design">
-                            <div class="image-box">
-                                <div class="overlay-container">
-                                    <img src="@Html.DisplayFor(modelItem => item.CategoryImage)" alt="@Html.DisplayFor(modelItem => item.CategoryName)">
-                                    <a class="overlay" href="index1.html?danh-muc=1">
-                                        <i class="fa fa-search-plus"></i>
-                                        <span>@Html.DisplayFor(modelItem => item.CategoryName)</span>
-                                    </a>
-
-                                </div>
-                                <a class="btn btn-default btn-block" href="index1.html?danh-muc=1">@Html.DisplayFor(modelItem => item.CategoryName) (123 món)</a>
-                            </div>
-                        </div>
-                    }
-                </div>
 
                 <div class="col-sm-6 col-md-3 isotope-item web-design">
                     <div class="image-box">
@@ -303,6 +268,7 @@
         </div>
     </div>
 </div>
+		</div>
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

@@ -4,67 +4,22 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - vnexchange.com</title>
+    <title>@ViewData["Title"] - vnexchange1</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
-
-        <!-- Web Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
-
-        <!-- Bootstrap core CSS -->
-        <link href="~/bootstrap/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Font Awesome CSS -->
-        <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Plugins -->
-        <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Worthy core CSS file -->
-        <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Custom css -->
-        <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
-
-
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
-
-        <!-- Web Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
-
-        <!-- Bootstrap core CSS -->
-        <link href="~/bootstrap/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Font Awesome CSS -->
-        <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Plugins -->
-        <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Worthy core CSS file -->
-        <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Custom css -->
-        <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
-
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top dn">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -85,86 +40,6 @@
             </div>
         </div>
     </nav>
-    <!-- header start -->
-    <!-- ================ -->
-    <header class="header fixed clearfix navbar navbar-fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-
-                    <!-- header-left start -->
-                    <!-- ================ -->
-                    <div class="header-left clearfix">
-
-                        <!-- logo -->
-                        <div class="logo smooth-scroll">                            
-                            <a asp-area="" asp-controller="Home" asp-action="Index"><img id="logo" src="~/img/logo-redesign.png" alt="VnEchange.com" style="height: 80px;"></a>
-                        </div>
-
-                        <!-- name-and-slogan -->
-                        <div class="site-name-and-slogan smooth-scroll" style="display: none;">
-                            <div class="site-name"><a href="#banner">vnexchange.com</a></div>
-                            <div class="site-slogan">Khám phá, trao đổi, mua bán đồ cũ theo cách dễ dàng nhất</div>
-                        </div>
-
-                    </div>
-                    <!-- header-left end -->
-
-                </div>
-                <div class="col-md-8">
-
-                    <!-- header-right start -->
-                    <!-- ================ -->
-                    <div class="header-right clearfix">
-
-                        <!-- main-navigation start -->
-                        <!-- ================ -->
-                        <div class="main-navigation animated">
-
-                            <!-- navbar start -->
-                            <!-- ================ -->
-                            <nav class="navbar navbar-default" role="navigation">
-                                <div class="container-fluid">
-
-                                    <!-- Toggle get grouped for better mobile display -->
-                                    <div class="navbar-header">
-                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                                            <span class="sr-only">Toggle navigation</span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                            <span class="icon-bar"></span>
-                                        </button>
-                                    </div>
-
-                                    <!-- Collect the nav links, forms, and other content for toggling -->
-                                    <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
-                                        @*<ul class="nav navbar-nav navbar-right">
-                                            <li><a href="login.html">Đăng nhập</a></li>
-                                            <li><a href="#portfolio">Đăng ký</a></li>
-                                            <li><a href="#about">Thông tin</a></li>
-                                        </ul>*@
-                                        <ul class="nav navbar-nav navbar-right">                                            
-                                            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                                        </ul>
-                                        @await Html.PartialAsync("_LoginPartial")
-                                    </div>
-
-                                </div>
-                            </nav>
-                            <!-- navbar end -->
-
-                        </div>
-                        <!-- main-navigation end -->
-
-                    </div>
-                    <!-- header-right end -->
-
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- header end -->
     <div class="container body-content">
         @RenderBody()
         <hr />
