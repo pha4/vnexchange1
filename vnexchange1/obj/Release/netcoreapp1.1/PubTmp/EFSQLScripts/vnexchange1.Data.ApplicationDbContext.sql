@@ -178,3 +178,22 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170513150243_Category')
+BEGIN
+    CREATE TABLE [Category] (
+        [CategoryId] int NOT NULL,
+        [CategoryName] nvarchar(max) NOT NULL,
+        [CategoryOrder] int NOT NULL
+    );
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170513150243_Category')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170513150243_Category', N'1.1.1');
+END;
+
+GO
+

@@ -150,6 +150,82 @@ namespace vnexchange1.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CategoryName = table.Column<string>(nullable: false),
+                    CategoryOrder = table.Column<int>(nullable: false),
+                    CategoryImage = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => new { x.CategoryId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Item",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemTitle = table.Column<string>(nullable: false),
+                    ItemDescription = table.Column<string>(nullable: false),
+                    ItemPrice = table.Column<decimal>(nullable: true),
+                    ItemOwner = table.Column<string>(nullable: false, maxLength: 450),
+
+                    ItemDate = table.Column<DateTime>(nullable: false),
+                    ItemManufacturer = table.Column<string>(nullable: true),
+                    ItemType = table.Column<bool>(nullable: false),
+                    CanExchange = table.Column<bool>(nullable: false),
+
+                    CanGiveAway = table.Column<bool>(nullable: false),
+                    CanTrade = table.Column<bool>(nullable: false),
+                    ItemCategory = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Item", x => new { x.ItemId });
+
+                    table.ForeignKey(
+                        name: "FK_Item_AspNetUsers_ItemOwner",
+                        column: x => x.ItemOwner,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+
+                    table.ForeignKey(
+                        name: "FK_Item_Category_ItemCategory",
+                        column: x => x.ItemCategory,
+                        principalTable: "Category",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemImage",
+                columns: table => new
+                {
+                    ItemImageId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemId = table.Column<int>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: false),
+                    IsMainImage = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemImage", x => new { x.ItemImageId });
+
+                    table.ForeignKey(
+                        name: "FK_ItemImage_Item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Item",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                });            
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",

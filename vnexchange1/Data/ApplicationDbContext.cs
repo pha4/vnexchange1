@@ -22,5 +22,11 @@ namespace vnexchange1.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<vnexchange1.Models.Category> Category { get; set; }
+
+        public DbSet<vnexchange1.Models.ItemImage> ItemImage { get; set; }
+
+        public DbSet<vnexchange1.Models.Item> Item { get; set; }
     }
 }
