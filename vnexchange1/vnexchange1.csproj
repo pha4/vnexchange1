@@ -14,14 +14,17 @@
 
   <ItemGroup>
     <Compile Remove="bootstrap\**" />
+    <Compile Remove="Views\Items1\**" />
     <Content Remove="bootstrap\**" />
+    <Content Remove="Views\Items1\**" />
     <EmbeddedResource Remove="bootstrap\**" />
+    <EmbeddedResource Remove="Views\Items1\**" />
     <None Remove="bootstrap\**" />
+    <None Remove="Views\Items1\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\VnExchangeContext.cs" />
-    <Compile Remove="Data\VnExchangeInitializer.cs" />
+    <Compile Remove="Controllers\ItemsController1.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

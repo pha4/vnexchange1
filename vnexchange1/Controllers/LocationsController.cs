@@ -10,25 +10,22 @@ using vnexchange1.Models;
 
 namespace vnexchange1.Controllers
 {
-    public class ItemsController : Controller
+    public class LocationsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemsController(ApplicationDbContext context)
+        public LocationsController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Items
+        // GET: Locations
         public async Task<IActionResult> Index()
         {
-            ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            return View(await _context.Item.ToListAsync());
+            return View(await _context.Location.ToListAsync());
         }
 
-        // GET: Items/Details/5
+        // GET: Locations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,45 +33,39 @@ namespace vnexchange1.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item
-                .SingleOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
+            var location = await _context.Location
+                .SingleOrDefaultAsync(m => m.LocationId == id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(location);
         }
 
-        // GET: Items/Create
+        // GET: Locations/Create
         public IActionResult Create()
         {
-            ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
             return View();
         }
 
-        // POST: Items/Create
+        // POST: Locations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemLocation,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
+        public async Task<IActionResult> Create([Bind("LocationId,LocationName,LocationRegion")] Location location)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                _context.Add(location);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            return View(item);
+            return View(location);
         }
 
-        // GET: Items/Edit/5
+        // GET: Locations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +73,22 @@ namespace vnexchange1.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
+            var location = await _context.Location.SingleOrDefaultAsync(m => m.LocationId == id);
+            if (location == null)
             {
                 return NotFound();
             }
-            return View(item);
+            return View(location);
         }
 
-        // POST: Items/Edit/5
+        // POST: Locations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemLocation,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("LocationId,LocationName,LocationRegion")] Location location)
         {
-            if (id != item.ItemId)
+            if (id != location.LocationId)
             {
                 return NotFound();
             }
@@ -106,12 +97,12 @@ namespace vnexchange1.Controllers
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(location);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.ItemId))
+                    if (!LocationExists(location.LocationId))
                     {
                         return NotFound();
                     }
@@ -122,10 +113,10 @@ namespace vnexchange1.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(item);
+            return View(location);
         }
 
-        // GET: Items/Delete/5
+        // GET: Locations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,30 +124,30 @@ namespace vnexchange1.Controllers
                 return NotFound();
             }
 
-            var item = await _context.Item
-                .SingleOrDefaultAsync(m => m.ItemId == id);
-            if (item == null)
+            var location = await _context.Location
+                .SingleOrDefaultAsync(m => m.LocationId == id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(location);
         }
 
-        // POST: Items/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var item = await _context.Item.SingleOrDefaultAsync(m => m.ItemId == id);
-            _context.Item.Remove(item);
+            var location = await _context.Location.SingleOrDefaultAsync(m => m.LocationId == id);
+            _context.Location.Remove(location);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool ItemExists(int id)
+        private bool LocationExists(int id)
         {
-            return _context.Item.Any(e => e.ItemId == id);
+            return _context.Location.Any(e => e.LocationId == id);
         }
     }
 }

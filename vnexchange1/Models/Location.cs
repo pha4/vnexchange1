@@ -5,12 +5,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace vnexchange1.Models
 {
-    public class ItemType
+    public class Location
     {
         [Key]
-        public int ItemTypeId { get; set; }
+        public int LocationId { get; set; }
         [Required]
-        public string ItemTypeName { get; set; }
+        public string LocationName { get; set; }
+        [Required]
+        public string LocationRegion { get; set; }
+
         public int SortOrder { get; set; }
     }
 }

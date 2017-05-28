@@ -13,5 +13,7 @@ namespace vnexchange1.Models
         [Required]
         public string CategoryImage { get; set; }
 
+        public string CategoryIcon { get; set; }
+
     }
 }

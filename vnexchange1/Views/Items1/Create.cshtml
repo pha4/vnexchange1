@@ -1,0 +1,156 @@
+﻿
+@using System.Security.Claims;
+@model vnexchange1.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script>
+    $(".dropdown-menu").find("a").each(function (index, ele) {
+        var id = $(ele).attr("id");
+        var text = $(ele).text();
+        $("#txtCategory").val(id);
+    });
+</script>
+<h2>Create</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-action="Create">
+        <div class="form-horizontal">
+            <h4>Item</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                @using (Html.BeginForm("Multiple", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div id="multiple">
+                        <input type="file" class="multiple" name="files" multiple />
+                    </div>
+                    <div id="single">
+                        <input type="file" class="single" name="files" /><br />
+                        <input type="file" class="single" name="files" /><br />
+                        <input type="file" class="single" name="files" /><br />
+                    </div>
+                    <button class="btn btn-default">Upload</button>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemTitle" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ItemTitle" class="form-control" />
+                    <span asp-validation-for="ItemTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemDescription" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <textarea asp-for="ItemDescription" class="form-control"></textarea>
+                    <span asp-validation-for="ItemDescription" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemPrice" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ItemPrice" class="form-control" />
+                    <span asp-validation-for="ItemPrice" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemCategory" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    @*<div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Danh mục
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach (var item in ViewBag.Categories)
+                                {
+                                    <li><a href="javascript:void(0);" id="@item.CategoryId">@item.CategoryName</a></li>
+                                    <li class="divider"></li>
+                                }
+                            </ul>
+                        </div>*@
+                    <div class="form-group">
+                        @*<label for="sel1">Select list:</label>*@
+                        <select class="form-control" asp-for="ItemCategory">
+                            @if (ViewBag.Categories != null)
+                            {@foreach (var item in ViewBag.Categories)
+                            {
+                                <option value="@item.CategoryId">@item.CategoryName</option>
+                            }}
+                        </select>
+                    </div>
+                    @*<input id="txtCategory" asp-for="ItemCategory" class="form-control" />*@
+                    <span asp-validation-for="ItemCategory" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group dn">
+                <label asp-for="ItemOwner" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ItemOwner" class="form-control " value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" />
+                    <span asp-validation-for="ItemOwner" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group dn">
+                <label asp-for="ItemDate" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ItemDate" class="form-control" value="@DateTime.Now" />
+                    <span asp-validation-for="ItemDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemManufacturer" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ItemManufacturer" class="form-control" />
+                    <span asp-validation-for="ItemManufacturer" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="ItemType" />
+                        <label asp-for="ItemType"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="CanExchange" />
+                        <label asp-for="CanExchange"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="CanGiveAway" />
+                        <label asp-for="CanGiveAway"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="CanTrade" />
+                        <label asp-for="CanTrade"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

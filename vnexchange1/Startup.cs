@@ -47,7 +47,7 @@ namespace vnexchange1
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddDbContext<VnExchangeContext>(options => 
+            //services.AddDbContext<VnExchangeContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc();
@@ -64,7 +64,7 @@ namespace vnexchange1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -115,7 +115,7 @@ namespace vnexchange1
                 //  .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
             });
 
-            //VnExchangeInitializer.Initialize(context);
+            VnExchangeInitializer.Initialize(context);
         }
     }
 }

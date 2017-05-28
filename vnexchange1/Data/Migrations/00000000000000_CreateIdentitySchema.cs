@@ -158,11 +158,42 @@ namespace vnexchange1.Data.Migrations
                     .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryName = table.Column<string>(nullable: false),
                     CategoryOrder = table.Column<int>(nullable: false),
-                    CategoryImage = table.Column<string>(nullable: false)
+                    CategoryImage = table.Column<string>(nullable: false),
+                    CategoryIcon = table.Column<string>(nullable: false),
+                    SortOrder = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => new { x.CategoryId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemType",
+                columns: table => new
+                {
+                    ItemTypeId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemTypeName = table.Column<string>(nullable: false),
+                    SortOrder = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemType", x => new { x.ItemTypeId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    LocationId = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    LocationName = table.Column<string>(nullable: false),
+                    LocationRegion = table.Column<string>(nullable: false),
+                    SortOrder = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => new { x.LocationId });
                 });
 
             migrationBuilder.CreateTable(
@@ -183,7 +214,8 @@ namespace vnexchange1.Data.Migrations
 
                     CanGiveAway = table.Column<bool>(nullable: false),
                     CanTrade = table.Column<bool>(nullable: false),
-                    ItemCategory = table.Column<int>(nullable: false)
+                    ItemCategory = table.Column<int>(nullable: false),
+                    ItemLocation = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -201,6 +233,20 @@ namespace vnexchange1.Data.Migrations
                         column: x => x.ItemCategory,
                         principalTable: "Category",
                         principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+
+                    table.ForeignKey(
+                        name: "FK_Item_Location_ItemLocation",
+                        column: x => x.ItemLocation,
+                        principalTable: "Location",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+
+                    table.ForeignKey(
+                        name: "FK_Item_ItemType_ItemType",
+                        column: x => x.ItemLocation,
+                        principalTable: "ItemType",
+                        principalColumn: "ItemTypeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

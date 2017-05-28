@@ -1,3 +1,4 @@
+﻿@using System.Security.Claims;
 @model vnexchange1.Models.Item
 
 @{
@@ -5,7 +6,55 @@
 }
 
 <h2>Create</h2>
+<script>
+    // Scrolls to the selected menu item on the page
+    $(function () {
+        var $chondanhmuc = $("#chondanhmuc");
+        var $lichondanhmuc = $("#lichondanhmuc");
+        var $chonnhucau = $("#chonnhucau");
+        var $lichonnhucau = $("#lichonnhucau");
+        var $btnchonnhucau = $("#btnchonnhucau");
+        var $chonkhuvuc = $("#chonkhuvuc");
+        var $lichonkhuvuc = $("#lichonkhuvuc");
+        var $chonhinhanh = $("#chonhinhanh");
+        var $lichonhinhanh = $("#lichonhinhanh");
+        var $btnchonhinhanh = $("#btnchonhinhanh");
+        var $chongiathongtin = $("#chongiathongtin");
+        $btnchonnhucau.click(function () {
+            $chonnhucau.hide();
+            $lichonnhucau.find("span").hide();
+            $lichonnhucau.find("a").show();
+            $chonkhuvuc.show();
+        });
 
+        $chondanhmuc.click(function () {
+            $chondanhmuc.hide();
+            $lichondanhmuc.find("span").hide();
+            $lichondanhmuc.find("a").show();
+            $chonnhucau.show();
+        });
+
+        $chondanhmuc.find("li").each(function (index, ele) {
+            $(ele).click(function () {
+                $("#txtCategory").val($(this).attr("id"));
+            });
+        });
+        $chonkhuvuc.find("li").each(function (index, ele) {
+            $(ele).click(function () {
+                $chonkhuvuc.hide();
+                $lichonkhuvuc.find("span").hide();
+                $lichonkhuvuc.find("a").show();
+                $chonhinhanh.show();
+            });
+        });
+        $btnchonhinhanh.click(function () {
+            $chonhinhanh.hide();
+            $lichonhinhanh.find("span").hide();
+            $lichonhinhanh.find("a").show();
+            $chongiathongtin.show();
+        });
+    });
+</script>
 <form asp-action="Create">
     <div class="form-horizontal">
         <h4>Item</h4>
@@ -35,22 +84,46 @@
         <div class="form-group">
             <label asp-for="ItemCategory" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ItemCategory" class="form-control" />
-                <span asp-validation-for="ItemCategory" class="text-danger"></span>
+                @*<div class="form-group">
+                        <select class="form-control" asp-for="ItemCategory">
+                            @if (ViewBag.Categories != null)
+                            {@foreach (var item in ViewBag.Categories)
+                            {
+                                <option value="@item.CategoryId">@item.CategoryName</option>
+                            }}
+                        </select>
+                    </div>*@
+
+                <input asp-for="ItemCategory" class="form-control" id="txtCategory" value="@ViewBag.Categories[0].CategoryId" />
+                @*<span asp-validation-for="ItemCategory" class="text-danger"></span>*@
             </div>
         </div>
         <div class="form-group">
             <label asp-for="ItemOwner" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ItemOwner" class="form-control" />
+                <input asp-for="ItemOwner" class="form-control" value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" />
                 <span asp-validation-for="ItemOwner" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="ItemDate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ItemDate" class="form-control" />
+                <input asp-for="ItemDate" class="form-control" value="@DateTime.Now" />
                 <span asp-validation-for="ItemDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ItemLocation" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+
+                <select class="form-control" asp-for="ItemLocation">
+                    @if (ViewBag.Locations != null)
+                    {@foreach (var item in ViewBag.Locations)
+                    {
+                        <option value="@item.LocationId">@item.LocationName</option>
+                    }}
+                </select>
+                <span asp-validation-for="ItemLocation" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -61,11 +134,17 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <input asp-for="ItemType" />
-                    <label asp-for="ItemType"></label>
-                </div>
+            <label asp-for="ItemType" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select class="form-control" asp-for="ItemType">
+                    @if (ViewBag.ItemTypes != null)
+                    {@foreach (var item in ViewBag.ItemTypes)
+                    {
+                        <option value="@item.ItemTypeId">@item.ItemTypeName</option>
+                    }}
+                </select>
+
+                <span asp-validation-for="ItemType" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -98,6 +177,194 @@
             </div>
         </div>
     </div>
+
+    <!-- section start -->
+    <!-- ================ -->
+    <div class="section" id="sectionPortfolio" style="padding: 50px 0px 0px 0px;">
+        <div class="container" style="width: 1000px;">
+            <h2 class="text-center title" id="portfolio" style="font-weight: bold;">Đăng tin</h2>
+            <div class="separator"></div>
+            <p class="lead text-center" style="font-size: 19px;">Bạn có thể khám phá, mua bán và trao đổi hàng ngàn sản phẩm mới cũ theo cách không thể dễ dàng hơn.</p>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-form well well-lg offer-box text-center">
+                        <ol class="breadcrumb">
+                            <li><a href="#">Đăng tin</a></li>
+                            <li class="active" id="lichondanhmuc"><span>Chọn danh mục</span><a href="#" style="display:none;">Chọn danh mục</a></li>
+                            <li class="active" id="lichonnhucau"><span>Chọn nhu cầu</span><a href="#" style="display:none;">Chọn nhu cầu</a></li>
+                            <li class="active" id="lichonkhuvuc"><span>Chọn khu vực</span><a href="#" style="display:none;">Chọn khu vực</a></li>
+                            <li class="active" id="lichonhinhanh"><span>Chọn hình ảnh</span><a href="#" style="display:none;">Chọn hình ảnh</a></li>
+                            <li class="active" id="lichongiathongtin"><span>Chọn giá và thông tin</span><a href="#" style="display:none;">Chọn giá và thông tin</a></li>
+                        </ol>
+                        <ul id="chondanhmuc" class="list-group" style="width: 500px; margin: 0 auto; text-align: left;">
+                            @if (ViewBag.Categories != null)
+                            {
+                                foreach (var item in ViewBag.Categories)
+                                {
+                                    <li class="list-group-item" id="@item.CategoryId">
+                                        <img src="@item.CategoryIcon" class="category-icon" />
+                                        @item.CategoryName
+                                        <span class="label label-warning pull-right">123</span>
+                                    </li>
+                                }
+                            }
+                            <li class="list-group-item">
+                                Khác...
+                                <span class="label label-warning pull-right">214</span>
+                            </li>
+                        </ul>
+                        <div id="chonnhucau" style="width: 500px; margin: 0 auto; text-align: left;display: none;">
+                            Tôi
+                            <div class="funkyradio" id="divItemType">
+                                <div class="funkyradio-danger" style="width: 40%; float: left; clear: right;">
+                                    <input type="radio" name="radio" id="radioCo" value="2" />
+                                    <label for="radioCo">Có món đồ</label>
+                                </div>
+                                <div class="funkyradio-success" style="width: 40%; float: left; padding-right: 10px;">
+                                    <input type="radio" name="radio" id="radioCan" value="1" checked />
+                                    <label for="radioCan">Cần món đồ</label>
+                                </div>
+
+                                @*@if (ViewBag.Categories != null)
+                                    {
+                                        var i = 0;
+                                        foreach (var item in ViewBag.ItemTypes)
+                                        {
+                                            if (i % 2 == 0)
+                                            {
+                                                <div class="funkyradio-success">
+                                                    <input type="radio" name="radio" id="radio_@item.ItemTypeId" value="@item.ItemTypeId" checked/>
+                                                    <label for="radio_@item.ItemTypeId">@item.ItemTypeName</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="funkyradio-danger">
+                                                    <input type="radio" name="radio" id="radio_@item.ItemTypeId" value="@item.ItemTypeId" />
+                                                    <label for="radio_@item.ItemTypeId">@item.ItemTypeName</label>
+                                                </div>
+                                            }
+
+                                            i++;
+                                        }
+                                    }*@
+                            </div>
+                            Và tôi muốn
+                            <div class="funkyradio" id="div">
+                                <div class="funkyradio-warning">
+                                    <input type="checkbox" name="checkbox" id="radioBan" />
+                                    <label for="checkbox1">Bán nó</label>
+                                </div>
+                                <div class="funkyradio-primary dn">
+                                    <input type="checkbox" name="checkbox" id="radioMua" />
+                                    <label for="checkbox2">Mua nó</label>
+                                </div>
+                                <div class="funkyradio-warning">
+                                    <input type="checkbox" name="checkbox" id="radioDoi" />
+                                    <label for="checkbox3">Đổi nó lấy món đồ khác</label>
+                                </div>
+                                <div class="funkyradio-primary dn">
+                                    <input type="checkbox" name="checkbox" id="radioCho" />
+                                    <label for="checkbox4">Tặng nó</label>
+                                </div>
+                                <div class="funkyradio-warning">
+                                    <input type="checkbox" name="checkbox" id="radioXin" />
+                                    <label for="checkbox5">Xin nó từ người khác</label>
+                                </div>
+                            </div>
+                            <br>
+                            <button id="btnchonnhucau" type="submit" class="btn btn-success">Tiếp tục</button>
+                        </div>
+                        <ul id="chonkhuvuc" class="list-group" style="width: 500px; margin: 0 auto; text-align: left;display:none;">
+                            <li class="list-group-item">
+                                Tất cả khu vực
+                            </li>
+                            <li class="list-group-item">
+                                Quận 1
+                            </li>
+                            <li class="list-group-item">
+                                Quận 2
+                            </li>
+                            <li class="list-group-item">
+                                Quận 3
+                            </li>
+                            <li class="list-group-item">
+                                Quận 4
+                            </li>
+                            <li class="list-group-item">
+                                Quận 5
+                            </li>
+                            <li class="list-group-item">
+                                Quận 6
+                            </li>
+                            <li class="list-group-item">
+                                Quận 7
+                            </li>
+                            <li class="list-group-item">
+                                Quận 8
+                            </li>
+                            <li class="list-group-item">
+                                Quận 9
+                            </li>
+                            <li class="list-group-item">
+                                Quận 10
+                            </li>
+                            <li class="list-group-item">
+                                Quận 11
+                            </li>
+                            <li class="list-group-item">
+                                Quận 12
+                            </li>
+                            <li class="list-group-item">
+                                Quận Tân Bình
+                            </li>
+                            <li class="list-group-item">
+                                Quận Gò Vấp
+                            </li>
+                            <li class="list-group-item">
+                                Quận Phú Nhuận
+                            </li>
+                            <li class="list-group-item">
+                                Khác...
+                            </li>
+                        </ul>
+                        <div id="chonhinhanh" style="width: 500px; margin: 0 auto; text-align: left;display:none;">
+                            <a href="#"><img src="../img/photo-camera.png" style="border: 1px solid orange; padding: 10px;" /></a>
+                            Chọn hình ảnh hiện thị
+                            <br>
+                            <br>
+                            Hình thật của sản phẩm sẽ tạo được niềm tin với người xem
+                            <br>
+                            Hình chụp từ nhiều góc độ của sản phẩm (mặt trước, mặt sau, mặt bên,...)
+                            <br>
+                            Hình chụp cận cảnh những điểm nổi bật của sản phẩm
+                            <br>
+                            Nên chụp rõ các điểm cần lưu ý của sản phẩm (ví dụ vết xước nếu có..)
+                            <br>
+                            <br>
+                            <button id="btnchonhinhanh" type="submit" class="btn btn-success">Chọn xong</button>
+                        </div>
+                        <div id="chongiathongtin" style="width: 500px; margin: 0 auto; text-align: left;display:none;">
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Giá:</span><input class="form-control" type="number" style="width: 250px; color: red;">
+                            </div>
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Tiêu đề:</span><input class="form-control" type="text" style="width: 250px;">
+                            </div>
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Mô tả:</span>
+                                <textarea rows="4" cols="50" style="width: 250px;" class="form-control"></textarea>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success" onclick="window.location.href='chinh-sua.html?san-pham=cknude';">Hoàn tất</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section end -->
 </form>
 
 <div>

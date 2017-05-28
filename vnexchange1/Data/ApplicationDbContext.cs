@@ -28,5 +28,9 @@ namespace vnexchange1.Data
         public DbSet<vnexchange1.Models.ItemImage> ItemImage { get; set; }
 
         public DbSet<vnexchange1.Models.Item> Item { get; set; }
+
+        public DbSet<vnexchange1.Models.Location> Location { get; set; }
+
+        public DbSet<ItemType> ItemType { get; set; }
     }
 }

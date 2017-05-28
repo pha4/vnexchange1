@@ -15,6 +15,7 @@ namespace vnexchange1.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Item>().Metadata.AddProperty("ItemLocation", typeof(string));            
             //modelBuilder.Entity<Category>().ToTable("Category");
             //modelBuilder.Entity<Item>().ToTable("Item");
             //modelBuilder.Entity<ItemType>().ToTable("ItemType");

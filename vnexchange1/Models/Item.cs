@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vnexchange1.Models
 {
@@ -14,21 +15,28 @@ namespace vnexchange1.Models
         public string ItemTitle { get; set; }
 
         [Required, MaxLength(500)]
-        public string ItemDescription { get; set; }    
-                
-        public decimal ItemPrice { get; set; }   
-        
+        public string ItemDescription { get; set; }
+
+        public decimal ItemPrice { get; set; }
+
         [Required]
         public int ItemCategory { get; set; }
-        
+
         [Required]
         public string ItemOwner { get; set; }
 
-        public DateTime ItemDate { get; set; }
+        public DateTime ItemDate
+        {
+            get; set;
+        }
 
-        public string ItemManufacturer { get; set; }         
-        
-        public bool ItemType { get; set; }
+
+
+        public string ItemLocation { get; set; }
+
+        public string ItemManufacturer { get; set; }
+
+        public int ItemType { get; set; }
 
         public bool CanExchange { get; set; }
 
@@ -36,6 +44,7 @@ namespace vnexchange1.Models
 
         public bool CanTrade { get; set; }
 
+        [ForeignKey("ItemImages")]
         public ICollection<ItemImage> Images { get; set; }
     }
 }

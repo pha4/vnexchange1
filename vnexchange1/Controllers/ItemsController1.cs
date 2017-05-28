@@ -10,11 +10,11 @@ using vnexchange1.Models;
 
 namespace vnexchange1.Controllers
 {
-    public class ItemsController : Controller
+    public class ItemsController1 : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemsController(ApplicationDbContext context)
+        public ItemsController1(ApplicationDbContext context)
         {
             _context = context;    
         }
@@ -23,8 +23,7 @@ namespace vnexchange1.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Locations = _context.Location.ToList();
             return View(await _context.Item.ToListAsync());
         }
 
@@ -50,8 +49,7 @@ namespace vnexchange1.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Locations = _context.Location.ToList();
             return View();
         }
 
@@ -60,8 +58,8 @@ namespace vnexchange1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemLocation,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
-        {
+        public async Task<IActionResult> Create([Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
+        {            
             if (ModelState.IsValid)
             {
                 _context.Add(item);
@@ -69,8 +67,6 @@ namespace vnexchange1.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
             return View(item);
         }
 
@@ -95,7 +91,7 @@ namespace vnexchange1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemLocation,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemTitle,ItemDescription,ItemPrice,ItemCategory,ItemOwner,ItemDate,ItemManufacturer,ItemType,CanExchange,CanGiveAway,CanTrade")] Item item)
         {
             if (id != item.ItemId)
             {
