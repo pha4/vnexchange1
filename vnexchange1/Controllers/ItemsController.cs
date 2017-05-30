@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using vnexchange1.Data;
 using vnexchange1.Models;
 
@@ -16,10 +17,10 @@ namespace vnexchange1.Controllers
 
         public ItemsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
-        // GET: Items
+        // GET: Items        
         public async Task<IActionResult> Index()
         {
             ViewBag.Categories = _context.Category.ToList();
@@ -64,6 +65,7 @@ namespace vnexchange1.Controllers
         {
             if (ModelState.IsValid)
             {
+                item.ItemDate = DateTime.Now;
                 _context.Add(item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -72,6 +74,51 @@ namespace vnexchange1.Controllers
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
             return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult UploadFilesAjax()
+        {
+            long size = 0;
+            var files = Request.Form.Files;
+            var hostingEnvironment = new HostingEnvironment();
+            foreach (var file in files)
+            {
+                var filename = ContentDispositionHeaderValue
+                                .Parse(file.ContentDisposition)
+                                .FileName
+                                .Trim('"');
+                filename = hostingEnvironment.WebRootPath + $@"\uploads\{filename}";
+                size += file.Length;
+                using (FileStream fs = System.IO.File.Create(filename))
+                {
+                    file.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
+            string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
+            return Json(message);
+        }
+
+        public JsonResult CreateItem(Item item, ItemImage[] itemImages)
+        {
+            if (ModelState.IsValid)
+            {
+                item.ItemDate = DateTime.Now;
+                _context.Add(item);
+                _context.SaveChanges();
+                foreach (ItemImage itemImage in itemImages)
+                {
+                    itemImage.ItemId = item.ItemId;
+                    _context.Add(itemImage);
+                }
+                _context.SaveChanges();
+                return Json(true);
+            }
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            return Json(true);
         }
 
         // GET: Items/Edit/5

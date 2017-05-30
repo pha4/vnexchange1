@@ -43,8 +43,7 @@ namespace vnexchange1.Models
         public bool CanGiveAway { get; set; }
 
         public bool CanTrade { get; set; }
-
-        [ForeignKey("ItemImages")]
+        
         public ICollection<ItemImage> Images { get; set; }
     }
 }
