@@ -1,5 +1,5 @@
-@model IEnumerable<vnexchange1.Models.Item>
-
+﻿@model IEnumerable<vnexchange1.Models.Item>
+@using vnexchange1.Data;
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,93 +9,90 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemCategory)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemOwner)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemLocation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemManufacturer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ItemType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CanExchange)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CanGiveAway)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CanTrade)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemOwner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemManufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CanExchange)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CanGiveAway)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CanTrade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="exchange-product">
+    @foreach (var item in Model)
+            {
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemOwner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemManufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CanExchange)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CanGiveAway)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CanTrade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ItemId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ItemId">Delete</a>
+                </td>
+            </tr>*@
+        <div class="col-md-12 product" style="width: 100%; clear: both;">
+            <div class="col-md-3 nopadding product image-container">
+                <div class="product indicator">
+                    <img src="img/money.png">
+                    <img src="img/swap.png">
+                    <img src="img/binocular.png">
+                    <img src="img/give.png">
+                </div>
+                <img src="img/watch.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
+            </div>
+            <div class="col-md-9 caption" style="float: left;">
+                <h3 style="margin: 0px 0px 5px 0px"><a href="#">@item.ItemTitle</a></h3>
+                <p>@item.ItemDescription...<a>Xem thêm</a></p>
+                <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice</strong></p>
+                <p style="font-weight: bold;"><a href="#">@User.Identity.Name</a> - @item.ItemLocation</p>
+                <p>
+                    @if (item.ItemType == 1)
+                    {
+                        if (item.CanTrade)
+                        {<a href="#" class="btn btn-success" role="button">Mua</a>}
+                        if (item.CanExchange)
+                        {<a href="#" class="btn btn-primary" role="button">Đổi</a>}
+                        if (item.CanGiveAway)
+                        {<a href="#" class="btn btn-warning" role="button">Xin</a>}
+                    }
+                    else
+                    {
+                        if (item.CanTrade)
+                        {<a href="#" class="btn btn-danger" role="button">Bán</a>}
+                        if (item.CanExchange)
+                        {<a href="#" class="btn btn-primary" role="button">Đổi</a>}
+                        if (item.CanGiveAway)
+                        {<a href="#" class="btn btn-default" role="button">Cho</a>}
+                    }
+                </p>
+            </div>
+        </div>
+    }
+</div>
+

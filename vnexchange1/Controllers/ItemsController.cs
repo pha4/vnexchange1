@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using System;
@@ -26,7 +28,14 @@ namespace vnexchange1.Controllers
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            return View(await _context.Item.ToListAsync());
+            var items = _context.Item.ToList();
+            foreach (Item item in items)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = _context.Location.First(x => x.LocationId == parseResult).LocationName;
+            }
+            return View(items);
         }
 
         // GET: Items/Details/5
@@ -76,6 +85,39 @@ namespace vnexchange1.Controllers
             return View(item);
         }
 
+
+        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+        public class RequestFormSizeLimitAttribute : Attribute, IAuthorizationFilter, IOrderedFilter
+        {
+            private readonly FormOptions _formOptions;
+
+            public RequestFormSizeLimitAttribute(int valueCountLimit)
+            {
+                _formOptions = new FormOptions()
+                {
+                    MultipartBodyLengthLimit = valueCountLimit,
+                    BufferBodyLengthLimit = valueCountLimit,
+                    ValueLengthLimit = valueCountLimit,
+                    MemoryBufferThreshold = valueCountLimit,
+                    ValueCountLimit = valueCountLimit
+                };
+            }
+
+            public int Order { get; set; }
+
+            public void OnAuthorization(AuthorizationFilterContext context)
+            {
+                var features = context.HttpContext.Features;
+                var formFeature = features.Get<IFormFeature>();
+
+                if (formFeature == null || formFeature.Form == null)
+                {
+                    // Request form has not been read yet, so set the limits
+                    features.Set<IFormFeature>(new FormFeature(context.HttpContext.Request, _formOptions));
+                }
+            }
+        }
+        [RequestFormSizeLimit(valueCountLimit: 2147483647)]
         [HttpPost]
         public IActionResult UploadFilesAjax()
         {
@@ -89,11 +131,15 @@ namespace vnexchange1.Controllers
                                 .FileName
                                 .Trim('"');
                 filename = hostingEnvironment.WebRootPath + $@"\uploads\{filename}";
+
+                var filePath = Path.GetTempPath();
+                var fileName = Path.GetTempFileName();
+
                 size += file.Length;
-                using (FileStream fs = System.IO.File.Create(filename))
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
-                    file.CopyTo(fs);
-                    fs.Flush();
+                    file.CopyToAsync(fs);
+                    //formFile.CopyToAsync(stream);
                 }
             }
             string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";

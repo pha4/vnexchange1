@@ -57,8 +57,7 @@ namespace vnexchange1
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            // Add framework services.
-            services.AddMvc();
+            // Add framework services.            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddReact();
 
@@ -66,6 +65,7 @@ namespace vnexchange1
             {
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue; // In case of multipart
+                x.MemoryBufferThreshold = int.MaxValue;
             });
 
         }
