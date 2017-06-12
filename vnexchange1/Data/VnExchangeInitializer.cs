@@ -1,12 +1,15 @@
 ﻿using vnexchange1.Models;
 using System;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace vnexchange1.Data
 {
     public static class VnExchangeInitializer
-    {
-        public static void Initialize(ApplicationDbContext context)
+    {        
+        public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             context.Database.EnsureCreated();
 
@@ -15,6 +18,12 @@ namespace vnexchange1.Data
             AddLocationItems(ref context);
 
             AddItemTypes(ref context);
+
+            //AddUsers(userManager);
+
+            //context.SaveChanges();
+
+            //AddItems(context);
 
             context.SaveChanges();
         }
@@ -63,6 +72,13 @@ namespace vnexchange1.Data
             }
         }
 
+        private static void AddUsers(UserManager<ApplicationUser> userManager)
+        {
+            //var _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)); ;
+            var user = new ApplicationUser { UserName = "pha4", Email = "pha4@csc.com" };
+            var checkUser = userManager.CreateAsync(user, "P@ssword123");
+        }
+
         private static void AddLocationItems(ref ApplicationDbContext context)
         {
             // Look for any location.
@@ -73,7 +89,7 @@ namespace vnexchange1.Data
 
             var locations = new Location[]
             {
-            new Location{LocationName="Quận 1", LocationRegion= "HCM", SortOrder = 0},
+            new Location{LocationName="Khác", LocationRegion= "", SortOrder = 0},
             new Location{LocationName="Quận 1", LocationRegion= "HCM", SortOrder = 1},
             new Location{LocationName="Quận 2", LocationRegion= "HCM", SortOrder = 2},
             new Location{LocationName="Quận 3", LocationRegion= "HCM", SortOrder = 3},
@@ -98,6 +114,54 @@ namespace vnexchange1.Data
             {
                 context.Location.Add(l);
             }
+        }
+
+
+        private static void AddItems(ApplicationDbContext context)
+        {
+            // Look for any category.
+            if (context.Item.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            var items = new Item[]
+            {
+            new Item{
+                ItemTitle = "Xe hơi nhựa dành cho bé 5 tuổi trở lên",
+                ItemDescription = "Xe đồ chơi rất dễ thương, bền, màu sắc sinh động, phù hợp cho bé trai hiếu động từ 5 tuổi trở lên",
+                ItemCategory = 0,
+                ItemDate = DateTime.Now,
+                ItemLocation = "7",
+                ItemPrice = 350000,
+                ItemType = 2,
+                CanTrade = true,
+                CanExchange = true,
+                CanGiveAway = false,
+                ItemOwner = context.Users.First().Id
+
+            },
+            new Item{
+                ItemTitle = "Ống nhòm cực nét giá cực sốc",
+                ItemDescription = "Một món đồ chơi tuyệt vời cho các em nhỏ từ 5 đến 10 tuổi. Có thể nhòm xa đến khoảng cách 300m với hình ảnh ro ràng. Giá sốc nhât trên thị trường",
+                ItemCategory = 0,
+                ItemDate = DateTime.Now,
+                ItemLocation = "8",
+                ItemPrice = 720000,
+                ItemType = 2,
+                CanTrade = true,
+                CanExchange = false,
+                CanGiveAway = false,
+                ItemOwner = context.Users.First().Id
+
+            }
+            };
+            foreach (Item s in items)
+            {
+                context.Item.Add(s);
+            }
+
+            context.SaveChanges();
         }
     }
 }

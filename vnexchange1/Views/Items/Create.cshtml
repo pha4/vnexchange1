@@ -91,22 +91,11 @@
             item.CanExchange = $chkDoi.is(":checked");
             item.CanGiveAway = item.ItemType == "1" ? $chkXin.is(":checked") : $chkTang.is(":checked")
             item.CanTrade = item.ItemType == "1" ? $chkMua.is(":checked") : $chkBan.is(":checked")
-
-            itemImages.push(
-                {
-                    ItemImageId: undefined,
-                    ItemId: undefined,
-                    ImagePath: "img/cknude1.jpg",
-                    IsMainImage: true
-                 },
-                {
-                    ItemImageId: undefined,
-                    ItemId: undefined,
-                    ImagePath: 'img/cknude2.jpg',
-                    IsMainImage: false
-                 }
-                );
-            //item.Images = itemImages;
+            var images = $("#txtImageList").val().split(',');
+            for (var i = 0; i < images.length; i++)
+            { 
+                itemImages.push(images[i]);
+            }            
             $.ajax({
                 url:url,
                 type:"POST",
@@ -117,7 +106,7 @@
                 datatype:'json',
                 ContentType:'application/json;utf-8'
             }).done(function(resp){
-                alert('Success ' +resp);
+                window.location.href = "/items/all";
             }).error(function(err){
                 alert("Error " + err.status);
             });
@@ -140,7 +129,8 @@
             processData: false,
             data: data,
             success: function (message) {
-                alert(message);
+                //alert(message);
+                $("#txtImageList").val(message);
             },
             error: function () {
                 alert("There was error uploading files!");
@@ -162,7 +152,7 @@
             </div>
         </div>
     </div>
-
+    <input id="txtImageList" type="hidden" value="" />
     <input id="txtItemDate" asp-for="ItemDate" type="hidden" value="@DateTime.Now" />
     <input id="txtItemOwner" asp-for="ItemOwner" type="hidden" value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" />
     <input id="txtItemCategory" asp-for="ItemCategory" type="hidden" value="@ViewBag.Categories[0].CategoryId" />
@@ -217,23 +207,23 @@
                             <div class="funkyradio" id="divNhuCau">
                                 <div class="funkyradio-warning">
                                     <input type="checkbox" name="checkbox" id="chkBan" checked asp-for="CanTrade" />
-                                    <label for="chkBan">Bán nó</label>
+                                    <label for="chkBan">Cần bán</label>
                                 </div>
                                 <div class="funkyradio-warning dn">
                                     <input type="checkbox" name="checkbox" id="chkMua" checked asp-for="CanTrade" />
-                                    <label for="chkMua">Mua nó</label>
+                                    <label for="chkMua">Cần mua</label>
                                 </div>
                                 <div class="funkyradio-warning">
                                     <input type="checkbox" name="checkbox" id="chkDoi" asp-for="CanExchange" />
-                                    <label for="chkDoi">Đổi nó lấy món đồ khác</label>
+                                    <label for="chkDoi">Cần đổi lấy món đồ khác</label>
                                 </div>
                                 <div class="funkyradio-warning">
                                     <input type="checkbox" name="checkbox" id="chkTang" asp-for="CanGiveAway" />
-                                    <label for="chkTang">Tặng nó</label>
+                                    <label for="chkTang">Cần tặng</label>
                                 </div>
                                 <div class="funkyradio-warning dn">
                                     <input type="checkbox" name="checkbox" id="chkXin" asp-for="CanGiveAway" />
-                                    <label for="chkXin">Xin nó từ người khác</label>
+                                    <label for="chkXin">Cần xin từ người khác</label>
                                 </div>
                             </div>
                             <br>

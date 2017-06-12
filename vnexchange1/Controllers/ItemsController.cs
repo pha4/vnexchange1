@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,26 +18,134 @@ namespace vnexchange1.Controllers
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _environment;
 
-        public ItemsController(ApplicationDbContext context)
+        public ItemsController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: Items        
-        public async Task<IActionResult> Index()
+        [HttpGet("/items/{id}", Name = "ItemList")]
+        public IActionResult Index(int? id)
         {
-            ViewBag.Categories = _context.Category.ToList();
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            var items = _context.Item.ToList();
-            foreach (Item item in items)
+            if (!_context.Item.Any())
+            {
+                var items = new Item[]
+                {
+                    new Item
+                    {
+                        ItemTitle = "Xe hơi nhựa dành cho bé 5 tuổi trở lên",
+                        ItemDescription = "Xe đồ chơi rất dễ thương, bền, màu sắc sinh động, phù hợp cho bé trai hiếu động từ 5 tuổi trở lên",
+                        ItemCategory = 1,
+                        ItemDate = DateTime.Now,
+                        ItemLocation = "7",
+                        ItemPrice = 350000,
+                        ItemType = 2,
+                        CanTrade = true,
+                        CanExchange = true,
+                        CanGiveAway = false,
+                        ItemOwner = _context.Users.First().Id
+
+                    },
+                    new Item
+                    {
+                        ItemTitle = "Ống nhòm cực nét giá cực sốc",
+                        ItemDescription = "Một món đồ chơi tuyệt vời cho các em nhỏ từ 5 đến 10 tuổi. Có thể nhòm xa đến khoảng cách 300m với hình ảnh ro ràng. Giá sốc nhât trên thị trường",
+                        ItemCategory = 1,
+                        ItemDate = DateTime.Now,
+                        ItemLocation = "8",
+                        ItemPrice = 720000,
+                        ItemType = 2,
+                        CanTrade = true,
+                        CanExchange = false,
+                        CanGiveAway = false,
+                        ItemOwner = _context.Users.First().Id
+
+                    },
+                    new Item
+                    {
+                        ItemTitle = "Nautica Girls' Stripe Seersucker Romper with Fixed Sash",
+                        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
+                        ItemCategory = 2,
+                        ItemDate = DateTime.Now,
+                        ItemLocation = "8",
+                        ItemPrice = 720000,
+                        ItemType = 2,
+                        CanTrade = true,
+                        CanExchange = false,
+                        CanGiveAway = false,
+                        ItemOwner = _context.Users.First().Id,
+                        ItemManufacturer = "Nautica"
+
+                    },
+                    new Item
+                    {
+                        ItemTitle = "Gymboree Big Girls' Short Sleeve Cat in Bunny Ears Graphic Tee",
+                        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
+                        ItemCategory = 2,
+                        ItemDate = DateTime.Now,
+                        ItemLocation = "9",
+                        ItemPrice = 230000,
+                        ItemType = 2,
+                        CanTrade = true,
+                        CanExchange = false,
+                        CanGiveAway = false,
+                        ItemOwner = _context.Users.First().Id,
+                        ItemManufacturer = "Gymboree"
+
+                    },
+                    new Item
+                    {
+                        ItemTitle = "Set quần sóc áo CK hồng phấn cho bạn nữ",
+                        ItemDescription = "Màu hồng phấn cực dễ thương, do hơi chật nên mình để lại giá tốt cho bạn nào thực sự thích",
+                        ItemCategory = 2,
+                        ItemDate = DateTime.Now,
+                        ItemLocation = "4",
+                        ItemPrice = 230000,
+                        ItemType = 2,
+                        CanTrade = true,
+                        CanExchange = false,
+                        CanGiveAway = false,
+                        ItemOwner = _context.Users.First().Id,
+                        ItemManufacturer = "CK"
+
+                    }
+                };
+                foreach (Item s in items)
+                {
+                    _context.Item.Add(s);
+                }
+
+                _context.SaveChanges();
+            }
+
+            var items1 = new List<Item>();
+            if (id != null)
+            {
+                items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
+            }
+            else
+            {
+                items1 = _context.Item.ToList();
+            }
+
+            foreach (Item item in items1)
             {
                 var parseResult = -1;
                 var location = int.TryParse(item.ItemLocation, out parseResult);
                 item.ItemLocation = _context.Location.First(x => x.LocationId == parseResult).LocationName;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
             }
-            return View(items);
+
+            ViewBag.Categories = items1;
+            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+
+            return View(items1);
         }
 
         // GET: Items/Details/5
@@ -57,6 +167,7 @@ namespace vnexchange1.Controllers
         }
 
         // GET: Items/Create
+        [HttpGet("/items/create", Name = "CreateItem")]
         public IActionResult Create()
         {
             ViewBag.Categories = _context.Category.ToList();
@@ -123,39 +234,41 @@ namespace vnexchange1.Controllers
         {
             long size = 0;
             var files = Request.Form.Files;
-            var hostingEnvironment = new HostingEnvironment();
+            var imageList = new List<string>();
             foreach (var file in files)
             {
-                var filename = ContentDispositionHeaderValue
+                var filename = User.Identity.Name + "_" + ContentDispositionHeaderValue
                                 .Parse(file.ContentDisposition)
                                 .FileName
                                 .Trim('"');
-                filename = hostingEnvironment.WebRootPath + $@"\uploads\{filename}";
-
-                var filePath = Path.GetTempPath();
-                var fileName = Path.GetTempFileName();
+                var uploads = Path.Combine(_environment.WebRootPath, "uploads");
 
                 size += file.Length;
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                using (var fs = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
                 {
-                    file.CopyToAsync(fs);
-                    //formFile.CopyToAsync(stream);
+                    file.CopyTo(fs);                    
                 }
+                imageList.Add(filename);
             }
-            string message = $"{files.Count} file(s) / { size} bytes uploaded successfully!";
-            return Json(message);
+            
+            ViewBag.ImageList = imageList;
+            return Json(imageList);
         }
 
-        public JsonResult CreateItem(Item item, ItemImage[] itemImages)
-        {
+        public JsonResult CreateItem(Item item, string[] itemImages)
+        {            
             if (ModelState.IsValid)
             {
                 item.ItemDate = DateTime.Now;
                 _context.Add(item);
                 _context.SaveChanges();
-                foreach (ItemImage itemImage in itemImages)
+                foreach (var imagePath in itemImages)
                 {
-                    itemImage.ItemId = item.ItemId;
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = item.ItemId,
+                        ImagePath = imagePath
+                    };
                     _context.Add(itemImage);
                 }
                 _context.SaveChanges();

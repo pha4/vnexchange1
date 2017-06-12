@@ -64,10 +64,14 @@
                     <img src="img/binocular.png">
                     <img src="img/give.png">
                 </div>
-                <img src="img/watch.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                @if (item.Images != null && item.Images.Count > 0)
+                {
+                    <img src="~/uploads/@item.Images.First().ImagePath" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                }
+                <img src="~/img/default.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
             </div>
             <div class="col-md-9 caption" style="float: left;">
-                <h3 style="margin: 0px 0px 5px 0px"><a href="#">@item.ItemTitle</a></h3>
+                <h3 style="margin: 0px 0px 5px 0px"><a href="~/items/details/@item.ItemId">@item.ItemTitle</a></h3>
                 <p>@item.ItemDescription...<a>Xem thêm</a></p>
                 <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice</strong></p>
                 <p style="font-weight: bold;"><a href="#">@User.Identity.Name</a> - @item.ItemLocation</p>
@@ -75,18 +79,18 @@
                     @if (item.ItemType == 1)
                     {
                         if (item.CanTrade)
-                        {<a href="#" class="btn btn-success" role="button">Mua</a>}
+                        {<a href="#" class="btn btn-success margin-right5" role="button">Mua</a>}
                         if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary" role="button">Đổi</a>}
+                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
                         if (item.CanGiveAway)
                         {<a href="#" class="btn btn-warning" role="button">Xin</a>}
                     }
                     else
                     {
                         if (item.CanTrade)
-                        {<a href="#" class="btn btn-danger" role="button">Bán</a>}
+                        {<a href="#" class="btn btn-danger margin-right5" role="button">Bán</a>}
                         if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary" role="button">Đổi</a>}
+                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
                         if (item.CanGiveAway)
                         {<a href="#" class="btn btn-default" role="button">Cho</a>}
                     }

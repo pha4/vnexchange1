@@ -251,17 +251,7 @@ blockquote {
 	filter: alpha(opacity=100) !important;
 }
 
-/* Targeting only Firefox for smoothest animations */
-@-moz-document url-prefix() {
-	.object-visible,
-	.touch .object-non-visible {
-		-webkit-transition: opacity 0.6s ease-in-out;
-		-moz-transition: opacity 0.6s ease-in-out;
-		-o-transition: opacity 0.6s ease-in-out;
-		-ms-transition: opacity 0.6s ease-in-out;
-		transition: opacity 0.6s ease-in-out;
-	}
-}
+
 .space {
 	padding: 20px 0;
 }
@@ -483,15 +473,16 @@ textarea {
 	color: #55acee;
 }
 @media (min-width:768px) {
-	.main-navigation .navbar-default .navbar-nav > li > a {
-		padding-top: 30px;
-		padding-bottom: 30px;
-		-webkit-transition: all 0.3s ease-in-out;
-		-moz-transition: all 0.3s ease-in-out;
-		-o-transition: all 0.3s ease-in-out;
-		-ms-transition: all 0.3s ease-in-out;
-		transition: all 0.3s ease-in-out;
-	}
+    .main-navigation .navbar-default .navbar-nav > li > a,
+    .main-navigation .navbar-default .navbar-nav > li > button {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        
+        transition: all 0.3s ease-in-out;
+    }
 }
 @media (min-width:768px) and (max-width:991px) {
 	.main-navigation .container-fluid {
@@ -546,7 +537,7 @@ textarea {
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
-	-ms-transition: all 0.3s ease-in-out;
+	
 	transition: all 0.3s ease-in-out;
 }
 .logo,
@@ -558,7 +549,7 @@ textarea {
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
-	-ms-transition: all 0.3s ease-in-out;
+	
 	transition: all 0.3s ease-in-out;
 }
 .site-name a {
@@ -682,7 +673,7 @@ textarea {
 	transform: scale(0.8);
 	-webkit-transition: all linear 0.2s;
 	-moz-transition: all linear 0.2s;
-	-ms-transition: all linear 0.2s;
+	
 	-o-transition: all linear 0.2s;
 	transition: all linear 0.2s;
 }
@@ -758,9 +749,9 @@ textarea {
 .product.image-container {
     position: relative;
 }
-.exchange-product a.btn {
+/*.exchange-product a.btn {
     display: none;
-}
+}*/
 .dn {
     display: none;
 }
@@ -966,4 +957,15 @@ body {
 }
 .exchange-product .product {
     padding: 0px 0px 10px 0px;
+}
+.main-navigation .navbar-default .navbar-nav > li > button {
+    color: white;
+    padding: 30px;
+    margin: 0px;
+}
+.pad-right5 {
+    padding-right: 5px;
+}
+.margin-right5 {
+    margin-right: 5px;
 }

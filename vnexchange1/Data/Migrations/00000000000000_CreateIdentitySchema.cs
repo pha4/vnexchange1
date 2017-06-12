@@ -215,7 +215,8 @@ namespace vnexchange1.Data.Migrations
                     CanGiveAway = table.Column<bool>(nullable: false),
                     CanTrade = table.Column<bool>(nullable: false),
                     ItemCategory = table.Column<int>(nullable: false),
-                    ItemLocation = table.Column<int>(nullable: true)
+                    ItemLocation = table.Column<int>(nullable: true),
+                    IsApproved = table.Column<bool>(nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {

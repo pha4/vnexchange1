@@ -45,5 +45,7 @@ namespace vnexchange1.Models
         public bool CanTrade { get; set; }
         
         public ICollection<ItemImage> Images { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

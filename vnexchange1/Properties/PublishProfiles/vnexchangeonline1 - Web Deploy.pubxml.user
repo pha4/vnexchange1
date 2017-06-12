@@ -14,9 +14,4 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <Value>Data Source=tcp:cscvmicroservicesdb.database.windows.net,1433;Initial Catalog=vnexchangeonline1_db;User Id=microservicesdb_admin@cscvmicroservicesdb;Password=P@ssword123</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
-  <ItemGroup>
-    <EFMigrations Include="vnexchange1.Data.ApplicationDbContext">
-      <Value>Data Source=tcp:cscvmicroservicesdb.database.windows.net,1433;Initial Catalog=vnexchangeonline1_db;User Id=microservicesdb_admin@cscvmicroservicesdb;Password=P@ssword123</Value>
-    </EFMigrations>
-  </ItemGroup>
 </Project>
