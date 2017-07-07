@@ -15,5 +15,6 @@ namespace vnexchange1.Models
 
         public string CategoryIcon { get; set; }
 
+        //public int CategoryCount { get; set; }
     }
 }

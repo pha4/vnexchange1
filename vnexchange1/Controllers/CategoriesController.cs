@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using vnexchange1.Data;
 using vnexchange1.Models;
+using vnexchange1.ViewModels;
 
 namespace vnexchange1.Controllers
 {
@@ -20,9 +21,29 @@ namespace vnexchange1.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        //public ActionResult Index()
+        public List<Category> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return (_context.Category.ToList());
+            //var originalResults = _context.Category.ToList();
+            //var results = new List<CategoryViewModel>();
+
+            //if (originalResults != null && originalResults.Count > 0)
+            //{
+            //    foreach (var result in originalResults)
+            //    {
+            //        results.Add(new CategoryViewModel
+            //        {
+            //            CategoryId = result.CategoryId,
+            //            CategoryIcon = result.CategoryIcon,
+            //            CategoryImage = result.CategoryImage,
+            //            CategoryName = result.CategoryName,
+            //            CategoryOrder = result.CategoryOrder,
+            //            CategoryCount = _context.Category.Where(x => x.CategoryId == result.CategoryId).Count()
+            //        });
+            //    }
+            //}
+            //return View(results);
         }
 
         // GET: Categories/Details/5

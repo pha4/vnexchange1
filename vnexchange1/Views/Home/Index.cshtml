@@ -3,24 +3,11 @@
     ViewData["Title"] = "vnexchange.com - Mua bán, Trao Đổi và Cho nhận Đồ cũ";
 }
 <script>
-    var CommentList = React.createClass({
-        render: function () {
-            return (
-                <div className="commentList">
-                    Hello, world! I am a CommentList.
-      </div>
-            );
-        }
-    });
-
-    ReactDOM.render(
-        <CommentList />,
-        document.getElementById('content')
-    );
+    
 </script>
 <div class="section" id="sectionPortfolio">
     <div class="container" style="width: 1000px;">
-        <h2 class="text-center title" id="portfolio" style="font-weight: bold;">Với vnexchange.com</h2>
+        <h2 class="text-center title" id="portfolio" style="font-weight: bold;">Với toicanbanco.com</h2>
         <div class="separator"></div>
         <p class="lead text-center" style="font-size: 19px;">Bạn có thể khám phá, mua bán và trao đổi hàng ngàn sản phẩm mới cũ theo cách không thể dễ dàng hơn.</p>
         <br>
@@ -52,7 +39,7 @@
                                     </a>
 
                                 </div>
-                                <a class="btn btn-default btn-block" href="index1.html?danh-muc=1">@Html.DisplayFor(modelItem => item.CategoryName) (123 món)</a>
+                                <a class="btn btn-default btn-block" href="items/@item.CategoryId">@Html.DisplayFor(modelItem => item.CategoryName) (123 món)</a>
                             </div>
                         </div>
                     }

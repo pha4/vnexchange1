@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,6 +55,12 @@ namespace vnexchange1
 
             services.AddMvc();
 
+            //services.AddMvc((options =>
+            //{
+            //    options.SslPort = 44377;
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //}));
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -98,7 +105,7 @@ namespace vnexchange1
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");               
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseStaticFiles();

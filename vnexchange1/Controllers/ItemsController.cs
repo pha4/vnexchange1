@@ -163,6 +163,16 @@ namespace vnexchange1.Controllers
                 return NotFound();
             }
 
+            var parseResult = -1;
+            var location = int.TryParse(item.ItemLocation, out parseResult);
+            item.ItemLocation = _context.Location.First(x => x.LocationId == parseResult).LocationName;
+
+            var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+            item.Images = images;
+
+            var user = _context.Users.First(x => x.Id == item.ItemOwner);
+            item.ItemOwner = user != null ? user.UserName : string.Empty;
+
             return View(item);
         }
 
@@ -246,28 +256,29 @@ namespace vnexchange1.Controllers
                 size += file.Length;
                 using (var fs = new FileStream(Path.Combine(uploads, filename), FileMode.Create))
                 {
-                    file.CopyTo(fs);                    
+                    file.CopyTo(fs);
                 }
                 imageList.Add(filename);
             }
-            
+
             ViewBag.ImageList = imageList;
             return Json(imageList);
         }
 
         public JsonResult CreateItem(Item item, string[] itemImages)
-        {            
+        {
             if (ModelState.IsValid)
             {
                 item.ItemDate = DateTime.Now;
                 _context.Add(item);
                 _context.SaveChanges();
-                foreach (var imagePath in itemImages)
+                for (var i = 0; i < itemImages.Length; i++)
                 {
                     var itemImage = new ItemImage()
                     {
                         ItemId = item.ItemId,
-                        ImagePath = imagePath
+                        ImagePath = itemImages[i],
+                        IsMainImage = i == 0
                     };
                     _context.Add(itemImage);
                 }
@@ -278,6 +289,12 @@ namespace vnexchange1.Controllers
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
             return Json(true);
+        }
+
+        public JsonResult SearchItem(string searchText)
+        {
+            var result = _context.Item.Where(x => x.ItemTitle.Contains(searchText)).ToList();
+            return Json(result);
         }
 
         // GET: Items/Edit/5

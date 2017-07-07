@@ -88,15 +88,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">vnexchange1</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">toicanbanco.com</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
+                    @await Html.PartialAsync("_LoginPartial")
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>
+                </ul>                
             </div>
         </div>
     </nav>
@@ -105,7 +105,7 @@
     <header class="header fixed clearfix navbar navbar-fixed-top">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
 
                     <!-- header-left start -->
                     <!-- ================ -->
@@ -113,12 +113,12 @@
 
                         <!-- logo -->
                         <div class="logo smooth-scroll">                            
-                            <a asp-area="" asp-controller="Home" asp-action="Index"><img id="logo" src="~/img/logo-redesign.png" alt="VnEchange.com" style="height: 80px;"></a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img id="logo" src="~/images/toicanbanco.png" alt="toicanbanco.com" style="height: 80px;"></a>
                         </div>
 
                         <!-- name-and-slogan -->
                         <div class="site-name-and-slogan smooth-scroll" style="display: none;">
-                            <div class="site-name"><a href="#banner">vnexchange.com</a></div>
+                            <div class="site-name"><a href="#banner">toicanbanco.com</a></div>
                             <div class="site-slogan">Khám phá, trao đổi, mua bán đồ cũ theo cách dễ dàng nhất</div>
                         </div>
 
@@ -126,7 +126,7 @@
                     <!-- header-left end -->
 
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-10">
 
                     <!-- header-right start -->
                     <!-- ================ -->
@@ -158,12 +158,18 @@
                                             <li><a href="#portfolio">Đăng ký</a></li>
                                             <li><a href="#about">Thông tin</a></li>
                                         </ul>*@
-                                        <ul class="nav navbar-nav navbar-right">                                            
-                                            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                                            <li><a href="~/items/create">Đăng Tin</a></li>
+                                        <ul class="nav navbar-nav navbar-right">            
+                                            <li style="margin-top: 20px;"><input id="txtSearchBox" type="text" class="fl form-control" /></li>
+
+                                            @await Html.PartialAsync("_LoginPartial")
+                                            @*<li><a asp-area="" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>*@
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <li><a href="~/items/create">Đăng Tin</a></li>
+                                            }
                                         </ul>
-                                        @await Html.PartialAsync("_LoginPartial")
+                                        
                                     </div>
 
                                 </div>
@@ -185,7 +191,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - vnexchange1</p>
+            <p>&copy; 2017 - toicanbanco.com</p>
         </footer>
     </div>
 
@@ -211,5 +217,29 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+
+        $("#txtSearchBox").keypress(function (e) {
+            if (e.which == 13) {
+                var url = '@Url.Action("SearchItem", "Items")';
+                var searchText = $(this).val();
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        searchText: searchText
+                    },
+                    datatype: 'json',
+                    ContentType: 'application/json;utf-8'
+                }).done(function (resp) {
+                    //window.location.href = "/items/all";
+                }).error(function (err) {
+                    alert("Error " + err.status);
+                });
+            }
+            //return false;
+        });
+    </script>
 </body>
 </html>

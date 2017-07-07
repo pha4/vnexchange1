@@ -969,3 +969,17 @@ body {
 .margin-right5 {
     margin-right: 5px;
 }
+.thumbnail-normal {
+    border: 1px solid #e1e1e1;
+    clear: both;
+    float: left;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.thumbnail-active {
+    border: 1px solid #e77600;
+}
+.fl {
+    float: left;
+}

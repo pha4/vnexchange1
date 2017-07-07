@@ -1,15 +1,166 @@
-@model vnexchange1.Models.Item
+﻿@model vnexchange1.Models.Item
 
 @{
     ViewData["Title"] = "Details";
 }
+<script>
+    function thumbnailImage_Click(obj, src) {
+        $(".thumbnail-active").removeClass("thumbnail-active");
+        $(obj).addClass("thumbnail-active");
+        $(".main-imgage:visible").attr("src", "/uploads/" + src);
+    }
+</script>
+<div>    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-lg text-center" style="">
+                Khu vực quảng cáo
+            </div>
+            <br>
+        </div>
+        <!-- /.col -->
+        <!-- /.col -->
+    </div>
+    <div class="main box-border" id="cknude" style="margin: 0px 0px 50px; padding: 0px 0px 30px 20px;">
+        <h1 style="padding: 30px; font-size: 30px;">@Html.DisplayFor(model => model.ItemTitle)</h1>
+        <div class="col-md-6">
+            <div class="col-md-2">
+                @if (Model.Images != null && Model.Images.Count > 0)
+                {
+                    foreach (var image in Model.Images)
+                    {
+                        <div onclick="thumbnailImage_Click(this, '@image.ImagePath');" class="thumbnail-normal @(@image.IsMainImage ? "thumbnail-active" : "")">
+                            <img src="~/uploads/@image.ImagePath" alt="" style="float: left;">
+                        </div>                        
+                    }
+                }                
+            </div>
+            <div class="col-md-10">
+                @if (Model.Images != null && Model.Images.Count > 0)
+                {
+                    <img src="~/uploads/@Model.Images.First().ImagePath" alt="" style="float: left;" class="main-imgage">
+                }
+                else
+                {
+                    <img src="default.jpg" alt="" style="float: left;" class="main-imgage"> 
+                }
+                
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="" style="padding: 20px 0px 0px 0px; width: 100%; clear: both;">
+                <div class="caption" style="float: left; padding: 0px 0px 0px 20px;">
+                    <p><strong>Đăng bởi:</strong> <a href="#" style="font-weight: bold;">@Html.DisplayFor(model => model.ItemOwner)</a> (Đánh giá: 5 sao)</p>
+                    <p><strong>Ngày đăng:</strong> @Html.DisplayFor(model => model.ItemDate)</p>
+                    <p><strong>Tình trạng:</strong> Mới 95%</p>
+                    <p><strong>Hãng sản xuất:</strong> <span style="font-weight: bold; color: green;">@Html.DisplayFor(model => model.ItemManufacturer)</span></p>
+                    <p><strong>Giá bán</strong> <span style="font-weight: bold; color: red;"> @Html.DisplayFor(model => model.ItemPrice)</span></p>
+                    <p>
+                        <strong>Ghi chú:</strong> @Html.DisplayFor(model => model.ItemDescription)...
+                        <a href="#">Xem thêm</a>
+                    </p>
+                    <p><strong>Tôi muốn:</strong></p>
+                    <p>
+                        @if (Model.ItemType == 1)
+                        {
+                            if (Model.CanTrade)
+                            {
+                                <a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModalMua">Mua</a>
+                            }
+                            if (Model.CanExchange)
+                            {
+                                <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
+                            }
+                            if (Model.CanGiveAway)
+                            {
+                                <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.CanTrade)
+                            {
+                                <a href="#" class="btn btn-danger margin-right5" role="button">Bán</a>}
+                            if (Model.CanExchange)
+                            {
+                                <a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
+                            if (Model.CanGiveAway)
+                            {
+                                <a href="#" class="btn btn-default" role="button">Cho</a>}
+                        }
+                        @*<a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModalMua">Mua</a>
+                        <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
+                        <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>*@
+                    </p>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="container dn">
+        <div class="main box-border suggested" style="margin: 0px 0px 50px 0px;">
+            <h4 style="padding: 30px;">
+                Nhu cầu về sản phẩm này
+            </h4>
+            <div style="margin-top: 10px; padding: 10px 0px 0px 50px;">
+                <ul class="list-inline">
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/give.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/1.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/swap.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/7.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/swap.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/9.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/money.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/10.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/give.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/5.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/give.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/12.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                    <li style="width: 150px; padding: 10px 20px;">
+                        <img src="img/give.png">
+                        <a href="#" style="cursor: pointer; ">
+                            <img src="assets/ItemSlider/images/8.jpg" alt="img01" style="width: 150px;">
+                        </a>
+                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
+                    </li>
+                </ul>
+            </div>
 
-<h2>Details</h2>
-
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="dl-horizontal">
+        </div>
+    </div>
+    <dl class="dl-horizontal dn">
         <dt>
             @Html.DisplayNameFor(model => model.ItemTitle)
         </dt>
