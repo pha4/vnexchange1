@@ -20,7 +20,7 @@ namespace vnexchange1.Models
         public decimal ItemPrice { get; set; }
 
         [Required]
-        public int ItemCategory { get; set; }
+        public int ItemCategory { get; set; }        
 
         [Required]
         public string ItemOwner { get; set; }

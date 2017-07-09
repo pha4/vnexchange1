@@ -1,15 +1,181 @@
 ﻿@model IEnumerable<vnexchange1.Models.Item>
 @using vnexchange1.Data;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh muc";
 }
 
-<h2>Index</h2>
-
+<h2>   
+    @ViewBag.Category    
+</h2>
+@if (Model.Count() == 0)
+{
+    <p>Chưa có thông tin</p>
+}
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.Identity.IsAuthenticated)
+    {<a asp-action="Create">Đăng tin</a>}
 </p>
+<div class="col-md-12">
+    <div class="well well-lg offer-box text-center" style="">
+        <form class="navbar-form" role="search">
+            <div class="form-group">
+                <input placeholder="Từ Khóa..." class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <input placeholder="TP Hồ Chí Minh..." class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" id="cboCategories" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span id="spanCategoryText">Quần áo nữ</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="listCategories">
+                        <li><a href="index1.html">Tất cả danh mục</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=1">Đồ Chơi Trẻ Em</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=2">Quần áo nữ</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=3">Phụ kiện</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=4">Đồ dùng gia đình</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=5">Quần áo trẻ em</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=6">Đồ dùng nam</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=7">Sách và tạp chí</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index1.html?danh-muc=8">Đồ trang điểm</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                        Tất cả
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" onclick="showAllItems(this);">Tất cả</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0);" onclick="showDesiredItems(this);">Cần</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0);" onclick="showAvailableItems(this);">Có</a></li>
+                    </ul>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning">Tìm</button>
+        </form>
 
+
+    </div>
+    <div class="main box-border">
+        <div id="mi-slider" class="mi-slider">
+            <ul class="mi-moveToLeft">
+                <li style="">
+                    <a href="chi-tiet.html?san-pham=cknude">
+                        <img src="img/cknude1.jpg" alt="img01">
+                        <h4>Giày cao gót Charles &amp; Keith, hồng nude chính hãng</h4>
+                    </a>
+                    <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">Cũ</span> - 3.200.000</span>
+                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Ngô Đắc Lâm</a> - <span>Tân Bình</span></span>
+                </li>
+                <li>
+                    <a href="chi-tiet.html?san-pham=rayban">
+                        <img src="assets/ItemSlider/images/7.jpg" alt="img01">
+                        <h4>Cần đổi lấy kính Police loại tương tự</h4>
+                    </a>
+                    <span style="color: grey; display: block;">Cũ - 95%</span>
+                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Phúc Hà</a> - <span>Bình Thạnh</span></span>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="img/car.jpg" alt="img01">
+                        <h4>Xe đua mô hình Kidoozie dành cho trẻ em</h4>
+                    </a>
+                    <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">Cũ</span> - 490.000</span>
+                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Little Girl</a> - <span>Tân Bình</span></span>
+                </li>
+                <li>
+                    <a href="chi-tiet.html?san-pham=converse">
+                        <img src="img/converse1.jpg" alt="img04"><h4>Cần tìm giày hiếm như hình, mua giá cao hoặc đổi Wave tàu 150cc</h4>
+                    </a>
+                    <span style="font-weight: bold;"><a href="chi-tiet.html?san-pham=converse" style="display: inline;">Lệ Rơi</a> - <span>Tuyên Quang</span></span>
+                </li>
+            </ul>
+            <ul class="mi-moveFromRight mi-current">
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/5.jpg" alt="img05"><h4>Tommny Belt, size 7"</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/6.jpg" alt="img06"><h4>Winter hood, from my daddy</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/7.jpg" alt="img07"><h4>Rayban aviator, just like new</h4>
+                    </a>
+                </li>
+                <li style="">
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/8.jpg" alt="img08"><h4>Scarves</h4>
+                    </a>
+                </li>
+            </ul>
+            <ul class="mi-moveToRight">
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/9.jpg" alt="img09"><h4>Casual</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/10.jpg" alt="img10"><h4>Luxury</h4>
+                    </a>
+                </li>
+                <li style="">
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/11.jpg" alt="img11"><h4>Sport</h4>
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/12.jpg" alt="img12"><h4>Carry-Ons</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/13.jpg" alt="img13"><h4>Duffel Bags</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/14.jpg" alt="img14"><h4>Laptop Bags</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="assets/ItemSlider/images/15.jpg" alt="img15"><h4>Briefcases</h4>
+                    </a>
+                </li>
+            </ul>
+            <nav id="navSlider">
+                <a href="#" class="">Nổi bật</a>
+                <a href="#" class="mi-selected">Hàng hiếm</a>
+                <a href="#" class="">Mới đăng</a>
+            </nav>
+        </div>
+
+    </div>
+    <br>
+</div>
 <div class="exchange-product">
     @foreach (var item in Model)
             {
@@ -99,4 +265,7 @@
         </div>
     }
 </div>
+<script>
+    
 
+</script>

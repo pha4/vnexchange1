@@ -68,13 +68,21 @@
 
         <!-- Worthy core CSS file -->
         <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
-
+        <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
+        <link href="~/css/animations.css" rel="stylesheet">
+        <link href="~/css/style.css" rel="stylesheet">
         <!-- Custom css -->
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
-        <script src="~/js/jquery.js"></script>
+        @*<script src="~/js/jquery.js"></script>*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+        <script src="~/assets/js/jquery-1.10.2.js"></script>
+        <!--bootstrap JavaScript file  -->
+        <script src="~/assets/js/bootstrap.js"></script>
+        <!--Slider JavaScript file  -->
+        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
+        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -239,6 +247,10 @@
                 });
             }
             //return false;
+        });
+
+        $(function () {
+            $('#mi-slider').catslider();
         });
     </script>
 </body>

@@ -125,6 +125,9 @@ namespace vnexchange1.Controllers
             if (id != null)
             {
                 items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
+
+                ViewBag.Category = _context.Category.Where(x => x.CategoryId == id).First().CategoryName;
+
             }
             else
             {
@@ -141,7 +144,7 @@ namespace vnexchange1.Controllers
                 item.Images = images;
             }
 
-            ViewBag.Categories = items1;
+
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
 
