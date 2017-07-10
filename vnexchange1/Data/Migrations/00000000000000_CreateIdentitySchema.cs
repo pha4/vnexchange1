@@ -160,7 +160,8 @@ namespace vnexchange1.Data.Migrations
                     CategoryOrder = table.Column<int>(nullable: false),
                     CategoryImage = table.Column<string>(nullable: false),
                     CategoryIcon = table.Column<string>(nullable: false),
-                    SortOrder = table.Column<int>(nullable: false)
+                    SortOrder = table.Column<int>(nullable: false),
+                    ParentCategory = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,7 +195,7 @@ namespace vnexchange1.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Location", x => new { x.LocationId });
-                });
+                });            
 
             migrationBuilder.CreateTable(
                 name: "Item",
@@ -216,7 +217,10 @@ namespace vnexchange1.Data.Migrations
                     CanTrade = table.Column<bool>(nullable: false),
                     ItemCategory = table.Column<int>(nullable: false),
                     ItemLocation = table.Column<int>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false, defaultValue: 0)
+                    IsApproved = table.Column<bool>(nullable: false, defaultValue: 0),
+                    ItemStatus = table.Column<string>(nullable: false, maxLength: 450),
+                    ItemColor = table.Column<string>(nullable: false, maxLength: 450),
+                    ItemSize = table.Column<string>(nullable: false, maxLength: 450)                    
                 },
                 constraints: table =>
                 {

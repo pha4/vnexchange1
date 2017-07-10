@@ -17,9 +17,16 @@ namespace vnexchange1.Controllers
             _context = context;
         }
         public async Task<IActionResult> Index()
-        {           
+        {
+            var categoryCount = new Dictionary<string, string>();
+            var results = _context.Category.ToList();
+            foreach (var result in results)
+            {
+                categoryCount.Add(result.CategoryId.ToString(), _context.Item.Where(x => x.ItemCategory == result.CategoryId).Count().ToString());
+            }
+            ViewBag.CategoryCount = categoryCount;            
             //return View();
-            return View(await _context.Category.ToListAsync());
+            return View(await _context.Category.Where(x => x.ParentCategory < 1).ToListAsync());
         }
 
         public IActionResult About()

@@ -39,7 +39,7 @@
                                     </a>
 
                                 </div>
-                                <a class="btn btn-default btn-block" href="items/@item.CategoryId">@Html.DisplayFor(modelItem => item.CategoryName) (123 món)</a>
+                                <a class="btn btn-default btn-block" href="items/@item.CategoryId">@Html.DisplayFor(modelItem => item.CategoryName) (@ViewBag.CategoryCount[item.CategoryId.ToString()] món)</a>
                             </div>
                         </div>
                     }

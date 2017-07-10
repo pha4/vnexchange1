@@ -186,6 +186,15 @@
                                         @item.CategoryName
                                         <span class="label label-warning pull-right">123</span>
                                     </li>
+                                    foreach (var subCategory in ViewBag.SubCategories[item.CategoryId])
+                                    {
+                                        <li class="list-group-item" data-category-id="@subCategory.CategoryId">
+                                            <img src="@subCategory.CategoryIcon" class="category-icon" style="visibility: hidden;"/>
+                                            @subCategory.CategoryName
+                                            <span class="label label-warning pull-right">123</span>
+                                        </li>
+                                    }
+
                                 }
                             }
                             <li class="list-group-item">

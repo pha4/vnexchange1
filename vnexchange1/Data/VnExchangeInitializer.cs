@@ -4,16 +4,17 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace vnexchange1.Data
 {
     public static class VnExchangeInitializer
-    {        
+    {
         public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             context.Database.EnsureCreated();
 
-            AddCategoryItems(ref context);
+            AddCategoryItems(context);
 
             AddLocationItems(ref context);
 
@@ -26,31 +27,92 @@ namespace vnexchange1.Data
             //AddItems(context);
 
             context.SaveChanges();
+
         }
 
-        private static void AddCategoryItems(ref ApplicationDbContext context)
+        private static void AddCategoryItems(ApplicationDbContext context)
         {
             // Look for any category.
             if (context.Category.Any())
             {
                 return;   // DB has been seeded
             }
+            var item = new Category { CategoryName = "Đồ chơi trẻ em", CategoryOrder = 0, CategoryImage = "img/kidToys.jpg", CategoryIcon = "../img/teddy-bear.png" };
 
-            var categories = new Category[]
+            var categories = new List<Category>()
             {
-            new Category{CategoryName="Đồ chơi trẻ em", CategoryOrder= 0, CategoryImage ="img/kidToys.jpg", CategoryIcon = "../img/teddy-bear.png"},
-            new Category{CategoryName="Quần áo nữ",CategoryOrder= 1,CategoryImage ="img/womanClothes.png", CategoryIcon = "../img/dress.png"},
-            new Category{CategoryName="Phụ kiện",CategoryOrder = 2,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
-            new Category{CategoryName="Đồ dùng gia đình",CategoryOrder = 3,CategoryImage ="img/housewares1.jpg", CategoryIcon = "../img/pijama.png"},
-            new Category{CategoryName="Quần áo trẻ em",CategoryOrder = 4,CategoryImage ="img/kidClothes.png", CategoryIcon = "../img/pijama.png"},
-            new Category{CategoryName="Đồ dùng nam",CategoryOrder = 5,CategoryImage ="img/manClothes.png", CategoryIcon = "../img/polo.png"},
-            new Category{CategoryName="Sách và tạp chí",CategoryOrder = 6,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
-            new Category{CategoryName="Đồ dùng trang điểm",CategoryOrder = 7,CategoryImage ="img/Makeup.png", CategoryIcon = "../img/cosmetics.png"}
+
+            new Category{CategoryName="Đồ chơi trẻ em 2-5 tuổi", CategoryOrder= 100, CategoryImage ="img/kidToys.jpg", CategoryIcon = "../img/teddy-bear.png"},
+            new Category{CategoryName="Đồ chơi trẻ em 5-7 tuổi", CategoryOrder= 101, CategoryImage ="img/kidToys.jpg", CategoryIcon = "../img/teddy-bear.png"},
+            new Category{CategoryName="Đồ chơi trẻ em 7-12 tuổi", CategoryOrder= 102, CategoryImage ="img/kidToys.jpg", CategoryIcon = "../img/teddy-bear.png"}
+
             };
-            foreach (Category s in categories)
+
+            AddCategoryAndSubCategories(item, categories, context);
+
+            var item1 = new Category { CategoryName = "Quần áo", CategoryOrder = 1, CategoryImage = "img/womanClothes.png", CategoryIcon = "../img/dress.png" };
+
+            var categories1 = new List<Category>()
             {
-                context.Category.Add(s);
+            new Category{CategoryName="Nữ",CategoryOrder = 200,CategoryImage ="img/womanClothes.png", CategoryIcon = "../img/dress.png"},
+            new Category{CategoryName="Nam",CategoryOrder = 201,CategoryImage ="img/womanClothes.jpg", CategoryIcon = "../img/dress.png"},
+            new Category{CategoryName="Trẻ em",CategoryOrder = 202,CategoryImage ="img/kidClothes.png", CategoryIcon = "../img/pijama.png"}
+
+            };
+
+            AddCategoryAndSubCategories(item1, categories1, context);
+
+            var item2 = new Category { CategoryName = "Sách", CategoryOrder = 2, CategoryImage = "img/books.png", CategoryIcon = "../img/agenda.png" };
+
+            var categories2 = new List<Category>()
+            {
+            new Category{CategoryName="Văn học",CategoryOrder = 300,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Giáo khoa",CategoryOrder = 301,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Truyện tranh",CategoryOrder = 302,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Tham khảo",CategoryOrder = 303,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"}
+            };
+
+            AddCategoryAndSubCategories(item2, categories2, context);
+
+            var item3 = new Category { CategoryName = "Đồ dùng gia đình", CategoryOrder = 3, CategoryImage = "img/housewares1.jpg", CategoryIcon = "../img/pijama.png" };
+
+            var categories3 = new List<Category>()
+            {
+            new Category{CategoryName="Bếp",CategoryOrder = 400,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Nội thất",CategoryOrder = 401,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Phòng tắm",CategoryOrder = 402,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"}            
+            };
+
+            AddCategoryAndSubCategories(item3, categories3, context);
+
+
+            var item4 = new Category { CategoryName = "Đồ điện tử", CategoryOrder = 4, CategoryImage = "img/housewares1.jpg", CategoryIcon = "../img/pijama.png" };
+
+            var categories4 = new List<Category>()
+            {
+            new Category{CategoryName="Điện gia dụng",CategoryOrder = 500,CategoryImage ="img/housewares1.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Điện thoại/Máy tính bảng", CategoryOrder = 501,CategoryImage ="img/housewares1.png", CategoryIcon = "../img/agenda.png"},
+            new Category{CategoryName="Phòng tắm",CategoryOrder = 502,CategoryImage ="img/housewares1.png", CategoryIcon = "../img/agenda.png"}
+            };
+
+            AddCategoryAndSubCategories(item4, categories4, context);            
+            
+        }
+
+
+        private static void AddCategoryAndSubCategories(Category category, List<Category> subCategories, ApplicationDbContext context)
+        {
+
+            context.Category.Add(category);
+            context.SaveChanges();
+
+            foreach (var item in subCategories)
+            {
+                item.ParentCategory = category.CategoryId;
             }
+
+            context.Category.AddRange(subCategories);
+            context.SaveChanges();
         }
 
         private static void AddItemTypes(ref ApplicationDbContext context)

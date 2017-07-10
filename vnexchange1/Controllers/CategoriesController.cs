@@ -23,7 +23,7 @@ namespace vnexchange1.Controllers
         // GET: Categories
         //public ActionResult Index()
         public List<Category> Index()
-        {
+        {            
             return (_context.Category.ToList());
             //var originalResults = _context.Category.ToList();
             //var results = new List<CategoryViewModel>();

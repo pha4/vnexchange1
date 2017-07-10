@@ -183,7 +183,15 @@ namespace vnexchange1.Controllers
         [HttpGet("/items/create", Name = "CreateItem")]
         public IActionResult Create()
         {
-            ViewBag.Categories = _context.Category.ToList();
+            var subCategories = new Dictionary<int, List<Category>>();
+            var categories = _context.Category.Where(x => x.ParentCategory < 1).ToList();
+            ViewBag.Categories = categories;
+            foreach (var category in categories)
+            {
+                var subCategories1 = _context.Category.Where(x => x.ParentCategory == category.CategoryId).ToList();
+                subCategories.Add(category.CategoryId, subCategories1);
+            }
+            ViewBag.SubCategories = subCategories;
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
             return View();
