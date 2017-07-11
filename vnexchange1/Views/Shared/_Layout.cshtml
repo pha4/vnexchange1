@@ -43,7 +43,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+        
 
+        <!--bootstrap JavaScript file  -->
+        <script src="~/assets/js/bootstrap.js"></script>
+        <!--Slider JavaScript file  -->
+        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
+        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -70,19 +76,19 @@
         <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
         <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
         <link href="~/css/animations.css" rel="stylesheet">
-        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style.css" rel="stylesheet">        
+        <!--bootstrap JavaScript file  -->
+        <script src="~/assets/js/bootstrap.js"></script>
+        <!--Slider JavaScript file  -->
+        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
+        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
         <!-- Custom css -->
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
         @*<script src="~/js/jquery.js"></script>*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
-        <script src="~/assets/js/jquery-1.10.2.js"></script>
-        <!--bootstrap JavaScript file  -->
-        <script src="~/assets/js/bootstrap.js"></script>
-        <!--Slider JavaScript file  -->
-        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
-        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
+        
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -251,7 +257,29 @@
 
         $(function () {
             $('#mi-slider').catslider();
+            switchSlider();
         });
+        // Read a page's GET URL variables and return them as an associative array.
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        function switchSlider() {
+            setTimeout(function () {
+                var nextTab = $("#navSlider a.mi-selected").next();
+                if (!nextTab[0]) {
+                    nextTab = $("#navSlider a:first");
+                }
+                nextTab.click();
+                switchSlider();
+            }, 5000);
+        };
     </script>
 </body>
 </html>

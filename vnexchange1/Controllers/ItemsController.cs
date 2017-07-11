@@ -125,6 +125,11 @@ namespace vnexchange1.Controllers
             if (id != null)
             {
                 items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
+                var subCategories = _context.Category.Where(x => x.ParentCategory == id).ToList();
+                foreach (var subCategory in subCategories)
+                {
+                    items1.AddRange(_context.Item.Where(x => x.ItemCategory == subCategory.CategoryId));
+                }
 
                 ViewBag.Category = _context.Category.Where(x => x.CategoryId == id).First().CategoryName;
 
