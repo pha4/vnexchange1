@@ -106,6 +106,14 @@ namespace vnexchange1
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                "AdvanceSearch",                                              // Route name
+                "items/search/{advanceSearchText}/{location}/{category}/{itemType}",                           // URL with parameters
+                new { controller = "items", action = "search", advanceSearchText = "", location = "", category = "", itemType = "" }  // Parameter defaults
+
+
+        );
             });
 
             app.UseStaticFiles();

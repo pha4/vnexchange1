@@ -89,8 +89,11 @@
             item.ItemManufacturer = $("#txtItemManufacturer").val();
             item.ItemType = $('input[name=radioCanCo]:checked').val();
             item.CanExchange = $chkDoi.is(":checked");
-            item.CanGiveAway = item.ItemType == "1" ? $chkXin.is(":checked") : $chkTang.is(":checked")
-            item.CanTrade = item.ItemType == "1" ? $chkMua.is(":checked") : $chkBan.is(":checked")
+            item.CanGiveAway = item.ItemType == "1" ? $chkXin.is(":checked") : $chkTang.is(":checked");
+            item.CanTrade = item.ItemType == "1" ? $chkMua.is(":checked") : $chkBan.is(":checked");
+            item.ItemSize = $("#txtItemSize").val();
+            item.ItemStatus = $("#txtItemStatus").val();
+            item.ItemColor = $("#txtItemColor").val();
             var images = $("#txtImageList").val().split(',');
             for (var i = 0; i < images.length; i++)
             { 
@@ -310,7 +313,27 @@
                                 <input asp-for="ItemManufacturer" class="form-control" id="txtItemManufacturer" />
                                 <span asp-validation-for="ItemManufacturer" class="text-danger"></span>
                             </div>
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Tình trạng:</span>
+                                @*<input id="txtItemPrice" class="form-control" type="number" style="width: 250px; color: red;">*@
 
+                                <input asp-for="ItemStatus" class="form-control" id="txtItemStatus" />
+                                <span asp-validation-for="ItemStatus" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Màu sắc:</span>
+                                @*<input id="txtItemPrice" class="form-control" type="number" style="width: 250px; color: red;">*@
+
+                                <input asp-for="ItemColor" class="form-control" id="txtItemColor" />
+                                <span asp-validation-for="ItemColor" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="padding-top: 10px; clear: both; display: block;">
+                                <span style="width: 80px; display: inline-block;">Kích thước:</span>
+                                @*<input id="txtItemPrice" class="form-control" type="number" style="width: 250px; color: red;">*@
+
+                                <input asp-for="ItemSize" class="form-control" id="txtItemSize" />
+                                <span asp-validation-for="ItemSize" class="text-danger"></span>
+                            </div>
                             <br>
                             <button id="btnSave" class="btn btn-success" onclick="return false;">Hoàn tất</button>
                         </div>

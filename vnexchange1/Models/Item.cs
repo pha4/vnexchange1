@@ -14,7 +14,7 @@ namespace vnexchange1.Models
         [Required, MaxLength(100)]
         public string ItemTitle { get; set; }
 
-        [Required, MaxLength(500)]
+        [Required, MaxLength(1000)]
         public string ItemDescription { get; set; }
         [DataType(DataType.Currency)]
         public decimal ItemPrice { get; set; }
@@ -47,5 +47,11 @@ namespace vnexchange1.Models
         public ICollection<ItemImage> Images { get; set; }
 
         public bool IsApproved { get; set; }
+
+        public string ItemStatus { get; set; }
+
+        public string ItemColor { get; set; }
+
+        public string ItemSize { get; set; }        
     }
 }

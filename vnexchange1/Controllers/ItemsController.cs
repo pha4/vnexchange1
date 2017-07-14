@@ -30,95 +30,237 @@ namespace vnexchange1.Controllers
         [HttpGet("/items/{id}", Name = "ItemList")]
         public IActionResult Index(int? id)
         {
-            if (!_context.Item.Any())
+            //if (!_context.Item.Any())
+            if (true)
             {
-                var items = new Item[]
+                //var items = new Item[]
+                //{                    
+                //    new Item
+                //    {
+                //        ItemTitle = "Ống nhòm cực nét giá cực sốc",
+                //        ItemDescription = "Một món đồ chơi tuyệt vời cho các em nhỏ từ 5 đến 10 tuổi. Có thể nhòm xa đến khoảng cách 300m với hình ảnh ro ràng. Giá sốc nhât trên thị trường",
+                //        ItemCategory = 1,
+                //        ItemDate = DateTime.Now,
+                //        ItemLocation = "8",
+                //        ItemPrice = 720000,
+                //        ItemType = 2,
+                //        CanTrade = true,
+                //        CanExchange = false,
+                //        CanGiveAway = false,
+                //        ItemOwner = _context.Users.First().Id
+
+                //    },
+                //    new Item
+                //    {
+                //        ItemTitle = "Nautica Girls' Stripe Seersucker Romper with Fixed Sash",
+                //        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
+                //        ItemCategory = 2,
+                //        ItemDate = DateTime.Now,
+                //        ItemLocation = "8",
+                //        ItemPrice = 720000,
+                //        ItemType = 2,
+                //        CanTrade = true,
+                //        CanExchange = false,
+                //        CanGiveAway = false,
+                //        ItemOwner = _context.Users.First().Id,
+                //        ItemManufacturer = "Nautica"
+
+                //    },
+                //    new Item
+                //    {
+                //        ItemTitle = "Gymboree Big Girls' Short Sleeve Cat in Bunny Ears Graphic Tee",
+                //        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
+                //        ItemCategory = 2,
+                //        ItemDate = DateTime.Now,
+                //        ItemLocation = "9",
+                //        ItemPrice = 230000,
+                //        ItemType = 2,
+                //        CanTrade = true,
+                //        CanExchange = false,
+                //        CanGiveAway = false,
+                //        ItemOwner = _context.Users.First().Id,
+                //        ItemManufacturer = "Gymboree"
+
+                //    },
+                //    new Item
+                //    {
+                //        ItemTitle = "Set quần sóc áo CK hồng phấn cho bạn nữ",
+                //        ItemDescription = "Màu hồng phấn cực dễ thương, do hơi chật nên mình để lại giá tốt cho bạn nào thực sự thích",
+                //        ItemCategory = 2,
+                //        ItemDate = DateTime.Now,
+                //        ItemLocation = "4",
+                //        ItemPrice = 230000,
+                //        ItemType = 2,
+                //        CanTrade = true,
+                //        CanExchange = false,
+                //        CanGiveAway = false,
+                //        ItemOwner = _context.Users.First().Id,
+                //        ItemManufacturer = "CK"
+
+                //    }
+                //};
+                //foreach (Item s in items)
+                //{
+                //    _context.Item.Add(s);
+                //}
+
+                //_context.SaveChanges();
+
+                var nuochoa = new Item
                 {
-                    new Item
-                    {
-                        ItemTitle = "Xe hơi nhựa dành cho bé 5 tuổi trở lên",
-                        ItemDescription = "Xe đồ chơi rất dễ thương, bền, màu sắc sinh động, phù hợp cho bé trai hiếu động từ 5 tuổi trở lên",
-                        ItemCategory = 1,
-                        ItemDate = DateTime.Now,
-                        ItemLocation = "7",
-                        ItemPrice = 350000,
-                        ItemType = 2,
-                        CanTrade = true,
-                        CanExchange = true,
-                        CanGiveAway = false,
-                        ItemOwner = _context.Users.First().Id
+                    ItemTitle = "Set nước hoa Marc Jacobs xách tay",
+                    ItemDescription = "Gia đình mình bên Mỹ gửi về cho nhưng mình còn nhiều nước hoa nên bán lại giá tốt cho bạn nào thích dòng nước hoa này nhé." +
+"Set bao gồm:" +
+"1 chai nước hoa dạng xịt 100ml" +
+"1 chai nước hoa dạng lăn 10ml" +
+"1 tuýp dưỡng thể 75ml",
+                    ItemCategory = 3,
+                    ItemDate = DateTime.Now,
+                    ItemLocation = "7",
+                    ItemPrice = 2300000,
+                    ItemType = 2,
+                    CanTrade = true,
+                    CanExchange = true,
+                    CanGiveAway = false,
+                    ItemOwner = _context.Users.First().Id
 
-                    },
-                    new Item
-                    {
-                        ItemTitle = "Ống nhòm cực nét giá cực sốc",
-                        ItemDescription = "Một món đồ chơi tuyệt vời cho các em nhỏ từ 5 đến 10 tuổi. Có thể nhòm xa đến khoảng cách 300m với hình ảnh ro ràng. Giá sốc nhât trên thị trường",
-                        ItemCategory = 1,
-                        ItemDate = DateTime.Now,
-                        ItemLocation = "8",
-                        ItemPrice = 720000,
-                        ItemType = 2,
-                        CanTrade = true,
-                        CanExchange = false,
-                        CanGiveAway = false,
-                        ItemOwner = _context.Users.First().Id
-
-                    },
-                    new Item
-                    {
-                        ItemTitle = "Nautica Girls' Stripe Seersucker Romper with Fixed Sash",
-                        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
-                        ItemCategory = 2,
-                        ItemDate = DateTime.Now,
-                        ItemLocation = "8",
-                        ItemPrice = 720000,
-                        ItemType = 2,
-                        CanTrade = true,
-                        CanExchange = false,
-                        CanGiveAway = false,
-                        ItemOwner = _context.Users.First().Id,
-                        ItemManufacturer = "Nautica"
-
-                    },
-                    new Item
-                    {
-                        ItemTitle = "Gymboree Big Girls' Short Sleeve Cat in Bunny Ears Graphic Tee",
-                        ItemDescription = "Polished wire frames outline these classic Ray-Ban aviators, detailed with logo lettering at one lens. Polarized. Case and cleaning cloth included.",
-                        ItemCategory = 2,
-                        ItemDate = DateTime.Now,
-                        ItemLocation = "9",
-                        ItemPrice = 230000,
-                        ItemType = 2,
-                        CanTrade = true,
-                        CanExchange = false,
-                        CanGiveAway = false,
-                        ItemOwner = _context.Users.First().Id,
-                        ItemManufacturer = "Gymboree"
-
-                    },
-                    new Item
-                    {
-                        ItemTitle = "Set quần sóc áo CK hồng phấn cho bạn nữ",
-                        ItemDescription = "Màu hồng phấn cực dễ thương, do hơi chật nên mình để lại giá tốt cho bạn nào thực sự thích",
-                        ItemCategory = 2,
-                        ItemDate = DateTime.Now,
-                        ItemLocation = "4",
-                        ItemPrice = 230000,
-                        ItemType = 2,
-                        CanTrade = true,
-                        CanExchange = false,
-                        CanGiveAway = false,
-                        ItemOwner = _context.Users.First().Id,
-                        ItemManufacturer = "CK"
-
-                    }
                 };
-                foreach (Item s in items)
+                _context.Item.Add(nuochoa);
+                for (var i = 1; i < 3; i++)
                 {
-                    _context.Item.Add(s);
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = nuochoa.ItemId,
+                        ImagePath = "nuochoa" + i.ToString() + ".jpg",
+                        IsMainImage = i == 0
+                    };
+                    _context.ItemImage.Add(itemImage);
                 }
-
                 _context.SaveChanges();
+
+                var binhxit = new Item
+                {
+                    ItemTitle = "Bình xịt kem tươi 1L Cream Whipper ",
+                    ItemDescription = "Bình xịt kem tươi là sản phẩm không thể thiếu cho cửa hàng làm kem, làm bánh và các quán cafe take away giúp tiết kiệm tối đa thời gian và công sức cho bạn chỉ 2p là bạn đã có thể tạo kem có độ xốp bông và mịn một cách dễ dàng và tiện dụng.",
+                    ItemCategory = 15,
+                    ItemDate = DateTime.Now,
+                    ItemLocation = "7",
+                    ItemPrice = 8190000,
+                    ItemType = 1,
+                    CanTrade = true,
+                    CanExchange = true,
+                    CanGiveAway = false,
+                    ItemOwner = _context.Users.First().Id
+
+                };
+                _context.Item.Add(binhxit);
+                for (var i = 1; i < 4; i++)
+                {
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = binhxit.ItemId,
+                        ImagePath = "pha4@csc.com_binhxit" + i.ToString() + ".jpg",
+                        IsMainImage = i == 0
+                    };
+                    _context.ItemImage.Add(itemImage);
+                }
+                _context.SaveChanges();
+
+                var iphone = new Item
+                {
+                    ItemTitle = "Bán iphone 7 128gb Gold bản quốc tế còn zin nguyên",
+                    ItemDescription = "Mình bán iPhone 7 Gold 128Gb phiên bản quốc tế." +
+"Máy còn bảo hành tại TGDĐ đến tháng 4 - 2018." +
+"Máy đầy đủ phụ kiện hộp sạc cáp tai nghe theo máy.Hình thức máy đẹp," +
+                    "đánh giá gần như mới.Nguyên bản nguyên zin chưa qua sửa chửa." +
+"Mọi chức năng dùng tốt ổn định, vân tay nhạy. Mình bán 9 triệu(có fix nhiệt tình cho người thiện chí)Đầy đủ phụ kiện sạc cáp tai nghe và hộp theo máy." +
+"Bao test mọi chức năng đến hết bảo hành.",
+                    ItemCategory = 20,
+                    ItemDate = DateTime.Now,
+                    ItemLocation = "7",
+                    ItemPrice = 8190000,
+                    ItemType = 1,
+                    CanTrade = true,
+                    CanExchange = true,
+                    CanGiveAway = false,
+                    ItemOwner = _context.Users.First().Id,
+                    ItemStatus = "Mới 99%"
+
+                };
+                _context.Item.Add(iphone);
+                for (var i = 1; i < 4; i++)
+                {
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = iphone.ItemId,
+                        ImagePath = "pha4@csc.com_iphone" + i.ToString() + ".jpg",
+                        IsMainImage = i == 0
+                    };
+                    _context.ItemImage.Add(itemImage);
+
+                }
+                _context.SaveChanges();
+
+                var samsung = new Item
+                {
+                    ItemTitle = "Samsung Galaxy A7 2017 dual 2 sim A720F/DS black",
+                    ItemDescription = "Tình trạng : Hàng công ty chính hãng Samsung Việt Nam, còn đẹp khoảng 99%, like new, nguyên zin, còn bảo hành chính hãng toàn quốc đến 05/2018",
+                    ItemCategory = 20,
+                    ItemDate = DateTime.Now,
+                    ItemLocation = "7",
+                    ItemPrice = 7100000,
+                    ItemType = 1,
+                    CanTrade = true,
+                    CanExchange = true,
+                    CanGiveAway = false,
+                    ItemOwner = _context.Users.First().Id,
+                    ItemStatus = "Fullbox (trùng imel)"
+
+                };
+                _context.Item.Add(samsung);
+                for (var i = 1; i < 5; i++)
+                {
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = samsung.ItemId,
+                        ImagePath = "pha4@csc.com_samsung" + i.ToString() + ".jpg",
+                        IsMainImage = i == 0
+                    };
+                    _context.ItemImage.Add(itemImage);
+
+                }
+                _context.SaveChanges();
+
+                var jade = new Item
+                {
+                    ItemTitle = "Vòng ngọc Jade thiên nhiên",
+                    ItemDescription = "Vòng ngọc Jade thiên nhiên. • Với vẻ đẹp thuần túy, không quá kiêu sa.Như một lời nhắn nhủ bình an - như ý. • Ni : 51.5 mm, Màu sắc: xanh đậm, Kiểu: Bản lá hẹ",
+                    ItemCategory = 26,
+                    ItemDate = DateTime.Now,
+                    ItemLocation = "2",
+                    ItemPrice = 500000,
+                    ItemType = 1,
+                    CanTrade = true,
+                    CanExchange = true,
+                    CanGiveAway = false,
+                    ItemOwner = _context.Users.First().Id,
+                    ItemStatus = "Mới 100%",
+                    ItemColor = "Xanh lá hẹ"
+                };
+                _context.Item.Add(jade);
+                for (var i = 1; i < 3; i++)
+                {
+                    var itemImage = new ItemImage()
+                    {
+                        ItemId = jade.ItemId,
+                        ImagePath = "pha4@csc.com_jade" + i.ToString() + ".jpg",
+                        IsMainImage = i == 0
+                    };
+                    _context.ItemImage.Add(itemImage);
+
+                }
+                _context.SaveChanges();
+
             }
 
             var items1 = new List<Item>();
@@ -152,6 +294,12 @@ namespace vnexchange1.Controllers
 
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Categories = _context.Category.Where(x => x.ParentCategory == 0).OrderBy(x => x.CategoryOrder).ToList();
+
+            ViewBag.SearchText = "all";
+            ViewBag.LocationID = 0;
+            ViewBag.ItemTypeID = 0;
+            ViewBag.CategoryID = 0;
 
             return View(items1);
         }
@@ -181,7 +329,102 @@ namespace vnexchange1.Controllers
             var user = _context.Users.First(x => x.Id == item.ItemOwner);
             item.ItemOwner = user != null ? user.UserName : string.Empty;
 
+            GenerateBreadCrumb(item.ItemCategory);
+
+            ViewBag.SearchText = "all";
+            ViewBag.LocationID = 0;
+            ViewBag.ItemTypeID = 0;
+            ViewBag.CategoryID = 0;
+
             return View(item);
+        }
+
+        private void GenerateBreadCrumb(int itemCategory)
+        {
+            var category = _context.Category.FirstOrDefault(x => x.CategoryId == itemCategory);
+
+            var breadCrumb = new List<Category>();
+
+            if (category.ParentCategory != 0)
+            {
+                var parentCategory = _context.Category.FirstOrDefault(x => x.CategoryId == category.ParentCategory);
+                breadCrumb.Add(parentCategory);
+            }
+
+            breadCrumb.Add(category);
+
+            ViewBag.BreadCrumb = breadCrumb;
+        }
+
+        [HttpGet("/items/search/{search}", Name = "Search")]
+        public IActionResult Search(string search)
+        {
+            var results = _context.Item.Where(x => x.ItemTitle.Contains(search)).ToList();
+
+            foreach (Item item in results)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = _context.Location.First(x => x.LocationId == parseResult).LocationName;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+            }
+
+            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Categories = _context.Category.Where(x => x.ParentCategory == 0).OrderBy(x => x.CategoryOrder).ToList();
+
+            ViewBag.SearchText = "all";
+            ViewBag.LocationID = 0;
+            ViewBag.ItemTypeID = 0;
+            ViewBag.CategoryID = 0;
+
+            return View(results);
+        }
+
+        //[HttpGet("/items/search/{advanceSearchText}/{location}/{category}/{itemType}", Name = "AdvanceSearch")]
+        public IActionResult Search(string advanceSearchText, string location, int category, int itemType)
+        {
+
+            var category1 = _context.Category.FirstOrDefault(x => x.CategoryId == category);
+            var subCategories = new List<string>();
+            if (category1 != null && category1.ParentCategory == 0)
+            {
+                var subCategories1 = _context.Category.Where(x => x.ParentCategory == category1.CategoryId).ToList();
+                foreach (var subCategory in subCategories1)
+                {
+                    subCategories.Add(subCategory.CategoryId.ToString());
+                }
+            }
+
+            var results = _context.Item.Where(x => (advanceSearchText == "all" || x.ItemTitle.Contains(advanceSearchText)) && 
+                (location == "0" || x.ItemLocation == location) && 
+                (category == 0 || x.ItemCategory == category || subCategories.IndexOf(x.ItemCategory.ToString()) > 0)  && 
+                (itemType == 0 || x.ItemType == itemType)).ToList();
+
+
+
+            foreach (Item item in results)
+            {
+                var parseResult = -1;
+                int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = _context.Location.First(x => x.LocationId == parseResult).LocationName;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+            }
+
+            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Categories = _context.Category.OrderBy(x => x.CategoryOrder).ToList();
+
+            ViewBag.SearchText = advanceSearchText;
+            ViewBag.LocationID = location;
+            ViewBag.ItemTypeID = itemType;
+            ViewBag.CategoryID = category;
+
+            return View(results);
         }
 
         // GET: Items/Create

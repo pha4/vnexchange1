@@ -26,10 +26,10 @@
         <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 
         <!-- Bootstrap core CSS -->
-        <link href="~/bootstrap/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
-
-        <!-- Font Awesome CSS -->
-        <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true">
+        <link href="~/assets/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
+        <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+        <!-- Font Awesome CSS -->        
 
         <!-- Plugins -->
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true">
@@ -39,23 +39,20 @@
 
         <!-- Custom css -->
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
-        <script src="~/js/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+        <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
         
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>*@
 
+        
+        <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true"/>
         <!--bootstrap JavaScript file  -->
-        <script src="~/assets/js/bootstrap.js"></script>
-        <!--Slider JavaScript file  -->
-        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
-        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
+        
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <!-- Favicon -->
         <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
 
@@ -64,30 +61,26 @@
         <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 
         <!-- Bootstrap core CSS -->
-        <link href="~/bootstrap/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
-
+        <link href="~/assets/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
+        <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
         <!-- Font Awesome CSS -->
-        <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true">
-
         <!-- Plugins -->
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true">
 
         <!-- Worthy core CSS file -->
         <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
-        <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
-        <link href="~/css/animations.css" rel="stylesheet">
-        <link href="~/css/style.css" rel="stylesheet">        
-        <!--bootstrap JavaScript file  -->
-        <script src="~/assets/js/bootstrap.js"></script>
-        <!--Slider JavaScript file  -->
-        <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
-        <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
+
         <!-- Custom css -->
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
-        @*<script src="~/js/jquery.js"></script>*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+        <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
+
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>*@
+
+
+        <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true" />
         
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
@@ -173,7 +166,7 @@
                                             <li><a href="#about">Thông tin</a></li>
                                         </ul>*@
                                         <ul class="nav navbar-nav navbar-right">            
-                                            <li style="margin-top: 20px;"><input id="txtSearchBox" type="text" class="fl form-control" /></li>
+                                            <li style="margin-top: 20px;"><input id="txtSearchBox" type="text" placeholder="Từ khóa..." class="fl form-control" /></li>
 
                                             @await Html.PartialAsync("_LoginPartial")
                                             @*<li><a asp-area="" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
@@ -231,10 +224,15 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
-
+    <script src="~/assets/js/jquery-1.10.2.js"></script>
+    @*<script src="~/assets/js/bootstrap.js"></script>*@
+    <!--Slider JavaScript file  -->
+    <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
+    <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
+    <script src="~/js/jquery.rateit.js" asp-append-version="true"></script>    
     <script type="text/javascript">
 
-        $("#txtSearchBox").keypress(function (e) {
+        $@*("#txtSearchBox").keypress(function (e) {
             if (e.which == 13) {
                 var url = '@Url.Action("SearchItem", "Items")';
                 var searchText = $(this).val();
@@ -253,12 +251,8 @@
                 });
             }
             //return false;
-        });
+        });*@
 
-        $(function () {
-            $('#mi-slider').catslider();
-            switchSlider();
-        });
         // Read a page's GET URL variables and return them as an associative array.
         function getUrlVars() {
             var vars = [], hash;
@@ -280,6 +274,69 @@
                 switchSlider();
             }, 5000);
         };
+
+        function search(object)
+        {
+            var search = $(object).val();
+            window.location.href = "/items/search/" + search;
+        };
+
+        function advanceSearch() {
+            var advanceSearchText = $("#txtAdvanceSearchText").val();
+            advanceSearchText = advanceSearchText == "" ? "all" : advanceSearchText;
+            var location = $("#cboLocations input[type='hidden']").val();
+            var itemType = $("#cboItemTypes input[type='hidden']").val();
+            var category = $("#cboCategories input[type='hidden']").val();
+
+            window.location.href = "/items/search/" + advanceSearchText + "/" + location + "/" + category + "/" + itemType;
+        };
+
+        $(function () {
+
+            $('#mi-slider').catslider();
+            switchSlider();
+            $('#txtSearchBox').keypress(function (e) {
+                if (e.which == 13) {
+                    search(this);
+                }
+            });
+
+            //$('#txtAdvanceSearchText').keypress(function (e) {
+            //    if (e.which == 13) {
+            //        advanceSearch();
+            //    }
+            //});
+
+            $("#listCategories").on('click', 'li a', function () {
+                $("#cboCategories #spanCategoryText").text($(this).text());
+                $("#cboCategories input[type='hidden']").val($(this).attr("id"));
+            });
+
+            $("#listLocations").on('click', 'li a', function () {
+                $("#cboLocations #spanLocationText").text($(this).text());
+                $("#cboLocations input[type='hidden']").val($(this).attr("id"));
+            });
+
+            $("#listItemTypes").on('click', 'li a', function () {
+                $("#cboItemTypes #spanItemTypeText").text($(this).text());
+                $("#cboItemTypes input[type='hidden']").val($(this).attr("id"));
+            });
+
+            var searchText = "@ViewBag.SearchText";
+            $("#txtAdvanceSearchText").val(searchText == "all" ? "" : searchText);
+
+            var locationID = "@ViewBag.LocationID";
+            var locationText = $("#listLocations a[id='" + locationID + "']").text();
+            $("#cboLocations #spanLocationText").text(locationText);
+
+            var itemTypeID = "@ViewBag.ItemTypeID";
+            var itemTypeText = $("#listItemTypes a[id='" + itemTypeID + "']").text();
+            $("#cboItemTypes #spanItemTypeText").text(itemTypeText);
+
+            var categoryID = "@ViewBag.CategoryID";
+            var categoryText = $("#listCategories a[id='" + categoryID + "']").text();
+            $("#cboCategories #spanCategoryText").text(categoryText);
+        });
     </script>
 </body>
 </html>

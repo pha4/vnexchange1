@@ -195,7 +195,36 @@ namespace vnexchange1.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Location", x => new { x.LocationId });
-                });            
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRating",
+                columns: table => new
+                {                    
+                    RatingID = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<string>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    RatedBy = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRating", x => new { x.UserID, x.RatedBy });
+                    table.ForeignKey(
+                        name: "FK_UserRating_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRating_AspNetUsers_UserId",
+                        column: x => x.RatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            
 
             migrationBuilder.CreateTable(
                 name: "Item",
@@ -252,6 +281,33 @@ namespace vnexchange1.Data.Migrations
                         column: x => x.ItemLocation,
                         principalTable: "ItemType",
                         principalColumn: "ItemTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemComment",
+                columns: table => new
+                {
+                    CommentID = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<string>(nullable: false),
+                    ItemID = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemComment", x => new { x.CommentID });
+                    table.ForeignKey(
+                        name: "FK_ItemComment_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemComment_Item_ItemID",
+                        column: x => x.ItemID,
+                        principalTable: "Item",
+                        principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

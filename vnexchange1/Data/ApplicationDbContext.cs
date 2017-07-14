@@ -32,5 +32,9 @@ namespace vnexchange1.Data
         public DbSet<vnexchange1.Models.Location> Location { get; set; }
 
         public DbSet<ItemType> ItemType { get; set; }
+
+        public DbSet<UserRating> UserRating { get; set; }
+
+        public DbSet<ItemComment> ItemComment { get; set; }
     }
 }

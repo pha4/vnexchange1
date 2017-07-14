@@ -29,7 +29,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\css\rateit.css" />
     <Content Include="wwwroot\images\toicanbanco.png" />
+    <Content Include="wwwroot\img\nuochoa1.jpg" />
+    <Content Include="wwwroot\img\nuochoa2.jpg" />
+    <Content Include="wwwroot\img\sinhto1.jpg" />
+    <Content Include="wwwroot\img\sinhto2.jpg" />
+    <Content Include="wwwroot\js\jquery.rateit.js" />
+    <Content Include="wwwroot\uploads\nuochoa1.jpg" />
+    <Content Include="wwwroot\uploads\nuochoa2.jpg" />
+    <Content Include="wwwroot\uploads\sinhto1.jpg" />
+    <Content Include="wwwroot\uploads\sinhto2.jpg" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -53,10 +63,6 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
-    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

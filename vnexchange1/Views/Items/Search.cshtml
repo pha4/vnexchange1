@@ -16,7 +16,7 @@
     {<a asp-action="Create">Đăng tin</a>}
 </p>
 <div class="col-md-12">
-    <div class="well well-lg offer-box text-center" style="">
+    <div class="well well-lg offer-box text-center" style="">        
         <form class="navbar-form" role="search">
             <div class="form-group">
                 <input placeholder="Từ Khóa..." class="form-control" type="text" id="txtAdvanceSearchText">
@@ -198,7 +198,11 @@
                 {
                     <img src="~/uploads/@item.Images.First().ImagePath" alt="" style="border: 1px solid #e1e1e1; float: left;">
                 }
-                <img src="~/img/default.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                else
+                {
+                    <img src="~/img/default.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                }
+                
             </div>
             <div class="col-md-9 caption" style="float: left;">
                 <h3 style="margin: 0px 0px 5px 0px"><a href="~/items/details/@item.ItemId">@item.ItemTitle</a></h3>

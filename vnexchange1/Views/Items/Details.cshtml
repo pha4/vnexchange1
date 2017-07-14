@@ -9,8 +9,35 @@
         $(obj).addClass("thumbnail-active");
         $(".main-imgage:visible").attr("src", "/uploads/" + src);
     }
+    $(function () {
+        $("#rateit11").bind('over', function (event, value) { $(this).attr('title', value); });
+    });
+
+    //we bind only to the rateit controls within the products div
+    $('#rateit11').bind('rated reset', function (e) {
+        var ri = $(this);
+
+        //if the use pressed reset, it will get value: 0 (to be compatible with the HTML range control), we could check if e.type == 'reset', and then set the value to  null .
+        var value = ri.rateit('value');        
+
+        //maybe we want to disable voting?
+        ri.rateit('readonly', true);
+
+        $.ajax({
+            url: 'rateit.aspx', //your server side script
+            data: { id: @Model.ItemId, value: value }, //our data
+            type: 'POST',
+            success: function (data) {
+                $('#response').append('<li>' + data + '</li>');
+
+            },
+            error: function (jxhr, msg, err) {
+                $('#response').append('<li style="color:red">' + msg + '</li>');
+            }
+        });
+    });
 </script>
-<div>    
+<div>
     <div class="row">
         <div class="col-md-12">
             <div class="well well-lg text-center" style="">
@@ -20,6 +47,14 @@
         </div>
         <!-- /.col -->
         <!-- /.col -->
+    </div>
+    <div style="padding: 20px 0px 0px 0px;">
+        <a href="/">Trang chủ</a> <span id="spanSeperator">&gt;</span> 
+        @foreach (var item in ViewBag.BreadCrumb)
+        {
+            <a href="/items/@item.CategoryId">@item.CategoryName</a> <span id="spanSeperator">&gt;</span> 
+        }        
+        <span>@Model.ItemTitle</span>
     </div>
     <div class="main box-border" id="cknude" style="margin: 0px 0px 50px; padding: 0px 0px 30px 20px;">
         <h1 style="padding: 30px; font-size: 30px;">@Html.DisplayFor(model => model.ItemTitle)</h1>
@@ -31,9 +66,9 @@
                     {
                         <div onclick="thumbnailImage_Click(this, '@image.ImagePath');" class="thumbnail-normal @(@image.IsMainImage ? "thumbnail-active" : "")">
                             <img src="~/uploads/@image.ImagePath" alt="" style="float: left;">
-                        </div>                        
+                        </div>
                     }
-                }                
+                }
             </div>
             <div class="col-md-10">
                 @if (Model.Images != null && Model.Images.Count > 0)
@@ -42,22 +77,30 @@
                 }
                 else
                 {
-                    <img src="default.jpg" alt="" style="float: left;" class="main-imgage"> 
+                    <img src="default.jpg" alt="" style="float: left;" class="main-imgage">
                 }
-                
+
             </div>
             <div style="clear: both;"></div>
         </div>
+        
         <div class="col-md-6">
             <div class="" style="padding: 20px 0px 0px 0px; width: 100%; clear: both;">
                 <div class="caption" style="float: left; padding: 0px 0px 0px 20px;">
-                    <p><strong>Đăng bởi:</strong> <a href="#" style="font-weight: bold;">@Html.DisplayFor(model => model.ItemOwner)</a> (Đánh giá: 5 sao)</p>
+                    <p>
+                        <strong>Đăng bởi:</strong> <a href="#" style="font-weight: bold;">@Html.DisplayFor(model => model.ItemOwner)</a>
+                        (Đánh giá: 
+                        <div class="rateit" id="rateit11">
+                        </div>
+
+                        5 sao)
+                    </p>
                     <p><strong>Ngày đăng:</strong> @Html.DisplayFor(model => model.ItemDate)</p>
                     <p><strong>Tình trạng:</strong> Mới 95%</p>
                     <p><strong>Hãng sản xuất:</strong> <span style="font-weight: bold; color: green;">@Html.DisplayFor(model => model.ItemManufacturer)</span></p>
                     <p><strong>Giá bán</strong> <span style="font-weight: bold; color: red;"> @Html.DisplayFor(model => model.ItemPrice)</span></p>
                     <p>
-                        <strong>Ghi chú:</strong> @Html.DisplayFor(model => model.ItemDescription)...
+                        <strong>Ghi chú:</strong> @Model.ItemDescription...
                         <a href="#">Xem thêm</a>
                     </p>
                     <p><strong>Tôi muốn:</strong></p>
@@ -90,8 +133,8 @@
                                 <a href="#" class="btn btn-default" role="button">Cho</a>}
                         }
                         @*<a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModalMua">Mua</a>
-                        <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
-                        <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>*@
+                            <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
+                            <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>*@
                     </p>
                 </div>
             </div>

@@ -80,7 +80,7 @@ namespace vnexchange1.Data
             {
             new Category{CategoryName="Bếp",CategoryOrder = 400,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
             new Category{CategoryName="Nội thất",CategoryOrder = 401,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"},
-            new Category{CategoryName="Phòng tắm",CategoryOrder = 402,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"}            
+            new Category{CategoryName="Phòng tắm",CategoryOrder = 402,CategoryImage ="img/books.png", CategoryIcon = "../img/agenda.png"}
             };
 
             AddCategoryAndSubCategories(item3, categories3, context);
@@ -95,8 +95,30 @@ namespace vnexchange1.Data
             new Category{CategoryName="Phòng tắm",CategoryOrder = 502,CategoryImage ="img/housewares1.png", CategoryIcon = "../img/agenda.png"}
             };
 
-            AddCategoryAndSubCategories(item4, categories4, context);            
-            
+            AddCategoryAndSubCategories(item4, categories4, context);
+
+            var item5 = new Category { CategoryName = "Đồ dùng nam", CategoryOrder = 5, CategoryImage = "img/manClothes.png", CategoryIcon = "../img/polo.png" };
+
+            var categories5 = new List<Category>()
+            {
+                new Category{CategoryName="Quần áo công sở",CategoryOrder = 600,CategoryImage ="img/manClothes.png", CategoryIcon = "../img/polo.png"},
+                new Category{CategoryName="Phụ kiện", CategoryOrder = 601,CategoryImage ="img/manClothes.png", CategoryIcon = "../img/polo.png"},
+                new Category{CategoryName="Quần áo thể thao",CategoryOrder = 602,CategoryImage ="img/manClothes.png", CategoryIcon = "../img/agenda.png"}
+            };
+
+            AddCategoryAndSubCategories(item5, categories5, context);
+
+            var item6 = new Category { CategoryName = "Phụ kiện nữ", CategoryOrder = 6, CategoryImage = "img/accessories.png", CategoryIcon = "../img/cosmetics.png" };
+
+            var categories6 = new List<Category>()
+            {
+                new Category{CategoryName="Đồ trang điểm",CategoryOrder = 700,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Nước hoa", CategoryOrder = 701,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Ví, giày, kẹp tóc",CategoryOrder = 702,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"}
+            };
+
+            AddCategoryAndSubCategories(item6, categories6, context);
+
         }
 
 
