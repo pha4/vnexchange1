@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using vnexchange1.Data;
 using vnexchange1.Models;
+using vnexchange1.Object;
+using vnexchange1.PaginatedList;
 
 namespace vnexchange1.Controllers
 {
@@ -27,8 +29,8 @@ namespace vnexchange1.Controllers
         }
 
         // GET: Items        
-        [HttpGet("/items/{id}", Name = "ItemList")]
-        public IActionResult Index(int? id)
+        //[HttpGet("/items/{id}/{page}", Name = "ItemList")]
+        public IActionResult Index(int? id, int? page)
         {
             //if (!_context.Item.Any())
             if (true)
@@ -266,6 +268,7 @@ namespace vnexchange1.Controllers
             var items1 = new List<Item>();
             if (id != null)
             {
+                
                 items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
                 var subCategories = _context.Category.Where(x => x.ParentCategory == id).ToList();
                 foreach (var subCategory in subCategories)
@@ -289,19 +292,19 @@ namespace vnexchange1.Controllers
 
                 var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
                 item.Images = images;
-            }
 
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
+            }          
 
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.Categories = _context.Category.Where(x => x.ParentCategory == 0).OrderBy(x => x.CategoryOrder).ToList();
+            SetViewBagData("all", 0, 0, 0, page ?? 1, 0);
 
-            ViewBag.SearchText = "all";
-            ViewBag.LocationID = 0;
-            ViewBag.ItemTypeID = 0;
-            ViewBag.CategoryID = 0;
+            var pagingResult = PaginatedList<Item>.Create(items1, page ?? 1, 10);
 
-            return View(items1);
+            return View(pagingResult);
         }
 
         // GET: Items/Details/5
@@ -329,12 +332,9 @@ namespace vnexchange1.Controllers
             var user = _context.Users.First(x => x.Id == item.ItemOwner);
             item.ItemOwner = user != null ? user.UserName : string.Empty;
 
-            GenerateBreadCrumb(item.ItemCategory);
+            GenerateBreadCrumb(item.ItemCategory);            
 
-            ViewBag.SearchText = "all";
-            ViewBag.LocationID = 0;
-            ViewBag.ItemTypeID = 0;
-            ViewBag.CategoryID = 0;
+            SetViewBagData("all", 0, 0, 0, 1, 0);
 
             return View(item);
         }
@@ -371,20 +371,53 @@ namespace vnexchange1.Controllers
                 item.Images = images;
             }
 
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.Categories = _context.Category.Where(x => x.ParentCategory == 0).OrderBy(x => x.CategoryOrder).ToList();
-
-            ViewBag.SearchText = "all";
-            ViewBag.LocationID = 0;
-            ViewBag.ItemTypeID = 0;
-            ViewBag.CategoryID = 0;
+            SetViewBagData("all", 0, 0, 0, 1, 0);
 
             return View(results);
         }
 
+        private void SetViewBagData(string searchText, int locationID, int itemTypeID, int categoryID, int page, int itemPerPage)
+        {
+            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
+            ViewBag.Categories = _context.Category.ToList();
+
+            ViewBag.SearchText = searchText;
+            ViewBag.LocationID = locationID;
+            ViewBag.ItemTypeID = itemTypeID;
+            ViewBag.CategoryID = categoryID;
+            ViewBag.ItemPerPage = itemPerPage;
+            ViewBag.Page = page;
+
+            var firstThreeNewestItems = _context.Item.OrderBy(x => x.ItemDate).Take(3).ToList();
+            var carouselHighlightItems = new List<CarouselHighlightItem>();
+            foreach (var firstThreeNewestItem in firstThreeNewestItems)
+            {
+                var carouselHighlightItem = new CarouselHighlightItem {
+                    ItemID = firstThreeNewestItem.ItemId,
+                    ItemOwner = firstThreeNewestItem.ItemOwner,
+                    ItemPrice = firstThreeNewestItem.ItemPrice,
+                    ItemTitle = firstThreeNewestItem.ItemTitle,
+                    ItemStatus = firstThreeNewestItem.ItemStatus,
+                    ItemLocation = firstThreeNewestItem.ItemLocation,
+                    ItemOwnerID = firstThreeNewestItem.ItemOwner
+                };
+
+                var itemImage = _context.ItemImage.FirstOrDefault(x => x.ItemId == firstThreeNewestItem.ItemId);
+                var owner = _context.Users.FirstOrDefault(x => x.Id == firstThreeNewestItem.ItemOwner);
+                var location = _context.Location.FirstOrDefault(x => x.LocationId.ToString() == firstThreeNewestItem.ItemLocation);
+
+                carouselHighlightItem.ItemImage = itemImage != null ? itemImage.ImagePath : "";
+                carouselHighlightItem.ItemOwner = owner != null ? owner.UserName : "";
+                carouselHighlightItem.ItemLocation = location != null ? location.LocationName : "";
+                carouselHighlightItems.Add(carouselHighlightItem);
+            }
+
+            ViewBag.CarouselHighlightItems = carouselHighlightItems;
+        }
+
         //[HttpGet("/items/search/{advanceSearchText}/{location}/{category}/{itemType}", Name = "AdvanceSearch")]
-        public IActionResult Search(string advanceSearchText, string location, int category, int itemType)
+        public IActionResult Search(string advanceSearchText, int location, int category, int itemType, int? page, int? itemPerPage)
         {
 
             var category1 = _context.Category.FirstOrDefault(x => x.CategoryId == category);
@@ -399,7 +432,7 @@ namespace vnexchange1.Controllers
             }
 
             var results = _context.Item.Where(x => (advanceSearchText == "all" || x.ItemTitle.Contains(advanceSearchText)) && 
-                (location == "0" || x.ItemLocation == location) && 
+                (location == 0 || x.ItemLocation == location.ToString()) && 
                 (category == 0 || x.ItemCategory == category || subCategories.IndexOf(x.ItemCategory.ToString()) > 0)  && 
                 (itemType == 0 || x.ItemType == itemType)).ToList();
 
@@ -415,16 +448,11 @@ namespace vnexchange1.Controllers
                 item.Images = images;
             }
 
-            ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
-            ViewBag.Categories = _context.Category.OrderBy(x => x.CategoryOrder).ToList();
+            SetViewBagData(advanceSearchText, location, itemType, category, page ?? 1, itemPerPage ?? 0);
 
-            ViewBag.SearchText = advanceSearchText;
-            ViewBag.LocationID = location;
-            ViewBag.ItemTypeID = itemType;
-            ViewBag.CategoryID = category;
+            var pagingResult = PaginatedList<Item>.Create(results, page ?? 1, itemPerPage ?? 10);
 
-            return View(results);
+            return View(pagingResult);
         }
 
         // GET: Items/Create

@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using vnexchange1.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<div id="mi-slider" class="mi-slider">
+    <ul class="mi-moveToLeft">
+        @foreach (var item in ViewBag.CarouselHighlightItems)
+        {
+            <li style="">
+                <a href="/items/details/@item.ItemID">
+                    <img src="/uploads/@item.ItemImage" alt="@item.ItemImage">
+                    <h4>@item.ItemTitle</h4>
+                </a>
+                <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">@item.ItemStatus</span> - @item.ItemPrice</span>
+                <span style="font-weight: bold;"><a href="#" style="display: inline;">@item.ItemOwner</a> - <span>@item.ItemLocation</span></span>
+            </li>
+        }
+    </ul>
+    <ul class="mi-moveFromRight mi-current">
+        @foreach (var item in ViewBag.CarouselHighlightItems)
+        {
+            <li style="">
+                <a href="/items/details/@item.ItemID">
+                    <img src="/uploads/@item.ItemImage" alt="@item.ItemImage">
+                    <h4>@item.ItemTitle</h4>
+                </a>
+                <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">@item.ItemStatus</span> - @item.ItemPrice</span>
+                <span style="font-weight: bold;"><a href="#" style="display: inline;">@item.ItemOwner</a> - <span>@item.ItemLocation</span></span>
+            </li>
+        }
+    </ul>
+    <ul class="mi-moveToRight">
+        @foreach (var item in ViewBag.CarouselHighlightItems)
+        {
+            <li style="">
+                <a href="/items/details/@item.ItemID">
+                    <img src="/uploads/@item.ItemImage" alt="@item.ItemImage">
+                    <h4>@item.ItemTitle</h4>
+                </a>
+                <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">@item.ItemStatus</span> - @item.ItemPrice</span>
+                <span style="font-weight: bold;"><a href="#" style="display: inline;">@item.ItemOwner</a> - <span>@item.ItemLocation</span></span>
+            </li>
+        }
+    </ul>
+    <ul>
+        <li>
+            <a href="#">
+                <img src="/assets/ItemSlider/images/12.jpg" alt="img12"><h4>Carry-Ons</h4>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="/assets/ItemSlider/images/13.jpg" alt="img13"><h4>Duffel Bags</h4>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="/assets/ItemSlider/images/14.jpg" alt="img14"><h4>Laptop Bags</h4>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="/assets/ItemSlider/images/15.jpg" alt="img15"><h4>Briefcases</h4>
+            </a>
+        </li>
+    </ul>
+    <nav id="navSlider">
+        <a href="#" class="">Nổi bật</a>
+        <a href="#" class="mi-selected">Hàng hiếm</a>
+        <a href="#" class="">Mới đăng</a>
+    </nav>
+</div>

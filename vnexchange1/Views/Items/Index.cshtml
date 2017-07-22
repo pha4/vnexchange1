@@ -1,5 +1,6 @@
-﻿@model IEnumerable<vnexchange1.Models.Item>
+﻿@model PaginatedList<vnexchange1.Models.Item>
 @using vnexchange1.Data;
+@using vnexchange1.PaginatedList;
 @{
     ViewData["Title"] = "Danh muc";
 }
@@ -16,170 +17,11 @@
     {<a asp-action="Create">Đăng tin</a>}
 </p>
 <div class="col-md-12">
-    <div class="well well-lg offer-box text-center" style="">
-        <form class="navbar-form" role="search">
-            <div class="form-group">
-                <input placeholder="Từ Khóa..." class="form-control" type="text" id="txtAdvanceSearchText">
-            </div>
-            <div class="form-group">
-                <div class="btn-group">
-                    <button type="button" id="cboLocations" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                        <span id="spanLocationText">Tất cả khu vực</span>
-                        <span class="caret"></span>
-                        <input type="hidden" value="@ViewBag.LocationID" />
-                    </button>
-                    <ul class="dropdown-menu" id="listLocations">
-                        <li><a href="javascript:void(0);" id="0">Tất cả khu vực</a></li>
-                        <li class="divider"></li>
-                        @foreach (var location in ViewBag.Locations)
-                        {
-                            <li><a href="javascript:void(0);" id="@location.LocationId">@location.LocationName</a></li>
-                            <li class="divider"></li>
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="btn-group">
-                    <button type="button" id="cboCategories" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        <span id="spanCategoryText">Tất cả danh mục</span>
-                        <span class="caret"></span>
-                        <input type="hidden" value="@ViewBag.CategoryID" />
-                    </button>
-                    <ul class="dropdown-menu" id="listCategories">
-                        <li><a href="javascript:void(0);" id="0">Tất cả danh mục</a></li>
-                        <li class="divider"></li>
-                        @foreach (var category in ViewBag.Categories)
-                        {
-                            <li><a href="javascript:void(0);" id="@category.CategoryId">@category.CategoryName</a></li>
-                            <li class="divider"></li>
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="btn-group">
-                    <button id="cboItemTypes" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                        <span id="spanItemTypeText">Tất cả loại</span>
-                        <span class="caret"></span>
-                        <input type="hidden" value="@ViewBag.ItemTypeID" />
-                    </button>
-                    <ul class="dropdown-menu" id="listItemTypes">
-                        <li><a href="javascript:void(0);" id="0">Tất cả loại</a></li>
-                        <li class="divider"></li>
-                        @foreach (var category in ViewBag.ItemTypes)
-                        {
-                            <li><a href="javascript:void(0);" id="@category.ItemTypeId">@category.ItemTypeName</a></li>
-                            <li class="divider"></li>
-                        }
-                    </ul>
-                </div>
-            </div>
-            <button type="button" class="btn btn-warning" onclick="advanceSearch(); return false;">Tìm</button>
-        </form>
+    <div class="well well-lg offer-box text-center" style="">        
+        @await Html.PartialAsync("_SearchBoxPartial")
     </div>
-    <div class="main box-border">
-        <div id="mi-slider" class="mi-slider">
-            <ul class="mi-moveToLeft">
-                <li style="">
-                    <a href="chi-tiet.html?san-pham=cknude">
-                        <img src="~/img/cknude1.jpg" alt="img01">
-                        <h4>Giày cao gót Charles &amp; Keith, hồng nude chính hãng</h4>
-                    </a>
-                    <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">Cũ</span> - 3.200.000</span>
-                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Ngô Đắc Lâm</a> - <span>Tân Bình</span></span>
-                </li>
-                <li>
-                    <a href="chi-tiet.html?san-pham=rayban">
-                        <img src="/assets/ItemSlider/images/7.jpg" alt="img01">
-                        <h4>Cần đổi lấy kính Police loại tương tự</h4>
-                    </a>
-                    <span style="color: grey; display: block;">Cũ - 95%</span>
-                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Phúc Hà</a> - <span>Bình Thạnh</span></span>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="~/img/car.jpg" alt="img01">
-                        <h4>Xe đua mô hình Kidoozie dành cho trẻ em</h4>
-                    </a>
-                    <span style="color: red; font-weight: bold; display: block;"><span style="color: grey;">Cũ</span> - 490.000</span>
-                    <span style="font-weight: bold;"><a href="#" style="display: inline;">Little Girl</a> - <span>Tân Bình</span></span>
-                </li>
-                <li>
-                    <a href="chi-tiet.html?san-pham=converse">
-                        <img src="~/img/converse1.jpg" alt="img04"><h4>Cần tìm giày hiếm như hình, mua giá cao hoặc đổi Wave tàu 150cc</h4>
-                    </a>
-                    <span style="font-weight: bold;"><a href="chi-tiet.html?san-pham=converse" style="display: inline;">Lệ Rơi</a> - <span>Tuyên Quang</span></span>
-                </li>
-            </ul>
-            <ul class="mi-moveFromRight mi-current">
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/5.jpg" alt="img05"><h4>Tommny Belt, size 7"</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/6.jpg" alt="img06"><h4>Winter hood, from my daddy</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/7.jpg" alt="img07"><h4>Rayban aviator, just like new</h4>
-                    </a>
-                </li>
-                <li style="">
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/8.jpg" alt="img08"><h4>Scarves</h4>
-                    </a>
-                </li>
-            </ul>
-            <ul class="mi-moveToRight">
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/9.jpg" alt="img09"><h4>Casual</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/10.jpg" alt="img10"><h4>Luxury</h4>
-                    </a>
-                </li>
-                <li style="">
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/11.jpg" alt="img11"><h4>Sport</h4>
-                    </a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/12.jpg" alt="img12"><h4>Carry-Ons</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/13.jpg" alt="img13"><h4>Duffel Bags</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/14.jpg" alt="img14"><h4>Laptop Bags</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/assets/ItemSlider/images/15.jpg" alt="img15"><h4>Briefcases</h4>
-                    </a>
-                </li>
-            </ul>
-            <nav id="navSlider">
-                <a href="#" class="">Nổi bật</a>
-                <a href="#" class="mi-selected">Hàng hiếm</a>
-                <a href="#" class="">Mới đăng</a>
-            </nav>
-        </div>
-
+    <div class="main box-border">        
+        @await Html.PartialAsync("_SliderPartial")
     </div>
     <br>
 </div>
@@ -197,14 +39,13 @@
                 @if (item.Images != null && item.Images.Count > 0)
                 {
                     <img src="~/uploads/@item.Images.First().ImagePath" alt="" style="border: 1px solid #e1e1e1; float: left;">
-                }
-                <img src="~/img/default.jpg" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                }                
             </div>
             <div class="col-md-9 caption" style="float: left;">
                 <h3 style="margin: 0px 0px 5px 0px"><a href="~/items/details/@item.ItemId">@item.ItemTitle</a></h3>
                 <p>@item.ItemDescription...<a>Xem thêm</a></p>
                 <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice</strong></p>
-                <p style="font-weight: bold;"><a href="#">@User.Identity.Name</a> - @item.ItemLocation</p>
+                <p style="font-weight: bold;"><a href="#">@item.ItemOwner</a> - @item.ItemLocation</p>
                 <p>
                     @if (item.ItemType == 1)
                     {
@@ -228,6 +69,21 @@
             </div>
         </div>
     }
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"       
+       asp-route-page="@(Model.PageIndex - 1)"       
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"       
+       asp-route-page="@(Model.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
 </div>
 <script>
 

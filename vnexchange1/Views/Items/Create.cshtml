@@ -2,10 +2,10 @@
 @model vnexchange1.Models.Item
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Đăng tin mới";
 }
 
-<h2>Create</h2>
+@*<h2>Đăng tin mới</h2>*@
 <script>
     // Scrolls to the selected menu item on the page
     $(function () {
@@ -145,7 +145,7 @@
 @*<form asp-action="Create">*@
 <form enctype="multipart/form-data">
     <div class="form-horizontal">
-        <h4>Item</h4>
+        @*<h4>Item</h4>*@
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -345,10 +345,15 @@
     <!-- section end -->
 </form>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}    
+    <script>
+        $(function () {
+            //tinymce.init({ selector: 'textarea' });
+        });        
+    </script>
 }

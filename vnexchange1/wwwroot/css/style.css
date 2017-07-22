@@ -722,7 +722,7 @@ textarea {
     height: 141px;
 }*/
 .bold {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 .price {
     font-weight: bold;
@@ -1383,4 +1383,18 @@ body {
             display: none;
         }
 }
+.italic {
+    font-style: italic !important;
+}
+.margin-left15 {
+    margin-left: 15px !important;
+}
+.categories-dropdown {
+    height: 500px;
+    overflow-y: auto;
+}
 
+.locations-dropdown {
+    height: 500px;
+    overflow-y: auto;
+}

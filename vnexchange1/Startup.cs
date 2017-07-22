@@ -108,12 +108,15 @@ namespace vnexchange1
                     template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
+                "ItemListPaging",                                              // Route name
+                "items/{id}/{page}/{itemPerPage}",                           // URL with parameters
+                new { controller = "items", action = "Index", id = "", page = "1", itemPerPage = "10"});  // Parameter defaults
+
+                routes.MapRoute(
                 "AdvanceSearch",                                              // Route name
-                "items/search/{advanceSearchText}/{location}/{category}/{itemType}",                           // URL with parameters
-                new { controller = "items", action = "search", advanceSearchText = "", location = "", category = "", itemType = "" }  // Parameter defaults
-
-
-        );
+                "items/search/{advanceSearchText}/{location}/{category}/{itemType}/{page}/{itemPerPage}",                           // URL with parameters
+                new { controller = "items", action = "search", advanceSearchText = "", location = "", category = "", itemType = "", page = "1", itemPerPage = "10" }  // Parameter defaults
+                );
             });
 
             app.UseStaticFiles();

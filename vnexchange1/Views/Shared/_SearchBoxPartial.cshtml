@@ -1,0 +1,88 @@
+﻿<form class="navbar-form" role="search">
+    <div class="form-group">
+        <input placeholder="Từ Khóa..." class="form-control" type="text" id="txtAdvanceSearchText" style="height:35px;">
+    </div>
+    <div class="form-group">
+        <div class="btn-group">
+            <button type="button" id="cboLocations" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                <span id="spanLocationText">Tất cả khu vực</span>
+                <span class="caret"></span>
+                <input type="hidden" value="@ViewBag.LocationID" />
+            </button>
+            <ul class="dropdown-menu locations-dropdown" id="listLocations">
+                <li><a href="javascript:void(0);" id="0">Tất cả khu vực</a></li>
+                <li class="divider"></li>
+                @foreach (var location in ViewBag.Locations)
+                {
+                    <li><a href="javascript:void(0);" id="@location.LocationId">@location.LocationName</a></li>
+                            <li class="divider"></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="btn-group">
+            <button type="button" id="cboCategories" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span id="spanCategoryText">Tất cả danh mục</span>
+                <span class="caret"></span>
+                <input type="hidden" value="@ViewBag.CategoryID" />
+            </button>
+            <ul class="dropdown-menu categories-dropdown" id="listCategories">
+                <li><a href="javascript:void(0);" id="0">Tất cả danh mục</a></li>
+                <li class="divider"></li>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    @if (category.ParentCategory == 0)
+                    {
+                        <li><a class="bold" href="javascript:void(0);" id="@category.CategoryId">@category.CategoryName</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="italic margin-left15" href="javascript:void(0);" id="@category.CategoryId">@category.CategoryName</a></li>
+                    }
+                    <li class="divider"></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="btn-group">
+            <button id="cboItemTypes" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span id="spanItemTypeText">Tất cả loại</span>
+                <span class="caret"></span>
+                <input type="hidden" value="@ViewBag.ItemTypeID" />
+            </button>
+            <ul class="dropdown-menu" id="listItemTypes">
+                <li><a href="javascript:void(0);" id="0">Tất cả loại</a></li>
+                <li class="divider"></li>
+                @foreach (var category in ViewBag.ItemTypes)
+                {
+                    <li><a href="javascript:void(0);" id="@category.ItemTypeId">@category.ItemTypeName</a></li>
+                            <li class="divider"></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="btn-group">
+            <button id="cboItemPerPage" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span id="spanItemPerPageText">Số tin hiển thị</span>
+                <span class="caret"></span>
+                <input type="hidden" value="@ViewBag.ItemPerPage" />
+            </button>
+            <ul class="dropdown-menu" id="listItemPerPage">
+                <li><a href="javascript:void(0);" id="0">Số tin hiển thị - 10</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0);" id="1">Số tin hiển thị - 15</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0);" id="2">Số tin hiển thị - 20</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0);" id="3">Số tin hiển thị - 25</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0);" id="4">Số tin hiển thị - 30</a></li>
+                <li class="divider"></li>
+            </ul>
+        </div>
+    </div>
+    <button type="button" class="btn btn-warning" onclick="advanceSearch(); return false;">Tìm</button>
+</form>
