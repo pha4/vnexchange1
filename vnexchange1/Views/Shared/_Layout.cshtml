@@ -1,4 +1,5 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using System.Globalization;
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +82,7 @@
         <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true" />
         
     </environment>
-    @Html.Raw(JavaScriptSnippet.FullScript)
+    @Html.Raw(JavaScriptSnippet.FullScript)    
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top dn">
@@ -288,7 +289,7 @@
             var category = $("#cboCategories input[type='hidden']").val();
             var itemPerPage = $("#cboItemPerPage input[type='hidden']").val();
 
-            window.location.href = "/items/search/" + advanceSearchText + "/" + location + "/" + category + "/" + itemType + "/" + itemPerPage;
+            window.location.href = "/items/search/" + advanceSearchText + "/" + location + "/" + category + "/" + itemType + "/1/" + itemPerPage;
         };
 
         $(function () {

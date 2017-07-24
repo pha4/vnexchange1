@@ -300,7 +300,7 @@ namespace vnexchange1.Controllers
                 }
             }          
 
-            SetViewBagData("all", 0, 0, 0, page ?? 1, 0);
+            SetViewBagData("all", 0, 0, 0, page ?? 1, 10);
 
             var pagingResult = PaginatedList<Item>.Create(items1, page ?? 1, 10);
 
@@ -334,7 +334,7 @@ namespace vnexchange1.Controllers
 
             GenerateBreadCrumb(item.ItemCategory);            
 
-            SetViewBagData("all", 0, 0, 0, 1, 0);
+            SetViewBagData("all", 0, 0, 0, 1, 10);
 
             return View(item);
         }
@@ -369,11 +369,19 @@ namespace vnexchange1.Controllers
 
                 var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
                 item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
             }
 
-            SetViewBagData("all", 0, 0, 0, 1, 0);
+            SetViewBagData("all", 0, 0, 0, 1, 10);
 
-            return View(results);
+            var pagingResult = PaginatedList<Item>.Create(results, 1, 10);
+
+            return View(pagingResult);
         }
 
         private void SetViewBagData(string searchText, int locationID, int itemTypeID, int categoryID, int page, int itemPerPage)
@@ -446,9 +454,15 @@ namespace vnexchange1.Controllers
 
                 var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
                 item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
             }
 
-            SetViewBagData(advanceSearchText, location, itemType, category, page ?? 1, itemPerPage ?? 0);
+            SetViewBagData(advanceSearchText, location, itemType, category, page ?? 1, itemPerPage ?? 10);
 
             var pagingResult = PaginatedList<Item>.Create(results, page ?? 1, itemPerPage ?? 10);
 

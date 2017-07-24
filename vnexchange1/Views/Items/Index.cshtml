@@ -1,6 +1,7 @@
 ﻿@model PaginatedList<vnexchange1.Models.Item>
 @using vnexchange1.Data;
 @using vnexchange1.PaginatedList;
+@using System.Globalization;
 @{
     ViewData["Title"] = "Danh muc";
 }
@@ -25,66 +26,7 @@
     </div>
     <br>
 </div>
-<div class="exchange-product">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-12 product" style="width: 100%; clear: both;">
-            <div class="col-md-3 nopadding product image-container">
-                <div class="product indicator">
-                    <img src="~/img/money.png">
-                    <img src="~/img/swap.png">
-                    <img src="~/img/binocular.png">
-                    <img src="~/img/give.png">
-                </div>
-                @if (item.Images != null && item.Images.Count > 0)
-                {
-                    <img src="~/uploads/@item.Images.First().ImagePath" alt="" style="border: 1px solid #e1e1e1; float: left;">
-                }                
-            </div>
-            <div class="col-md-9 caption" style="float: left;">
-                <h3 style="margin: 0px 0px 5px 0px"><a href="~/items/details/@item.ItemId">@item.ItemTitle</a></h3>
-                <p>@item.ItemDescription...<a>Xem thêm</a></p>
-                <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice</strong></p>
-                <p style="font-weight: bold;"><a href="#">@item.ItemOwner</a> - @item.ItemLocation</p>
-                <p>
-                    @if (item.ItemType == 1)
-                    {
-                        if (item.CanTrade)
-                        {<a href="#" class="btn btn-success margin-right5" role="button">Mua</a>}
-                        if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
-                        if (item.CanGiveAway)
-                        {<a href="#" class="btn btn-warning" role="button">Xin</a>}
-                    }
-                    else
-                    {
-                        if (item.CanTrade)
-                        {<a href="#" class="btn btn-danger margin-right5" role="button">Bán</a>}
-                        if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
-                        if (item.CanGiveAway)
-                        {<a href="#" class="btn btn-default" role="button">Cho</a>}
-                    }
-                </p>
-            </div>
-        </div>
-    }
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-
-    <a asp-action="Index"       
-       asp-route-page="@(Model.PageIndex - 1)"       
-       class="btn btn-default @prevDisabled">
-        Previous
-    </a>
-    <a asp-action="Index"       
-       asp-route-page="@(Model.PageIndex + 1)"
-       class="btn btn-default @nextDisabled">
-        Next
-    </a>
-</div>
+@await Html.PartialAsync("_ItemsListPartial")
 <script>
 
 

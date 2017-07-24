@@ -16,7 +16,7 @@ namespace vnexchange1.Models
 
         [Required, MaxLength(1000)]
         public string ItemDescription { get; set; }
-        [DataType(DataType.Currency)]
+        [DataType(DataType.Currency)]        
         public decimal ItemPrice { get; set; }
 
         [Required]
