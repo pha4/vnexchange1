@@ -268,7 +268,7 @@ namespace vnexchange1.Controllers
             var items1 = new List<Item>();
             if (id != null)
             {
-                
+
                 items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
                 var subCategories = _context.Category.Where(x => x.ParentCategory == id).ToList();
                 foreach (var subCategory in subCategories)
@@ -298,9 +298,11 @@ namespace vnexchange1.Controllers
                 {
                     item.ItemOwner = owner.UserName;
                 }
-            }          
+            }
 
-            SetViewBagData("all", 0, 0, 0, page ?? 1, 10);
+            SetViewBagData("all", 0, 0, 0, page ?? 1, 10, items1.Count() / 10);
+
+            ViewBag.Action = "Index";
 
             var pagingResult = PaginatedList<Item>.Create(items1, page ?? 1, 10);
 
@@ -332,9 +334,9 @@ namespace vnexchange1.Controllers
             var user = _context.Users.First(x => x.Id == item.ItemOwner);
             item.ItemOwner = user != null ? user.UserName : string.Empty;
 
-            GenerateBreadCrumb(item.ItemCategory);            
+            GenerateBreadCrumb(item.ItemCategory);
 
-            SetViewBagData("all", 0, 0, 0, 1, 10);
+            SetViewBagData("all", 0, 0, 0, 1, 10, 0);
 
             return View(item);
         }
@@ -377,14 +379,16 @@ namespace vnexchange1.Controllers
                 }
             }
 
-            SetViewBagData("all", 0, 0, 0, 1, 10);
+            SetViewBagData("all", 0, 0, 0, 1, 10, results.Count() / 10);
+
+            ViewBag.Action = "Search";
 
             var pagingResult = PaginatedList<Item>.Create(results, 1, 10);
 
             return View(pagingResult);
         }
 
-        private void SetViewBagData(string searchText, int locationID, int itemTypeID, int categoryID, int page, int itemPerPage)
+        private void SetViewBagData(string searchText, int locationID, int itemTypeID, int categoryID, int page, int itemPerPage, int numberOfPage)
         {
             ViewBag.Locations = _context.Location.OrderBy(x => x.SortOrder).ToList();
             ViewBag.ItemTypes = _context.ItemType.OrderBy(x => x.SortOrder).ToList();
@@ -401,7 +405,8 @@ namespace vnexchange1.Controllers
             var carouselHighlightItems = new List<CarouselHighlightItem>();
             foreach (var firstThreeNewestItem in firstThreeNewestItems)
             {
-                var carouselHighlightItem = new CarouselHighlightItem {
+                var carouselHighlightItem = new CarouselHighlightItem
+                {
                     ItemID = firstThreeNewestItem.ItemId,
                     ItemOwner = firstThreeNewestItem.ItemOwner,
                     ItemPrice = firstThreeNewestItem.ItemPrice,
@@ -422,6 +427,15 @@ namespace vnexchange1.Controllers
             }
 
             ViewBag.CarouselHighlightItems = carouselHighlightItems;
+
+            var pages = new List<int>();
+
+            for (var i = 1; i <= numberOfPage; i++)
+            {
+                pages.Add(i);
+            }
+
+            ViewBag.Pages = pages;
         }
 
         //[HttpGet("/items/search/{advanceSearchText}/{location}/{category}/{itemType}", Name = "AdvanceSearch")]
@@ -439,9 +453,9 @@ namespace vnexchange1.Controllers
                 }
             }
 
-            var results = _context.Item.Where(x => (advanceSearchText == "all" || x.ItemTitle.Contains(advanceSearchText)) && 
-                (location == 0 || x.ItemLocation == location.ToString()) && 
-                (category == 0 || x.ItemCategory == category || subCategories.IndexOf(x.ItemCategory.ToString()) > 0)  && 
+            var results = _context.Item.Where(x => (advanceSearchText == "all" || x.ItemTitle.Contains(advanceSearchText)) &&
+                (location == 0 || x.ItemLocation == location.ToString()) &&
+                (category == 0 || x.ItemCategory == category || subCategories.IndexOf(x.ItemCategory.ToString()) > 0) &&
                 (itemType == 0 || x.ItemType == itemType)).ToList();
 
 
@@ -462,7 +476,9 @@ namespace vnexchange1.Controllers
                 }
             }
 
-            SetViewBagData(advanceSearchText, location, itemType, category, page ?? 1, itemPerPage ?? 10);
+            SetViewBagData(advanceSearchText, location, itemType, category, page ?? 1, itemPerPage ?? 10, results.Count() / itemPerPage ?? 10);
+
+            ViewBag.Action = "Index";
 
             var pagingResult = PaginatedList<Item>.Create(results, page ?? 1, itemPerPage ?? 10);
 

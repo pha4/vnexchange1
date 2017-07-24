@@ -47,12 +47,32 @@
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
     }
 
-    <a asp-action="Index"
+    <a asp-action="@ViewBag.Action"
        asp-route-page="@(Model.PageIndex - 1)"
        class="btn btn-default @prevDisabled">
         Trang trước
     </a>
-    <a asp-action="Index"
+    @foreach (var page in ViewBag.Pages)
+    {
+        if (Model.PageIndex == page)
+        {
+            <a asp-action="@ViewBag.Action"
+               asp-route-page="@(page)"
+               class="btn btn-default pagination disabled">
+                @page
+            </a>
+        }
+        else
+        {
+            <a asp-action="@ViewBag.Action"
+               asp-route-page="@(page)"
+               class="btn btn-default pagination">
+                @page
+            </a>
+        }
+
+    }
+    <a asp-action="@ViewBag.Action"
        asp-route-page="@(Model.PageIndex + 1)"
        class="btn btn-default @nextDisabled">
         Trang sau
