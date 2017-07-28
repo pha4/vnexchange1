@@ -1,0 +1,48 @@
+@model vnexchange1.Models.ItemRequest
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ItemRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="RequestID" />
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestorID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestorID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestType)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>

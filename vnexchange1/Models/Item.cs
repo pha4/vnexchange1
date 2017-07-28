@@ -16,11 +16,11 @@ namespace vnexchange1.Models
 
         [Required, MaxLength(1000)]
         public string ItemDescription { get; set; }
-        [DataType(DataType.Currency)]        
+        [DataType(DataType.Currency)]
         public decimal ItemPrice { get; set; }
 
         [Required]
-        public int ItemCategory { get; set; }        
+        public int ItemCategory { get; set; }
 
         [Required]
         public string ItemOwner { get; set; }
@@ -43,7 +43,7 @@ namespace vnexchange1.Models
         public bool CanGiveAway { get; set; }
 
         public bool CanTrade { get; set; }
-        
+
         public ICollection<ItemImage> Images { get; set; }
 
         public bool IsApproved { get; set; }
@@ -52,6 +52,8 @@ namespace vnexchange1.Models
 
         public string ItemColor { get; set; }
 
-        public string ItemSize { get; set; }        
+        public string ItemSize { get; set; }
+
+        public bool IsClosed { get; set; }
     }
 }

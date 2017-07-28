@@ -108,16 +108,27 @@ namespace vnexchange1.Data
 
             AddCategoryAndSubCategories(item5, categories5, context);
 
-            var item6 = new Category { CategoryName = "Phụ kiện nữ", CategoryOrder = 6, CategoryImage = "img/accessories.png", CategoryIcon = "../img/cosmetics.png" };
+            var item6 = new Category { CategoryName = "Đồng hồ, trang sức", CategoryOrder = 6, CategoryImage = "img/accessories.png", CategoryIcon = "../img/cosmetics.png" };
 
             var categories6 = new List<Category>()
             {
-                new Category{CategoryName="Đồ trang điểm",CategoryOrder = 700,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
-                new Category{CategoryName="Nước hoa", CategoryOrder = 701,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
-                new Category{CategoryName="Ví, giày, kẹp tóc",CategoryOrder = 702,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"}
+                new Category{CategoryName="Đồng hồ",CategoryOrder = 700,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Trang sức", CategoryOrder = 701,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Giày dép",CategoryOrder = 702,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"}
             };
 
             AddCategoryAndSubCategories(item6, categories6, context);
+
+            var item7 = new Category { CategoryName = "Làm đẹp", CategoryOrder = 6, CategoryImage = "img/accessories.png", CategoryIcon = "../img/cosmetics.png" };
+
+            var categories7 = new List<Category>()
+            {
+                new Category{CategoryName="Mỹ phẩm",CategoryOrder = 700,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Nước hoa", CategoryOrder = 701,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"},
+                new Category{CategoryName="Son môi",CategoryOrder = 702,CategoryImage ="img/accessories.png", CategoryIcon = "../img/cosmetics.png"}
+            };
+
+            AddCategoryAndSubCategories(item7, categories7, context);
 
         }
 

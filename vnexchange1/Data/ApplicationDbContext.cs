@@ -36,5 +36,7 @@ namespace vnexchange1.Data
         public DbSet<UserRating> UserRating { get; set; }
 
         public DbSet<ItemComment> ItemComment { get; set; }
+
+        public DbSet<vnexchange1.Models.ItemRequest> ItemRequest { get; set; }
     }
 }

@@ -200,7 +200,7 @@ namespace vnexchange1.Data.Migrations
             migrationBuilder.CreateTable(
                 name: "UserRating",
                 columns: table => new
-                {                    
+                {
                     RatingID = table.Column<int>(nullable: false)
                     .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserID = table.Column<string>(nullable: false),
@@ -224,7 +224,7 @@ namespace vnexchange1.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            
+
 
             migrationBuilder.CreateTable(
                 name: "Item",
@@ -249,7 +249,8 @@ namespace vnexchange1.Data.Migrations
                     IsApproved = table.Column<bool>(nullable: false, defaultValue: 0),
                     ItemStatus = table.Column<string>(nullable: false, maxLength: 450),
                     ItemColor = table.Column<string>(nullable: false, maxLength: 450),
-                    ItemSize = table.Column<string>(nullable: false, maxLength: 450)                    
+                    ItemSize = table.Column<string>(nullable: false, maxLength: 450),
+                    IsClosed = table.Column<bool>(nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {
@@ -331,7 +332,35 @@ namespace vnexchange1.Data.Migrations
                         principalTable: "Item",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
-                });            
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemRequest",
+                columns: table => new
+                {
+                    RequestID = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemID = table.Column<int>(nullable: false),
+                    RequestorID = table.Column<string>(nullable: false),
+                    Message = table.Column<string>(nullable: false),
+                    RequestType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemRequest", x => new { x.RequestID });
+                    table.ForeignKey(
+                        name: "FK_ItemRequest_Item_ItemID",
+                        column: x => x.ItemID,
+                        principalTable: "Item",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemRequest_AspNetUsers_UserId",
+                        column: x => x.RequestorID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",

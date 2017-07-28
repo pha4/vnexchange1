@@ -1398,3 +1398,9 @@ body {
     height: 500px;
     overflow-y: auto;
 }
+.paging {
+    min-width: 40px !important;
+}
+.font12 .btn {
+    font-size: 12px;
+}
