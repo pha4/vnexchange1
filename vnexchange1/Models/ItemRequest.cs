@@ -12,6 +12,8 @@ namespace vnexchange1.Models
         public string RequestorID { get; set; }        
         public string Message { get; set; }
 
-        public int RequestType { get; set; }
+        public string RequestType { get; set; }
+
+        public bool IsRead { get; set; }
     }
 }

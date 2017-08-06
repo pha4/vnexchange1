@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using vnexchange1.PaginatedList;
 
 namespace vnexchange1.Models.ManageViewModels
 {
@@ -17,5 +18,23 @@ namespace vnexchange1.Models.ManageViewModels
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Email { get; set; }
+
+        public PaginatedList<Item> PostingItems { get; set; }
+
+        public PaginatedList<Item> WaitingItems { get; set; }
+
+        public PaginatedList<Item> ClosedItems { get; set; }
+
+        public PaginatedList<Item> HiddenItems { get; set; }
+
+        public PaginatedList<Item> InterestingItems { get; set; }
+
+        public int Waiting { get; set; }
+
+        public int Ended { get; set; }
     }
 }

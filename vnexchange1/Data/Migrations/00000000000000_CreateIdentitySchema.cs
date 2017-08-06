@@ -246,11 +246,11 @@ namespace vnexchange1.Data.Migrations
                     CanTrade = table.Column<bool>(nullable: false),
                     ItemCategory = table.Column<int>(nullable: false),
                     ItemLocation = table.Column<int>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false, defaultValue: 0),
+                    IsApproved = table.Column<bool>(nullable: false),
                     ItemStatus = table.Column<string>(nullable: false, maxLength: 450),
                     ItemColor = table.Column<string>(nullable: false, maxLength: 450),
                     ItemSize = table.Column<string>(nullable: false, maxLength: 450),
-                    IsClosed = table.Column<bool>(nullable: false, defaultValue: 0)
+                    IsClosed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,7 +343,8 @@ namespace vnexchange1.Data.Migrations
                     ItemID = table.Column<int>(nullable: false),
                     RequestorID = table.Column<string>(nullable: false),
                     Message = table.Column<string>(nullable: false),
-                    RequestType = table.Column<int>(nullable: false)
+                    RequestType = table.Column<int>(nullable: false),
+                    IsRead = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

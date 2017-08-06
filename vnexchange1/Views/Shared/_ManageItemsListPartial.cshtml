@@ -1,0 +1,61 @@
+﻿@model PaginatedList<vnexchange1.Models.Item>
+@using vnexchange1.PaginatedList;
+@*@await Html.PartialAsync("_PagingPartial")*@
+<br />
+<br />
+<div class="exchange-product">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12 product" style="width: 100%; clear: both;" id="item_@item.ItemId">
+            <div class="col-md-3 nopadding product image-container">
+                <div class="product indicator">
+                    <img src="~/img/money.png">
+                    <img src="~/img/swap.png">
+                    <img src="~/img/binocular.png">
+                    <img src="~/img/give.png">
+                </div>
+                @if (item.Images != null && item.Images.Count > 0)
+                {
+                    <img src="~/uploads/@item.Images.FirstOrDefault().ImagePath" alt="" style="border: 1px solid #e1e1e1; float: left;">
+                }
+            </div>
+            <div class="col-md-9 caption" style="float: left;">
+                <h3 style="margin: 0px 0px 5px 0px"><a href="~/items/details/@item.ItemId">@item.ItemTitle</a></h3>
+                <p>@item.ItemDescription...<a>Xem thêm</a></p>
+                <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice.ToString("#,### vnd")</strong></p>
+                <p style="font-weight: bold;"><a href="#">@item.ItemOwner</a> - @item.ItemLocation</p>
+                <p>
+                    @if (item.IsApproved && !item.IsClosed)
+                    {
+                        <a href="javascript:void(0);" class="btn btn-success margin-right5" role="button">Sửa</a>
+                        if (!item.IsHide)
+                        {
+                            <a href="javascript:void(0);" class="btn btn-primary margin-right5" role="button" onclick="Item[@item.ItemId].hide();">Ẩn</a>
+                        }                        
+                        <a href="javascript:void(0);" class="btn btn-warning" role="button" onclick="Item[@item.ItemId].close();">Đóng</a>
+                    }
+                    @if(item.IsHide)
+                    {
+                        <a href="javascript:void(0);" class="btn btn-primary margin-right5" role="button" onclick="Item[@item.ItemId].show();">Hiện</a>
+                    }
+                    @if (ViewBag.IsAdmin && !item.IsApproved)
+                    {
+                        <a href="javascript:void(0);" class="btn btn-primary margin-right5" role="button" onclick="Item[@item.ItemId].approve();">Duyệt</a>
+                    }
+                </p>
+            </div>
+        </div>
+        <script>
+            Item[@item.ItemId] = new Item(@item.ItemId);
+        </script>
+    }
+</div>
+<br />
+<br />
+<script>
+    GlobalConstant.HideItemActionURL = '@Url.Action("Hide", "Manage")';
+    GlobalConstant.CloseItemActionURL = '@Url.Action("Close", "Manage")';
+    GlobalConstant.ShowItemActionURL = '@Url.Action("Show", "Manage")';
+    GlobalConstant.ApproveItemActionURL = '@Url.Action("Approve", "Manage")';
+</script>
+@*@await Html.PartialAsync("_PagingPartial")*@

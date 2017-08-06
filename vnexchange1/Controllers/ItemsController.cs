@@ -47,7 +47,7 @@ namespace vnexchange1.Controllers
                     ItemDate = DateTime.Now,
                     ItemLocation = "7",
                     ItemPrice = 2300000,
-                    ItemType = 2,
+                    ItemType = 1,
                     CanTrade = true,
                     CanExchange = true,
                     CanGiveAway = false,
@@ -196,11 +196,11 @@ namespace vnexchange1.Controllers
             if (id != null)
             {
 
-                items1 = _context.Item.Where(x => x.ItemCategory == id).ToList();
+                items1 = _context.Item.Where(x => x.ItemCategory == id && x.IsApproved && !x.IsClosed && !x.IsHide).ToList();
                 var subCategories = _context.Category.Where(x => x.ParentCategory == id).ToList();
                 foreach (var subCategory in subCategories)
                 {
-                    items1.AddRange(_context.Item.Where(x => x.ItemCategory == subCategory.CategoryId));
+                    items1.AddRange(_context.Item.Where(x => x.ItemCategory == subCategory.CategoryId && x.IsApproved && !x.IsClosed && !x.IsHide));
                 }
 
                 ViewBag.Category = _context.Category.Where(x => x.CategoryId == id).First().CategoryName;
@@ -208,7 +208,7 @@ namespace vnexchange1.Controllers
             }
             else
             {
-                items1 = _context.Item.ToList();
+                items1 = _context.Item.Where(x => x.IsApproved && !x.IsClosed && !x.IsHide).ToList();
             }
 
             foreach (Item item in items1)
@@ -288,7 +288,7 @@ namespace vnexchange1.Controllers
         [HttpGet("/items/search/{search}", Name = "Search")]
         public IActionResult Search(string search)
         {
-            var results = _context.Item.Where(x => x.ItemTitle.Contains(search)).ToList();
+            var results = _context.Item.Where(x => x.ItemTitle.Contains(search) && x.IsApproved && !x.IsClosed && !x.IsHide).ToList();
 
             foreach (Item item in results)
             {
@@ -328,7 +328,7 @@ namespace vnexchange1.Controllers
             ViewBag.ItemPerPage = itemPerPage;
             ViewBag.Page = page;
 
-            var firstThreeNewestItems = _context.Item.OrderBy(x => x.ItemDate).Take(3).ToList();
+            var firstThreeNewestItems = _context.Item.Where(x => x.IsApproved && !x.IsClosed && !x.IsHide).OrderBy(x => x.ItemDate).Take(3).ToList();
             var carouselHighlightItems = new List<CarouselHighlightItem>();
             foreach (var firstThreeNewestItem in firstThreeNewestItems)
             {
@@ -383,7 +383,8 @@ namespace vnexchange1.Controllers
             var results = _context.Item.Where(x => (advanceSearchText == "all" || x.ItemTitle.Contains(advanceSearchText)) &&
                 (location == 0 || x.ItemLocation == location.ToString()) &&
                 (category == 0 || x.ItemCategory == category || subCategories.IndexOf(x.ItemCategory.ToString()) > 0) &&
-                (itemType == 0 || x.ItemType == itemType)).ToList();
+                (itemType == 0 || x.ItemType == itemType) &&
+                x.IsApproved && !x.IsClosed && !x.IsHide).ToList();
 
 
 
@@ -535,9 +536,23 @@ namespace vnexchange1.Controllers
             return Json(true);
         }
 
+        public JsonResult CreateRequest(string itemID, string requestType, string message)
+        {
+            var itemRequest = new ItemRequest() {
+                ItemID = itemID,
+                RequestType = requestType,
+                Message = message,
+                RequestorID = User.Identity.Name
+            };
+
+            _context.ItemRequest.Add(itemRequest);
+            _context.SaveChanges();
+            return Json(true);
+        }
+
         public JsonResult SearchItem(string searchText)
         {
-            var result = _context.Item.Where(x => x.ItemTitle.Contains(searchText)).ToList();
+            var result = _context.Item.Where(x => x.ItemTitle.Contains(searchText) && x.IsApproved && !x.IsClosed && !x.IsHide).ToList();
             return Json(result);
         }
 

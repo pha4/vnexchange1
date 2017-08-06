@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using vnexchange1.Models;
 using vnexchange1.Models.ManageViewModels;
 using vnexchange1.Services;
+using vnexchange1.PaginatedList;
+using vnexchange1.Data;
 
 namespace vnexchange1.Controllers
 {
@@ -22,6 +24,7 @@ namespace vnexchange1.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
         public ManageController(
           UserManager<ApplicationUser> userManager,
@@ -29,7 +32,7 @@ namespace vnexchange1.Controllers
           IOptions<IdentityCookieOptions> identityCookieOptions,
           IEmailSender emailSender,
           ISmsSender smsSender,
-          ILoggerFactory loggerFactory)
+          ILoggerFactory loggerFactory, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,6 +40,7 @@ namespace vnexchange1.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _context = context;
         }
 
         //
@@ -64,9 +68,218 @@ namespace vnexchange1.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                UserName = user.UserName,
+                Email = user.Email
             };
+
+            model = GetData(model, user);
+
             return View(model);
+        }
+
+        private IndexViewModel GetData(IndexViewModel model, ApplicationUser user)
+        {
+            var postingItems = new List<Item>();
+
+            postingItems = _context.Item.Where(x => x.ItemOwner == user.Id && x.IsApproved && !x.IsClosed).ToList();
+
+            foreach (Item item in postingItems)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = location ? _context.Location.First(x => x.LocationId == parseResult).LocationName : item.ItemLocation;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
+            }
+
+            model.PostingItems = PaginatedList<Item>.Create(postingItems, 1, 10000);
+
+            var waitingItems = new List<Item>();
+
+            //postingItems = _context.Item.Where(x => x.ItemOwner == user.Id && !x.IsApproved && !x.IsClosed).ToList();
+            if (user.Email != "pha4@csc.com")
+            {
+                waitingItems = _context.Item.Where(x => x.ItemOwner == user.Id && !x.IsApproved && !x.IsHide).ToList();
+                ViewBag.IsAdmin = false;
+            }
+            else
+            {
+                ViewBag.IsAdmin = true;
+                waitingItems = _context.Item.Where(x => !x.IsApproved && !x.IsHide).ToList();
+            }
+
+            foreach (Item item in waitingItems)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = location ? _context.Location.First(x => x.LocationId == parseResult).LocationName : item.ItemLocation;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
+            }
+
+            model.WaitingItems = PaginatedList<Item>.Create(waitingItems, 1, 10000);
+
+            var closedItems = new List<Item>();
+
+            closedItems = _context.Item.Where(x => x.ItemOwner == user.Id && x.IsClosed).ToList();
+
+
+            foreach (Item item in closedItems)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = location ? _context.Location.First(x => x.LocationId == parseResult).LocationName : item.ItemLocation;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
+            }
+
+            model.ClosedItems = PaginatedList<Item>.Create(closedItems, 1, 10000);
+
+            var hiddenItems = new List<Item>();
+
+            hiddenItems = _context.Item.Where(x => x.ItemOwner == user.Id && x.IsHide).ToList();
+
+            foreach (Item item in hiddenItems)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = location ? _context.Location.First(x => x.LocationId == parseResult).LocationName : item.ItemLocation;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }
+            }
+
+            model.HiddenItems = PaginatedList<Item>.Create(hiddenItems, 1, 100000);
+
+            var interestingItems = new List<Item>();
+            var itemRequests = new List<ItemRequest>();
+
+            var data = from item in _context.Item join itemrequest in _context.ItemRequest on item.ItemId.ToString() equals itemrequest.ItemID select item;
+
+            interestingItems = data.ToList();
+
+            foreach (Item item in interestingItems)
+            {
+                var parseResult = -1;
+                var location = int.TryParse(item.ItemLocation, out parseResult);
+                item.ItemLocation = location ? _context.Location.First(x => x.LocationId == parseResult).LocationName : item.ItemLocation;
+
+                var images = _context.ItemImage.Where(x => x.ItemId == item.ItemId).ToList();
+                item.Images = images;
+
+                var owner = _context.Users.FirstOrDefault(x => x.Id == item.ItemOwner);
+                if (owner != null)
+                {
+                    item.ItemOwner = owner.UserName;
+                }                
+            }
+
+            model.InterestingItems = PaginatedList<Item>.Create(interestingItems, 1, 100000);
+
+            ViewBag.NumberOfPosting = model.PostingItems.Count();
+            ViewBag.NumberOfWaiting = model.WaitingItems.Count();
+            ViewBag.NumberOfClosed = model.ClosedItems.Count();
+            ViewBag.NumberOfHidden = model.HiddenItems.Count();
+            ViewBag.NumberOfInterestingItems = model.InterestingItems.Count();
+
+            return model;
+        }
+
+        public JsonResult Hide(string itemID)
+        {
+            var item = _context.Item.First(x => x.ItemId.ToString() == itemID);
+            var user = GetCurrentUserAsync();
+            if (item != null && user != null)
+            {
+                if (_context.Users.First(x => x.Id == user.Result.Id) != null)
+                {
+                    item.IsHide = true;
+                    item.IsApproved = false;
+                    _context.Update(item);
+                    _context.SaveChanges();
+                    return Json(true);
+                }
+            }
+            return Json(false);
+        }
+
+        public JsonResult Show(string itemID)
+        {
+            var item = _context.Item.First(x => x.ItemId.ToString() == itemID);
+            var user = GetCurrentUserAsync();
+            if (item != null && user != null)
+            {
+                if (_context.Users.First(x => x.Id == user.Result.Id) != null)
+                {
+                    item.IsHide = false;
+                    _context.Update(item);
+                    _context.SaveChanges();
+                    return Json(true);
+                }
+            }
+            return Json(false);
+        }
+
+        public JsonResult Close(string itemID)
+        {
+            var item = _context.Item.First(x => x.ItemId.ToString() == itemID);
+            var user = GetCurrentUserAsync();
+            if (item != null && user != null)
+            {
+                if (_context.Users.First(x => x.Id == user.Result.Id) != null)
+                {
+                    item.IsClosed = true;
+                    _context.Update(item);
+                    _context.SaveChanges();
+                    return Json(true);
+                }
+            }
+            return Json(false);
+        }
+
+        public JsonResult Approve(string itemID)
+        {
+            var item = _context.Item.First(x => x.ItemId.ToString() == itemID);
+            var user = GetCurrentUserAsync();
+            if (item != null && user != null)
+            {
+                if (_context.Users.First(x => x.Id == user.Result.Id) != null)
+                {
+                    item.IsApproved = true;
+                    _context.Update(item);
+                    _context.SaveChanges();
+                    return Json(true);
+                }
+            }
+            return Json(false);
         }
 
         //

@@ -55,5 +55,8 @@ namespace vnexchange1.Models
         public string ItemSize { get; set; }
 
         public bool IsClosed { get; set; }
+
+        public bool IsHide { get; set; }
+        
     }
 }

@@ -26,26 +26,79 @@
                     @if (item.ItemType == 1)
                     {
                         if (item.CanTrade)
-                        {<a href="#" class="btn btn-success margin-right5" role="button">Mua</a>}
+                        {<a href="javascript:void(0);" class="btn btn-success margin-right5" role="button" onclick="Item[@item.ItemId].initRequest('mua');">Mua</a>}
                         if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
+                        {<a href="javascript:void(0);" class="btn btn-primary margin-right5" role="button" onclick="Item[@item.ItemId].initRequest('doi');">Đổi</a>}
                         if (item.CanGiveAway)
-                        {<a href="#" class="btn btn-warning" role="button">Xin</a>}
+                        {<a href="javascript:void(0);" class="btn btn-warning" role="button" onclick="Item[@item.ItemId].initRequest('xin');">Xin</a>}
                     }
                     else
                     {
                         if (item.CanTrade)
-                        {<a href="#" class="btn btn-danger margin-right5" role="button">Bán</a>}
+                        {<a href="javascript:void(0);" class="btn btn-danger margin-right5" role="button" onclick="Item[@item.ItemId].initRequest('ban');">Bán</a>}
                         if (item.CanExchange)
-                        {<a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
+                        {<a href="javascript:void(0);" class="btn btn-primary margin-right5" role="button" onclick="Item[@item.ItemId].initRequest('doi');">Đổi</a>}
                         if (item.CanGiveAway)
-                        {<a href="#" class="btn btn-default" role="button">Cho</a>}
+                        {
+                            <a href="javascript:void(0);" class="btn btn-default" role="button" onclick="Item[@item.ItemId].initRequest('cho');">Cho</a>
+                        }
                     }
                 </p>
             </div>
         </div>
+        <script>
+            Item[@item.ItemId] = new Item(@item.ItemId, @item.ItemType, "@item.ItemOwner", "");
+        </script>
     }    
 </div>
+<div id="myModalMua" class="modal fade in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Thông báo</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Vui lòng để lại lời nhắn với <a href="#" id="myModalMuaUser">Lâm Đắc Ngô</a> để <span id="lblRequestType"></span> món đồ này:</strong></p>
+                <br>                
+                <br>
+                <textarea class="form-control" style="height: 100px; max-width: none;" id="txtMessage"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnGuiTinNhan">Gửi tin nhắn</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="myModalXin" class="modal fade in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Yêu cầu xin đồ</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                </p><p><strong>Gửi lời nhắn cho <a>Lâm Ngô</a></strong></p>
+                <br>
+                <input class="form-control" style="height: 100px;" type="textarea">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    GlobalConstant.CreateRequestItemActionURL = '@Url.Action("CreateRequest", "Items")';    
+</script>
 <br />
 <br />
 @await Html.PartialAsync("_PagingPartial")
