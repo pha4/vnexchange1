@@ -33,7 +33,7 @@ namespace vnexchange1.Controllers
         public IActionResult Index(int? id, int? page)
         {
             //if (!_context.Item.Any())
-            if (true)
+            if (_context.Item.Count() < 50)
             {                
                 var nuochoa = new Item
                 {

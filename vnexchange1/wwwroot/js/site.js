@@ -28,7 +28,7 @@ Item.prototype = {
                 var requestTypeText = GetRequestTypeText(requestType);
                 $('#myModalMua').modal('show');
                 $("#myModalMuaUser").text(this.ItemOwner);
-                $("#btnGuiTinNhan").attr("onclick", "Item[" + this.ItemID + "].request('" + requestType ==  + "');");
+                $("#btnGuiTinNhan").attr("onclick", "Item[" + this.ItemID + "].request('" + requestType + "');");
                 $("#lblRequestType").text(requestTypeText);
                 break;            
             default:

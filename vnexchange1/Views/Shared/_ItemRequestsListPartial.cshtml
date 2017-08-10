@@ -1,0 +1,12 @@
+﻿@model ItemMessageViewModel
+@using vnexchange1.ViewModels;
+<div class="exchange-product">    
+    @for(var i = 0; i < Model.ItemRequests.Count(); i++)
+    {
+        <div class="col-md-12 product" style="width: 100%; clear: both; padding-left: 50px; padding-top: 20px;">
+            <p><span>Người gửi: </span><a class="bold" href="#">@Model.ItemRequests[i].RequestorID</a></p>
+            <p><span>Tin: </span><a class="bold" href="/items/details/@Model.Items[i].ItemId">@Model.Items[i].ItemTitle</a></p>
+            <p><span>Nội dung: </span><span class="italic bold">@Model.ItemRequests[i].Message</span></p>                        
+        </div>       
+    }    
+</div>

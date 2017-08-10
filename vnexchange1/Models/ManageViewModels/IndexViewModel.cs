@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using vnexchange1.PaginatedList;
+using vnexchange1.ViewModels;
 
 namespace vnexchange1.Models.ManageViewModels
 {
@@ -32,6 +33,8 @@ namespace vnexchange1.Models.ManageViewModels
         public PaginatedList<Item> HiddenItems { get; set; }
 
         public PaginatedList<Item> InterestingItems { get; set; }
+
+        public ItemMessageViewModel ItemMessages { get; set; }
 
         public int Waiting { get; set; }
 

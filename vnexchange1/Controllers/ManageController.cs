@@ -179,12 +179,13 @@ namespace vnexchange1.Controllers
 
             model.HiddenItems = PaginatedList<Item>.Create(hiddenItems, 1, 100000);
 
-            var interestingItems = new List<Item>();
-            var itemRequests = new List<ItemRequest>();
+            var interestingItems = new List<Item>();            
 
             var data = from item in _context.Item join itemrequest in _context.ItemRequest on item.ItemId.ToString() equals itemrequest.ItemID select item;
 
             interestingItems = data.ToList();
+
+            var messages = from itemrequest in _context.ItemRequest join item in _context.Item on itemrequest.ItemID.ToString() equals item.ItemId.ToString() select itemrequest;
 
             foreach (Item item in interestingItems)
             {
@@ -203,12 +204,15 @@ namespace vnexchange1.Controllers
             }
 
             model.InterestingItems = PaginatedList<Item>.Create(interestingItems, 1, 100000);
+            model.ItemMessages = new ViewModels.ItemMessageViewModel();
+            model.ItemMessages.Items = data.ToList();
+            model.ItemMessages.ItemRequests = messages.ToList();
 
             ViewBag.NumberOfPosting = model.PostingItems.Count();
             ViewBag.NumberOfWaiting = model.WaitingItems.Count();
             ViewBag.NumberOfClosed = model.ClosedItems.Count();
             ViewBag.NumberOfHidden = model.HiddenItems.Count();
-            ViewBag.NumberOfInterestingItems = model.InterestingItems.Count();
+            ViewBag.NumberOfInterestingItems = model.InterestingItems.Count();            
 
             return model;
         }

@@ -22,11 +22,11 @@ namespace vnexchange1.Controllers
             var results = _context.Category.Where(x => x.ParentCategory < 1).ToList();
             foreach (var result in results)
             {
-                var categoriesCount = _context.Item.Where(x => x.ItemCategory == result.CategoryId).Count();
+                var categoriesCount = _context.Item.Where(x => x.ItemCategory == result.CategoryId && x.IsApproved && !x.IsClosed && !x.IsHide).Count();
                 var subCategories = _context.Category.Where(x => x.ParentCategory == result.CategoryId).ToList();
                 foreach (var subCategory in subCategories)
                 {
-                    categoriesCount += _context.Item.Where(x => x.ItemCategory == subCategory.CategoryId).Count();
+                    categoriesCount += _context.Item.Where(x => x.ItemCategory == subCategory.CategoryId && x.IsApproved && !x.IsClosed && !x.IsHide).Count();
                 }
                 
                 categoryCount.Add(result.CategoryId.ToString(), categoriesCount.ToString());

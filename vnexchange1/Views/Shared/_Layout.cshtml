@@ -5,11 +5,14 @@
 <head>
     <!-- Google Tag Manager -->
     <script>
-			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-			})(window,document,'script','dataLayer','GTM-W3QDN8J');
+        (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W3QDN8J');
     </script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8" />
@@ -18,13 +21,13 @@
     <script src="~/assets/js/jquery-1.10.2.js"></script>
     @*<script src="~/assets/js/bootstrap.js"></script>*@
     <!--Slider JavaScript file  -->
-    <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>    
+    <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
         <link href="~/assets/css/bootstrap.css" rel="stylesheet">
         <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
         <!-- Favicon -->
         <link rel="shortcut icon" href="~/images/favicon.ico" asp-append-version="true">
@@ -34,10 +37,9 @@
         <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 
         <!-- Bootstrap core CSS -->
-        <link href="~/assets/css/bootstrap.css" rel="stylesheet" asp-append-version="true">        
+        <link href="~/assets/css/bootstrap.css" rel="stylesheet" asp-append-version="true">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-        <!-- Font Awesome CSS -->        
-
+        <!-- Font Awesome CSS -->
         <!-- Plugins -->
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true">
 
@@ -45,10 +47,10 @@
         <link href="~/css/style.css" rel="stylesheet" asp-append-version="true">
 
         <!-- Custom css -->
-        <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">                      
-        <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true"/>
+        <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true">
+        <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true" />
         <!--bootstrap JavaScript file  -->
-        
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
@@ -76,14 +78,14 @@
         <link href="~/assets/ItemSlider/css/main-style.css" rel="stylesheet" />
 
         @*<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>*@
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>*@
 
 
         <link href="~/css/rateit.css" rel="stylesheet" asp-append-version="true" />
-        
+
     </environment>
-    @Html.Raw(JavaScriptSnippet.FullScript)    
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top dn">
@@ -103,7 +105,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>
-                </ul>                
+                </ul>
             </div>
         </div>
     </nav>
@@ -119,7 +121,7 @@
                     <div class="header-left clearfix">
 
                         <!-- logo -->
-                        <div class="logo smooth-scroll">                            
+                        <div class="logo smooth-scroll">
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img id="logo" src="~/images/toicanbanco.png" alt="toicanbanco.com" style="height: 80px;"></a>
                         </div>
 
@@ -161,22 +163,22 @@
                                     <!-- Collect the nav links, forms, and other content for toggling -->
                                     <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                                         @*<ul class="nav navbar-nav navbar-right">
-                                            <li><a href="login.html">Đăng nhập</a></li>
-                                            <li><a href="#portfolio">Đăng ký</a></li>
-                                            <li><a href="#about">Thông tin</a></li>
-                                        </ul>*@
-                                        <ul class="nav navbar-nav navbar-right">            
+                                                <li><a href="login.html">Đăng nhập</a></li>
+                                                <li><a href="#portfolio">Đăng ký</a></li>
+                                                <li><a href="#about">Thông tin</a></li>
+                                            </ul>*@
+                                        <ul class="nav navbar-nav navbar-right">
                                             <li style="margin-top: 20px;"><input id="txtSearchBox" type="text" placeholder="Từ khóa..." class="fl form-control" style="height:35px;" /></li>
 
                                             @await Html.PartialAsync("_LoginPartial")
                                             @*<li><a asp-area="" asp-controller="Home" asp-action="About">Giới thiệu</a></li>
-                                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>*@
+                                                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Liên hệ</a></li>*@
                                             @if (User.Identity.IsAuthenticated)
                                             {
                                                 <li><a href="~/items/create">Đăng Tin</a></li>
                                             }
                                         </ul>
-                                        
+
                                     </div>
 
                                 </div>
@@ -198,38 +200,111 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - toicanbanco.com</p>
+            <div class="col-md-12 download-app-box text-center dn">
+                <span class="glyphicon glyphicon-download-alt"></span>Tải ứng dụng toicanbanco trên điện thoại để cập nhật các thông tin mới nhất. <a href="#" class="btn btn-danger btn-lg">TẢI NGAY</a>
+            </div>
+            <div class="col-md-12 footer-box text-center small-box">
+                <div class="col-md-2">
+                    <div><strong>Quần Áo Phụ Nữ</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div><strong>Quần Áo Trẻ Em</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div><strong>Đồ Chơi Trẻ Em</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div><strong>Đồ Dùng Gia Đình</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div><strong>Phụ Kiện</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div><strong>Sách và Tạp Chí</strong></div>
+                    <div class="text-center">
+                        <span>Áo sơ mi nữ</span><br>
+                        <span>Áo thun</span><br>
+                        <span>Đầm công sở</span><br>
+                        <span>Váy dã ngoại</span><br>
+                        <span>Quần short</span><br>
+                        <span>Quần Jeans</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 end-box ">
+                © 2017 by toicanbanco.com | &nbsp; All Rights Reserved | &nbsp; www.toicanbanco.com | &nbsp; Email us: info@toicanbanco.com
+            </div>
         </footer>
     </div>
 
     @*<environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>*@
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>*@
 
-    @RenderSection("Scripts", required: false)     
+    @RenderSection("Scripts", required: false)
     <script src="~/assets/js/jquery-1.10.2.js"></script>
     <!--bootstrap JavaScript file  -->
     <script src="~/assets/js/bootstrap.js"></script>
     <!--Slider JavaScript file  -->
     <script src="~/assets/ItemSlider/js/modernizr.custom.63321.js"></script>
-    <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>     
+    <script src="~/assets/ItemSlider/js/jquery.catslider.js"></script>
     @*<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>*@
     <script type="text/javascript">
 

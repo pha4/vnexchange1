@@ -47,7 +47,7 @@
         </ul>
 
 
-        <div class="tab-content">
+        <div class="tab-content" style="min-height: 400px;">
             <div id="home" class="tab-pane fade in active">
               
                 @Html.Partial("_ManageItemsListPartial", Model.PostingItems)
@@ -66,7 +66,7 @@
             </div>
             <div id="menu4" class="tab-pane fade">
 
-                @Html.Partial("_ManageItemsListPartial", Model.InterestingItems)
+                @Html.Partial("_ItemRequestsListPartial", Model.ItemMessages)
             </div>
         </div>
 
