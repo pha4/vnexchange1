@@ -23,7 +23,7 @@
                 <p style="font-weight: bold;">Giá : <strong style="color: red;">@item.ItemPrice.ToString("#,### vnd")</strong></p>
                 <p style="font-weight: bold;"><a href="#">@item.ItemOwner</a> - @item.ItemLocation</p>
                 <p>
-                    @if (item.ItemType == 1)
+                    @if (item.ItemType == 2)
                     {
                         if (item.CanTrade)
                         {<a href="javascript:void(0);" class="btn btn-success margin-right5" role="button" onclick="Item[@item.ItemId].initRequest('mua');">Mua</a>}
