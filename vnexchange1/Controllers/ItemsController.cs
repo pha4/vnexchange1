@@ -14,6 +14,8 @@ using vnexchange1.Data;
 using vnexchange1.Models;
 using vnexchange1.Object;
 using vnexchange1.PaginatedList;
+using Microsoft.AspNetCore.Identity;
+using vnexchange1.ViewModels;
 
 namespace vnexchange1.Controllers
 {
@@ -33,164 +35,167 @@ namespace vnexchange1.Controllers
         public IActionResult Index(int? id, int? page)
         {
             //if (!_context.Item.Any())
-            if (_context.Item.Count() < 50)
-            {                
-                var nuochoa = new Item
-                {
-                    ItemTitle = "Set nước hoa Marc Jacobs xách tay",
-                    ItemDescription = "Gia đình mình bên Mỹ gửi về cho nhưng mình còn nhiều nước hoa nên bán lại giá tốt cho bạn nào thích dòng nước hoa này nhé." +
-"Set bao gồm:" +
-"1 chai nước hoa dạng xịt 100ml" +
-"1 chai nước hoa dạng lăn 10ml" +
-"1 tuýp dưỡng thể 75ml",
-                    ItemCategory = 3,
-                    ItemDate = DateTime.Now,
-                    ItemLocation = "7",
-                    ItemPrice = 2300000,
-                    ItemType = 1,
-                    CanTrade = true,
-                    CanExchange = true,
-                    CanGiveAway = false,
-                    ItemOwner = _context.Users.First().Id
+//            if (false)
+//            {
+//                var user = _context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+//                var itemOwner = user.Id;
+//                var userEmail = user.Email;
+//                var xeday4banh = new Item
+//                {
+//                    ItemTitle = "Xe đẩy 4 bánh cho bé",
+//                    ItemDescription = "xe đẩy cho bé nhập khẩu Úc" +
+//"một chiếc xe đẩy em bé sẽ là sự lựa chọn tốt cho bạn giúp bạn vừa chăm sóc bé," +
+//"vừa rảnh tay hơn công việc.Với 1 chiếc xe đẩy phù hợp cho bé," +
+//"bạn chỉ cần để em bé nằm hoặc ngồi trên xe và làm công việc của mình hay đưa em bé đi dạo 1 cách dệ dàng.",
+//                    ItemCategory = 2,
+//                    ItemDate = DateTime.Now,
+//                    ItemLocation = "12",
+//                    ItemPrice = 2300000,
+//                    ItemType = 1,
+//                    CanTrade = true,
+//                    CanExchange = true,
+//                    CanGiveAway = false,
+//                    ItemOwner = itemOwner
 
-                };
-                _context.Item.Add(nuochoa);
-                for (var i = 1; i < 3; i++)
-                {
-                    var itemImage = new ItemImage()
-                    {
-                        ItemId = nuochoa.ItemId,
-                        ImagePath = "nuochoa" + i.ToString() + ".jpg",
-                        IsMainImage = i == 0
-                    };
-                    _context.ItemImage.Add(itemImage);
-                }
-                _context.SaveChanges();
+//                };
+//                _context.Item.Add(xeday4banh);
+//                for (var i = 1; i < 4; i++)
+//                {
+//                    var itemImage = new ItemImage()
+//                    {
+//                        ItemId = xeday4banh.ItemId,
+//                        ImagePath = userEmail + "_" + "xeday4banh" + i.ToString() + ".jpg",
+//                        IsMainImage = i == 0
+//                    };
+//                    _context.ItemImage.Add(itemImage);
+//                }
+//                _context.SaveChanges();
 
-                var binhxit = new Item
-                {
-                    ItemTitle = "Bình xịt kem tươi 1L Cream Whipper ",
-                    ItemDescription = "Bình xịt kem tươi là sản phẩm không thể thiếu cho cửa hàng làm kem, làm bánh và các quán cafe take away giúp tiết kiệm tối đa thời gian và công sức cho bạn chỉ 2p là bạn đã có thể tạo kem có độ xốp bông và mịn một cách dễ dàng và tiện dụng.",
-                    ItemCategory = 15,
-                    ItemDate = DateTime.Now,
-                    ItemLocation = "7",
-                    ItemPrice = 8190000,
-                    ItemType = 1,
-                    CanTrade = true,
-                    CanExchange = true,
-                    CanGiveAway = false,
-                    ItemOwner = _context.Users.First().Id
+//                var xeday = new Item
+//                {
+//                    ItemTitle = "Xe đẩy bé 3 bánh",
+//                    ItemDescription = "Xe phun tuyết nháy đèn, xe đẩy êm không rung lắc",
+//                    ItemCategory = 2,
+//                    ItemDate = DateTime.Now,
+//                    ItemLocation = "12",
+//                    ItemPrice = 0,
+//                    ItemType = 1,
+//                    CanTrade = false,
+//                    CanExchange = true,
+//                    CanGiveAway = true,
+//                    ItemOwner = itemOwner
 
-                };
-                _context.Item.Add(binhxit);
-                for (var i = 1; i < 4; i++)
-                {
-                    var itemImage = new ItemImage()
-                    {
-                        ItemId = binhxit.ItemId,
-                        ImagePath = "pha4@csc.com_binhxit" + i.ToString() + ".jpg",
-                        IsMainImage = i == 0
-                    };
-                    _context.ItemImage.Add(itemImage);
-                }
-                _context.SaveChanges();
+//                };
+//                _context.Item.Add(xeday3banh);
+//                for (var i = 1; i < 2; i++)
+//                {
+//                    var itemImage = new ItemImage()
+//                    {
+//                        ItemId = xeday.ItemId,
+//                        ImagePath = userEmail + "_" + "xeday" + i.ToString() + ".jpg",
+//                        IsMainImage = i == 0
+//                    };
+//                    _context.ItemImage.Add(itemImage);
+//                }                
 
-                var iphone = new Item
-                {
-                    ItemTitle = "Bán iphone 7 128gb Gold bản quốc tế còn zin nguyên",
-                    ItemDescription = "Mình bán iPhone 7 Gold 128Gb phiên bản quốc tế." +
-"Máy còn bảo hành tại TGDĐ đến tháng 4 - 2018." +
-"Máy đầy đủ phụ kiện hộp sạc cáp tai nghe theo máy.Hình thức máy đẹp," +
-                    "đánh giá gần như mới.Nguyên bản nguyên zin chưa qua sửa chửa." +
-"Mọi chức năng dùng tốt ổn định, vân tay nhạy. Mình bán 9 triệu(có fix nhiệt tình cho người thiện chí)Đầy đủ phụ kiện sạc cáp tai nghe và hộp theo máy." +
-"Bao test mọi chức năng đến hết bảo hành.",
-                    ItemCategory = 20,
-                    ItemDate = DateTime.Now,
-                    ItemLocation = "7",
-                    ItemPrice = 8190000,
-                    ItemType = 1,
-                    CanTrade = true,
-                    CanExchange = true,
-                    CanGiveAway = false,
-                    ItemOwner = _context.Users.First().Id,
-                    ItemStatus = "Mới 99%"
+//                _context.SaveChanges();
 
-                };
-                _context.Item.Add(iphone);
-                for (var i = 1; i < 4; i++)
-                {
-                    var itemImage = new ItemImage()
-                    {
-                        ItemId = iphone.ItemId,
-                        ImagePath = "pha4@csc.com_iphone" + i.ToString() + ".jpg",
-                        IsMainImage = i == 0
-                    };
-                    _context.ItemImage.Add(itemImage);
+//                var xeoto = new Item
+//                {
+//                    ItemTitle = "xe ô tô cho bé chạy 2 bình 2 máy",
+//                    ItemDescription = "xe mới 100% bán lẻ giá sỉ còn nhiều mẫu xe khác liên hệ để biết thêm." +
+//"Xe đẩy seebabyT03 là sản phẩm mang một phong cách rất hiện đại của SeeBaby " +
+//"Xe đẩy seebabyT03 là sản phẩm mang một phong cách rất hiện đại của SeeBaby " +
+//                    "Dây an toàn 3 điểm. Phanh và hệ thống treo an toàn hai bánh sau " +
+//"Đệm ghế êm ái, lưng ghế có thể thay đổi nhiều vị trí mang lại cho bé các tư thế nằm, ngồi thoải mái " +
+//"Bao test mọi chức năng đến hết bảo hành.",
+//                    ItemCategory = 2,
+//                    ItemDate = DateTime.Now,
+//                    ItemLocation = "5",
+//                    ItemPrice = 1300000,
+//                    ItemType = 1,
+//                    CanTrade = true,
+//                    CanExchange = true,
+//                    CanGiveAway = false,
+//                    ItemOwner = itemOwner,
+//                    ItemStatus = "Như mới"
 
-                }
-                _context.SaveChanges();
+//                };
+//                _context.Item.Add(iphone);
+//                for (var i = 1; i < 4; i++)
+//                {
+//                    var itemImage = new ItemImage()
+//                    {
+//                        ItemId = iphone.ItemId,
+//                        ImagePath = "pha4@csc.com_iphone" + i.ToString() + ".jpg",
+//                        IsMainImage = i == 0
+//                    };
+//                    _context.ItemImage.Add(itemImage);
 
-                var samsung = new Item
-                {
-                    ItemTitle = "Samsung Galaxy A7 2017 dual 2 sim A720F/DS black",
-                    ItemDescription = "Tình trạng : Hàng công ty chính hãng Samsung Việt Nam, còn đẹp khoảng 99%, like new, nguyên zin, còn bảo hành chính hãng toàn quốc đến 05/2018",
-                    ItemCategory = 20,
-                    ItemDate = DateTime.Now,
-                    ItemLocation = "7",
-                    ItemPrice = 7100000,
-                    ItemType = 1,
-                    CanTrade = true,
-                    CanExchange = true,
-                    CanGiveAway = false,
-                    ItemOwner = _context.Users.First().Id,
-                    ItemStatus = "Fullbox (trùng imel)"
+//                }
+//                _context.SaveChanges();
 
-                };
-                _context.Item.Add(samsung);
-                for (var i = 1; i < 5; i++)
-                {
-                    var itemImage = new ItemImage()
-                    {
-                        ItemId = samsung.ItemId,
-                        ImagePath = "pha4@csc.com_samsung" + i.ToString() + ".jpg",
-                        IsMainImage = i == 0
-                    };
-                    _context.ItemImage.Add(itemImage);
+//                var samsung = new Item
+//                {
+//                    ItemTitle = "Samsung Galaxy A7 2017 dual 2 sim A720F/DS black",
+//                    ItemDescription = "Tình trạng : Hàng công ty chính hãng Samsung Việt Nam, còn đẹp khoảng 99%, like new, nguyên zin, còn bảo hành chính hãng toàn quốc đến 05/2018",
+//                    ItemCategory = 20,
+//                    ItemDate = DateTime.Now,
+//                    ItemLocation = "7",
+//                    ItemPrice = 7100000,
+//                    ItemType = 1,
+//                    CanTrade = true,
+//                    CanExchange = true,
+//                    CanGiveAway = false,
+//                    ItemOwner = itemOwner,
+//                    ItemStatus = "Fullbox (trùng imel)"
 
-                }
-                _context.SaveChanges();
+//                };
+//                _context.Item.Add(samsung);
+//                for (var i = 1; i < 5; i++)
+//                {
+//                    var itemImage = new ItemImage()
+//                    {
+//                        ItemId = samsung.ItemId,
+//                        ImagePath = "pha4@csc.com_samsung" + i.ToString() + ".jpg",
+//                        IsMainImage = i == 0
+//                    };
+//                    _context.ItemImage.Add(itemImage);
 
-                var jade = new Item
-                {
-                    ItemTitle = "Vòng ngọc Jade thiên nhiên",
-                    ItemDescription = "Vòng ngọc Jade thiên nhiên. • Với vẻ đẹp thuần túy, không quá kiêu sa.Như một lời nhắn nhủ bình an - như ý. • Ni : 51.5 mm, Màu sắc: xanh đậm, Kiểu: Bản lá hẹ",
-                    ItemCategory = 26,
-                    ItemDate = DateTime.Now,
-                    ItemLocation = "2",
-                    ItemPrice = 500000,
-                    ItemType = 1,
-                    CanTrade = true,
-                    CanExchange = true,
-                    CanGiveAway = false,
-                    ItemOwner = _context.Users.First().Id,
-                    ItemStatus = "Mới 100%",
-                    ItemColor = "Xanh lá hẹ"
-                };
-                _context.Item.Add(jade);
-                for (var i = 1; i < 3; i++)
-                {
-                    var itemImage = new ItemImage()
-                    {
-                        ItemId = jade.ItemId,
-                        ImagePath = "pha4@csc.com_jade" + i.ToString() + ".jpg",
-                        IsMainImage = i == 0
-                    };
-                    _context.ItemImage.Add(itemImage);
+//                }
+//                _context.SaveChanges();
 
-                }
-                _context.SaveChanges();
+//                var jade = new Item
+//                {
+//                    ItemTitle = "Vòng ngọc Jade thiên nhiên",
+//                    ItemDescription = "Vòng ngọc Jade thiên nhiên. • Với vẻ đẹp thuần túy, không quá kiêu sa.Như một lời nhắn nhủ bình an - như ý. • Ni : 51.5 mm, Màu sắc: xanh đậm, Kiểu: Bản lá hẹ",
+//                    ItemCategory = 26,
+//                    ItemDate = DateTime.Now,
+//                    ItemLocation = "2",
+//                    ItemPrice = 500000,
+//                    ItemType = 1,
+//                    CanTrade = true,
+//                    CanExchange = true,
+//                    CanGiveAway = false,
+//                    ItemOwner = itemOwner,
+//                    ItemStatus = "Mới 100%",
+//                    ItemColor = "Xanh lá hẹ"
+//                };
+//                _context.Item.Add(jade);
+//                for (var i = 1; i < 3; i++)
+//                {
+//                    var itemImage = new ItemImage()
+//                    {
+//                        ItemId = jade.ItemId,
+//                        ImagePath = "pha4@csc.com_jade" + i.ToString() + ".jpg",
+//                        IsMainImage = i == 0
+//                    };
+//                    _context.ItemImage.Add(itemImage);
 
-            }
+//                }
+//                _context.SaveChanges();
+
+//            }
 
             var items1 = new List<Item>();
             if (id != null)
@@ -262,6 +267,23 @@ namespace vnexchange1.Controllers
             item.ItemOwner = user != null ? user.UserName : string.Empty;
 
             GenerateBreadCrumb(item.ItemCategory);
+
+            var interestingItems = new List<InterestingItemViewModel>();
+
+            var items1 = _context.Item.Where(x => x.ItemCategory == item.ItemCategory && x.IsApproved && !x.IsClosed && !x.IsHide && x.ItemId != id).ToList();
+            var subCategories = _context.Category.Where(x => x.ParentCategory == item.ItemCategory).ToList();
+            foreach (var subCategory in subCategories)
+            {
+                items1.AddRange(_context.Item.Where(x => x.ItemCategory == subCategory.CategoryId && x.IsApproved && !x.IsClosed && !x.IsHide && x.ItemId != id));
+            }
+
+            foreach (Item item1 in items1)
+            {
+                var images1 = _context.ItemImage.Where(x => x.ItemId == item1.ItemId).ToList();
+                item1.Images = images1;
+            }
+
+            ViewBag.InterestingItems = items1;
 
             SetViewBagData("all", 0, 0, 0, 1, 10, 0);
 
@@ -515,6 +537,7 @@ namespace vnexchange1.Controllers
             if (ModelState.IsValid)
             {
                 item.ItemDate = DateTime.Now;
+                item.IsApproved = true;
                 _context.Add(item);
                 _context.SaveChanges();
                 for (var i = 0; i < itemImages.Length; i++)
@@ -538,7 +561,8 @@ namespace vnexchange1.Controllers
 
         public JsonResult CreateRequest(string itemID, string requestType, string message)
         {
-            var itemRequest = new ItemRequest() {
+            var itemRequest = new ItemRequest()
+            {
                 ItemID = itemID,
                 RequestType = requestType,
                 Message = message,

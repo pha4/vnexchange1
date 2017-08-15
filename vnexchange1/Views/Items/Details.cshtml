@@ -98,14 +98,14 @@
                     <p><strong>Ngày đăng:</strong> @Html.DisplayFor(model => model.ItemDate)</p>
                     <p><strong>Tình trạng:</strong> Mới 95%</p>
                     <p><strong>Hãng sản xuất:</strong> <span style="font-weight: bold; color: green;">@Html.DisplayFor(model => model.ItemManufacturer)</span></p>
-                    <p><strong>Giá bán</strong> <span style="font-weight: bold; color: red;"> @Html.DisplayFor(model => model.ItemPrice)</span></p>
+                    <p><strong>Giá bán</strong> <span style="font-weight: bold; color: red;"> @Model.ItemPrice.ToString("#,### vnd") </ span ></ p >
                     <p>
                         <strong>Ghi chú:</strong> @Model.ItemDescription...
                         <a href="#">Xem thêm</a>
                     </p>
                     <p><strong>Tôi muốn:</strong></p>
                     <p>
-                        @if (Model.ItemType == 1)
+                        @if (Model.ItemType == 2)
                         {
                             if (Model.CanTrade)
                             {
@@ -142,65 +142,29 @@
         </div>
         <div style="clear: both;"></div>
     </div>
-    <div class="container dn">
+    <div class="container">
         <div class="main box-border suggested" style="margin: 0px 0px 50px 0px;">
             <h4 style="padding: 30px;">
-                Nhu cầu về sản phẩm này
+                Các sản phẩm liên quan
             </h4>
             <div style="margin-top: 10px; padding: 10px 0px 0px 50px;">
                 <ul class="list-inline">
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/give.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/1.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/swap.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/7.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/swap.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/9.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/money.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/10.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/give.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/5.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/give.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/12.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
-                    <li style="width: 150px; padding: 10px 20px;">
-                        <img src="img/give.png">
-                        <a href="#" style="cursor: pointer; ">
-                            <img src="assets/ItemSlider/images/8.jpg" alt="img01" style="width: 150px;">
-                        </a>
-                        <a href="#" style="cursor: pointer;">Giày đi rừng, leo núi, còn tốt 95%</a>
-                    </li>
+                    @foreach (var item in ViewBag.InterestingItems)
+                    {
+                        <li style="width: 150px; padding: 10px 20px;">
+                            
+                            <a href="/items/details/@item.ItemId" style="cursor: pointer; ">
+                                @if (item.Images != null && item.Images.Count > 0)
+                                {
+                                    <img src="~/uploads/@item.Images[0].ImagePath" alt="" style="width: 150px;">
+                                }
+                            </a>
+                            <a href="/items/details/@item.ItemId" style="cursor: pointer;">@item.ItemTitle</a>
+                        </li>
+                    }                   
                 </ul>
             </div>
-
+            @*<img src="img/give.png">*@
         </div>
     </div>
     <dl class="dl-horizontal dn">
