@@ -4,9 +4,31 @@
     @for(var i = 0; i < Model.ItemRequests.Count(); i++)
     {
         <div class="col-md-12 product" style="width: 100%; clear: both; padding-left: 50px; padding-top: 20px;">
-            <p><span>Người gửi: </span><a class="bold" href="#">@Model.ItemRequests[i].RequestorID</a></p>
+            <p><span>Người gửi: </span><a class="bold" onclick="ItemRequest[@Model.Items[i].ItemId].onclick();" href="javascript:void(0);">@Model.ItemRequests[i].RequestorID</a></p>
             <p><span>Tin: </span><a class="bold" href="/items/details/@Model.Items[i].ItemId">@Model.Items[i].ItemTitle</a></p>
             <p><span>Nội dung: </span><span class="italic bold">@Model.ItemRequests[i].Message</span></p>                        
-        </div>       
+        </div>
+        <script>
+            ItemRequest[@Model.Items[i].ItemId] = new ItemRequest('@Model.Items[i].ItemId', '@Model.ItemRequests[i].RequestorID', '@Model.Emails[i]');
+        </script>
     }    
+</div>
+<div id="myModalUserInformation" class="modal fade in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Thông báo</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Vui lòng liên lạc với <a href="#" id="myModalUser"></a> thông qua email sau <a id="linkEmail" href=""></a></strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnDong">Đóng</button>
+            </div>
+        </div>
+
+    </div>
 </div>

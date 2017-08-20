@@ -7,6 +7,6 @@ namespace vnexchange1.ViewModels
     {
         public List<ItemRequest> ItemRequests { get; set; }
         public List<Item> Items { get; set; }
-       
+        public List<string> Emails { get; set; }
     }
 }

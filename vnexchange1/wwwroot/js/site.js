@@ -5,6 +5,13 @@ var Item = function (itemID, itemType, itemOwner, itemEmail) {
     this.ItemOwner = itemOwner;
     this.ItemEmail = itemEmail;
 };
+
+var ItemRequest = function (itemID, itemOwner, itemEmail) {
+    this.ItemID = itemID;    
+    this.ItemOwner = itemOwner;
+    this.ItemEmail = itemEmail;
+};
+
 var GlobalConstant = new Object();
 GlobalConstant.HideItemActionURL = "";
 GlobalConstant.CloseItemActionURL = "";
@@ -16,6 +23,16 @@ function GetRequestTypeText(requestType) {
     if (requestType == "doi")
     {
         return "đổi";
+    }
+};
+
+ItemRequest.prototype = {
+    onclick: function ()
+    {
+        $('#myModalUserInformation').modal('show');
+        $("#myModalUser").text(this.ItemOwner);
+        $("#linkEmail").text(this.ItemEmail).attr("href", "mailto:" + this.ItemEmail);
+        $("#btnDong").attr("onclick", "$('#myModalUserInformation').modal('hide');");        
     }
 };
 

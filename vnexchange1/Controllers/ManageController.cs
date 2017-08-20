@@ -207,6 +207,8 @@ namespace vnexchange1.Controllers
             model.ItemMessages = new ViewModels.ItemMessageViewModel();
             model.ItemMessages.Items = data.ToList();
             model.ItemMessages.ItemRequests = messages.ToList();
+            model.ItemMessages.Emails = new List<string>();
+            model.ItemMessages.Emails.Add(user.Email);
 
             ViewBag.NumberOfPosting = model.PostingItems.Count();
             ViewBag.NumberOfWaiting = model.WaitingItems.Count();
