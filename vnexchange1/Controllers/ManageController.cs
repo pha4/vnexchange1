@@ -181,11 +181,11 @@ namespace vnexchange1.Controllers
 
             var interestingItems = new List<Item>();            
 
-            var data = from item in _context.Item join itemrequest in _context.ItemRequest on item.ItemId.ToString() equals itemrequest.ItemID select item;
+            var data = from item in _context.Item join itemrequest in _context.ItemRequest on item.ItemId.ToString() equals itemrequest.ItemID where item.ItemOwner == user.Id select item;
 
             interestingItems = data.ToList();
 
-            var messages = from itemrequest in _context.ItemRequest join item in _context.Item on itemrequest.ItemID.ToString() equals item.ItemId.ToString() select itemrequest;
+            var messages = from itemrequest in _context.ItemRequest join item in _context.Item on itemrequest.ItemID.ToString() equals item.ItemId.ToString() where item.ItemOwner == user.Id select itemrequest;
 
             foreach (Item item in interestingItems)
             {
@@ -204,11 +204,19 @@ namespace vnexchange1.Controllers
             }
 
             model.InterestingItems = PaginatedList<Item>.Create(interestingItems, 1, 100000);
-            model.ItemMessages = new ViewModels.ItemMessageViewModel();
-            model.ItemMessages.Items = data.ToList();
-            model.ItemMessages.ItemRequests = messages.ToList();
-            model.ItemMessages.Emails = new List<string>();
-            model.ItemMessages.Emails.Add(user.Email);
+            model.ItemMessages = new List<ViewModels.ItemMessageViewModel>();
+            foreach (ItemRequest itemRequest in messages)
+            {
+                var itemMessageViewModel = new ViewModels.ItemMessageViewModel();
+                itemMessageViewModel.Item = data.FirstOrDefault(x => x.ItemId.ToString() == itemRequest.ItemID);
+                itemMessageViewModel.ItemID = itemRequest.ItemID;
+                itemMessageViewModel.Message = itemRequest.Message;
+                itemMessageViewModel.RequestorID = itemRequest.RequestorID;
+                itemMessageViewModel.RequestType = itemRequest.RequestType;
+                itemMessageViewModel.Email = user.Email;
+
+                model.ItemMessages.Add(itemMessageViewModel);
+            }
 
             ViewBag.NumberOfPosting = model.PostingItems.Count();
             ViewBag.NumberOfWaiting = model.WaitingItems.Count();

@@ -18,7 +18,7 @@
         var ri = $(this);
 
         //if the use pressed reset, it will get value: 0 (to be compatible with the HTML range control), we could check if e.type == 'reset', and then set the value to  null .
-        var value = ri.rateit('value');        
+        var value = ri.rateit('value');
 
         //maybe we want to disable voting?
         ri.rateit('readonly', true);
@@ -49,11 +49,11 @@
         <!-- /.col -->
     </div>
     <div style="padding: 20px 0px 0px 0px;">
-        <a href="/">Trang chủ</a> <span id="spanSeperator">&gt;</span> 
+        <a href="/">Trang chủ</a> <span id="spanSeperator">&gt;</span>
         @foreach (var item in ViewBag.BreadCrumb)
         {
-            <a href="/items/@item.CategoryId">@item.CategoryName</a> <span id="spanSeperator">&gt;</span> 
-        }        
+            <a href="/items/@item.CategoryId">@item.CategoryName</a> <span id="spanSeperator">&gt;</span>
+        }
         <span>@Model.ItemTitle</span>
     </div>
     <div class="main box-border" id="cknude" style="margin: 0px 0px 50px; padding: 0px 0px 30px 20px;">
@@ -83,13 +83,13 @@
             </div>
             <div style="clear: both;"></div>
         </div>
-        
+
         <div class="col-md-6">
             <div class="" style="padding: 20px 0px 0px 0px; width: 100%; clear: both;">
                 <div class="caption" style="float: left; padding: 0px 0px 0px 20px;">
                     <p>
                         <strong>Đăng bởi:</strong> <a href="#" style="font-weight: bold;">@Html.DisplayFor(model => model.ItemOwner)</a>
-                        (Đánh giá: 
+                        (Đánh giá:
                         <div class="rateit" id="rateit11">
                         </div>
 
@@ -98,7 +98,7 @@
                     <p><strong>Ngày đăng:</strong> @Html.DisplayFor(model => model.ItemDate)</p>
                     <p><strong>Tình trạng:</strong> Mới 95%</p>
                     <p><strong>Hãng sản xuất:</strong> <span style="font-weight: bold; color: green;">@Html.DisplayFor(model => model.ItemManufacturer)</span></p>
-                    <p><strong>Giá bán</strong> <span style="font-weight: bold; color: red;"> @Model.ItemPrice.ToString("#,### vnd") </ span ></ p >
+                    <p><strong>Giá bán: </strong> <span style="font-weight: bold; color: red;">@Model.ItemPrice.ToString("#,### vnd")</span ></ p >
                     <p>
                         <strong>Ghi chú:</strong> @Model.ItemDescription...
                         <a href="#">Xem thêm</a>
@@ -109,32 +109,29 @@
                         {
                             if (Model.CanTrade)
                             {
-                                <a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModalMua">Mua</a>
+                                <a href="#" class="btn btn-success" role="button" data-toggle="modal" onclick="Item[@Model.ItemId].initRequest('mua');">Mua</a>
                             }
                             if (Model.CanExchange)
                             {
-                                <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
+                                <a href="#" class="btn btn-primary" role="button" data-toggle="modal" onclick="Item[@Model.ItemId].initRequest('doi');">Đổi</a>
                             }
                             if (Model.CanGiveAway)
                             {
-                                <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>
+                                <a href="#" class="btn btn-warning" role="button" data-toggle="modal" onclick="Item[@Model.ItemId].initRequest('xin');">Xin</a>
                             }
                         }
                         else
                         {
                             if (Model.CanTrade)
                             {
-                                <a href="#" class="btn btn-danger margin-right5" role="button">Bán</a>}
+                                <a href="#" class="btn btn-danger margin-right5" role="button" onclick="Item[@Model.ItemId].initRequest('ban');">Bán</a>}
                             if (Model.CanExchange)
                             {
-                                <a href="#" class="btn btn-primary margin-right5" role="button">Đổi</a>}
+                                <a href="#" class="btn btn-primary margin-right5" role="button" onclick="Item[@Model.ItemId].initRequest('doi');">Đổi</a>}
                             if (Model.CanGiveAway)
                             {
-                                <a href="#" class="btn btn-default" role="button">Cho</a>}
+                                <a href="#" class="btn btn-default" role="button" onclick="Item[@Model.ItemId].initRequest('cho');">Cho</a>}
                         }
-                        @*<a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModalMua">Mua</a>
-                            <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModalDoi">Đổi</a>
-                            <a href="#" class="btn btn-warning" role="button" data-toggle="modal" data-target="#myModalXin">Xin</a>*@
                     </p>
                 </div>
             </div>
@@ -142,103 +139,59 @@
         </div>
         <div style="clear: both;"></div>
     </div>
-    <div class="container">
-        <div class="main box-border suggested" style="margin: 0px 0px 50px 0px;">
-            <h4 style="padding: 30px;">
-                Các sản phẩm liên quan
-            </h4>
-            <div style="margin-top: 10px; padding: 10px 0px 0px 50px;">
-                <ul class="list-inline">
-                    @foreach (var item in ViewBag.InterestingItems)
-                    {
-                        <li style="width: 150px; padding: 10px 20px;">
-                            
-                            <a href="/items/details/@item.ItemId" style="cursor: pointer; ">
-                                @if (item.Images != null && item.Images.Count > 0)
-                                {
-                                    <img src="~/uploads/@item.Images[0].ImagePath" alt="" style="width: 150px;">
-                                }
-                            </a>
-                            <a href="/items/details/@item.ItemId" style="cursor: pointer;">@item.ItemTitle</a>
-                        </li>
-                    }                   
-                </ul>
+    @if (ViewBag.InterestingItems.Count > 0)
+    {
+        <div class="container">
+            <div class="main box-border suggested" style="margin: 0px 0px 50px 0px;">
+                <h4 style="padding: 30px;">
+                    Bạn muốn trao đổi? Xem thử những sản phẩm này nhé
+                </h4>
+                <div style="margin-top: 10px; padding: 10px 0px 0px 50px;">
+                    <ul class="list-inline">
+                        @foreach (var item in ViewBag.InterestingItems)
+                        {
+                            <li style="width: 150px; padding: 10px 20px;">
+
+                                <a href="/items/details/@item.ItemId" style="cursor: pointer; ">
+                                    @if (item.Images != null && item.Images.Count > 0)
+                                    {
+                                        <img src="~/uploads/@item.Images[0].ImagePath" alt="" style="width: 150px;">
+                                    }
+                                </a>
+                                <a href="/items/details/@item.ItemId" style="cursor: pointer;">@item.ItemTitle</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
-            @*<img src="img/give.png">*@
         </div>
-    </div>
-    <dl class="dl-horizontal dn">
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemTitle)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemTitle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemPrice)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemPrice)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemCategory)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemCategory)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemOwner)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemOwner)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemLocation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemLocation)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemManufacturer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemManufacturer)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CanExchange)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CanExchange)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CanGiveAway)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CanGiveAway)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CanTrade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CanTrade)
-        </dd>
-    </dl>
+    }
 </div>
+<script>
+    Item[@Model.ItemId] = new Item(@Model.ItemId, @Model.ItemType, "@Model.ItemOwner", "");
+</script>
+<div id="myModalMua" class="modal fade in" role="dialog" aria-hidden="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Thông báo</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Vui lòng để lại lời nhắn với <a href="#" id="myModalMuaUser">Lâm Đắc Ngô</a> để <span id="lblRequestType"></span> món đồ này:</strong></p>
+                <br>
+                <br>
+                <textarea class="form-control" style="height: 100px; max-width: none;" id="txtMessage"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnGuiTinNhan">Gửi tin nhắn</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    GlobalConstant.CreateRequestItemActionURL = '@Url.Action("CreateRequest", "Items")';
+</script>

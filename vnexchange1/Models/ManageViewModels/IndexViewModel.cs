@@ -34,7 +34,7 @@ namespace vnexchange1.Models.ManageViewModels
 
         public PaginatedList<Item> InterestingItems { get; set; }
 
-        public ItemMessageViewModel ItemMessages { get; set; }
+        public List<ItemMessageViewModel> ItemMessages { get; set; }
 
         public int Waiting { get; set; }
 

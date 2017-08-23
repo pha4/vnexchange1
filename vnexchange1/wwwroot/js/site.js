@@ -24,6 +24,7 @@ function GetRequestTypeText(requestType) {
     {
         return "đổi";
     }
+    return requestType;
 };
 
 ItemRequest.prototype = {

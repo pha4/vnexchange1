@@ -1,17 +1,17 @@
-﻿@model ItemMessageViewModel
+﻿@model List<ItemMessageViewModel>
 @using vnexchange1.ViewModels;
-<div class="exchange-product">    
-    @for(var i = 0; i < Model.ItemRequests.Count(); i++)
+<div class="exchange-product">
+    @for (var i = 0; i < Model.Count(); i++)
     {
         <div class="col-md-12 product" style="width: 100%; clear: both; padding-left: 50px; padding-top: 20px;">
-            <p><span>Người gửi: </span><a class="bold" onclick="ItemRequest[@Model.Items[i].ItemId].onclick();" href="javascript:void(0);">@Model.ItemRequests[i].RequestorID</a></p>
-            <p><span>Tin: </span><a class="bold" href="/items/details/@Model.Items[i].ItemId">@Model.Items[i].ItemTitle</a></p>
-            <p><span>Nội dung: </span><span class="italic bold">@Model.ItemRequests[i].Message</span></p>                        
+            <p><span>Người gửi: </span><a class="bold" onclick="ItemRequest[@Model[i].ItemID].onclick();" href="javascript:void(0);">@Model[i].RequestorID</a></p>
+            <p><span>Tin: </span><a class="bold" href="/items/details/@Model[i].ItemID">@Model[i].Item.ItemTitle</a></p>
+            <p><span>Nội dung: </span><span class="italic bold">@Model[i].Message</span></p>
         </div>
         <script>
-            ItemRequest[@Model.Items[i].ItemId] = new ItemRequest('@Model.Items[i].ItemId', '@Model.ItemRequests[i].RequestorID', '@Model.Emails[i]');
+            ItemRequest[@Model[i].ItemID] = new ItemRequest('@Model[i].ItemID', '@Model[i].RequestorID', '@Model[i].Email');
         </script>
-    }    
+    }
 </div>
 <div id="myModalUserInformation" class="modal fade in" role="dialog" aria-hidden="false">
     <div class="modal-dialog">
